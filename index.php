@@ -55,6 +55,10 @@
                     </p>
                     <input type="text" name="phoneNumber" id="phoneNumber">
                 </div>
+
+                <div class="form__input__button">
+                    <button type="submit">Daxil olmaq</button>
+                </div>
         </form>
     </div>
 </body>
