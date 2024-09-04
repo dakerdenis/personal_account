@@ -26,14 +26,14 @@
                     <p class="form__input__desc">
                     userName:
                     </p>
-                    <input type="text" name="username" id="username">
+                    <input value="AQWeb" type="text" name="username" id="username">
                 </div>
 
                 <div class="form__input__container">
                     <p class="form__input__desc">
                         password:
                     </p>
-                    <input type="password" name="password" id="password">
+                    <input value="@QWeb" type="password" name="password" id="password">
                 </div>
 
                 <div class="form__input__container">
