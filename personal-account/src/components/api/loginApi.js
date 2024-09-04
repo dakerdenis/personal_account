@@ -13,14 +13,16 @@ export const loginUser = async (formData) => {
       </soap12:Envelope>`;
   
     try {
-      const response = await fetch('https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/soap+xml; charset=utf-8',
-          'SOAPAction': 'http://tempuri.org/Login',
-        },
-        body: soapRequest,
-      });
+        const response = await fetch('/api/insureazSvc/AQroupMobileIntegrationSvc.asmx', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/soap+xml; charset=utf-8',
+              'SOAPAction': 'http://tempuri.org/Login',
+            },
+            body: soapRequest,
+          });
+          
+          
   
       if (!response.ok) {
         throw new Error('Network response was not OK');
