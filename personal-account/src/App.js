@@ -4,8 +4,9 @@ import LoginForm from './components/LoginForm';
 import ResultPage from './components/ResultPage';
 
 function App() {
+  console.log("App is rendering");
   return (
-    <Router>
+    <Router basename="/cabinet">
       <Routes>
         <Route path="/" element={<LoginForm />} />
         <Route path="/result" element={<ResultPage />} />

@@ -1,5 +1,3 @@
-// src/api/loginApi.js
-
 export const loginUser = async (formData) => {
     const soapRequest = `<?xml version="1.0" encoding="utf-8"?>
       <soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
@@ -29,8 +27,7 @@ export const loginUser = async (formData) => {
       }
   
       const responseText = await response.text();
-  
-      // Return the result if successful
+      
       if (responseText.includes('<LoginResult>')) {
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(responseText, 'text/xml');
