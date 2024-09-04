@@ -13,33 +13,30 @@ export const loginUser = async (formData) => {
       </soap12:Envelope>`;
   
     try {
-        const response = await fetch('/api/insureazSvc/AQroupMobileIntegrationSvc.asmx', {
+        const response = await fetch('https://cors-anywhere.herokuapp.com/https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx', {  // Using CORS proxy
             method: 'POST',
             headers: {
               'Content-Type': 'application/soap+xml; charset=utf-8',
               'SOAPAction': 'http://tempuri.org/Login',
             },
             body: soapRequest,
-          });
-          
-          
+        });
+        
+        if (!response.ok) {
+          throw new Error('Network response was not OK');
+        }
   
-      if (!response.ok) {
-        throw new Error('Network response was not OK');
-      }
+        const responseText = await response.text();
+        
+        if (responseText.includes('<LoginResult>')) {
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(responseText, 'text/xml');
+          return xmlDoc.getElementsByTagName('LoginResult')[0].textContent;
+        }
   
-      const responseText = await response.text();
-      
-      if (responseText.includes('<LoginResult>')) {
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(responseText, 'text/xml');
-        return xmlDoc.getElementsByTagName('LoginResult')[0].textContent;
-      }
-  
-      throw new Error('Invalid login data');
+        throw new Error('Invalid login data');
     } catch (error) {
       console.error('Error:', error);
       throw error;
     }
-  };
-  
+};
