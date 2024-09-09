@@ -10,7 +10,7 @@ function LoginForm() {
     password: '@QWeb',
     pinCode: 'A111111',
     policyNumber: 'MDC2400047-100887/01',
-    phoneNumber: '994516704118'
+    phoneNumber: '994516704118',
   });
 
   const [error, setError] = useState(null);
