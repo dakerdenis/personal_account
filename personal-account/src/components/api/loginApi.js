@@ -16,9 +16,10 @@ export const loginUser = (formData) => {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx', true);
 
+
     // Set the appropriate headers
-    xhr.setRequestHeader('Content-Type', 'application/soap+xml; charset=utf-8');
-    xhr.setRequestHeader('SOAPAction', 'http://tempuri.org/Login');
+  // xhr.setRequestHeader('Content-Type', 'application/soap+xml; charset=utf-8');
+  // xhr.setRequestHeader('SOAPAction', 'http://tempuri.org/Login');
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) { // When the request is complete
