@@ -80,7 +80,6 @@ function sendSoapRequest($soapUrl, $xml_post_string, $soapAction) {
     return $response;
 }
 
-// Fetch data from SOAP and parse the XML response
 try {
     $response = login($username, $password, $pinCode, $policyNumber, $phoneNumber);
     $xml = simplexml_load_string($response);
