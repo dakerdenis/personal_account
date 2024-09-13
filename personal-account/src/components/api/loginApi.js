@@ -1,50 +1,28 @@
 export const loginUser = (formData) => {
-  const soapRequest = `<?xml version="1.0" encoding="utf-8"?>
-    <soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
-      <soap12:Body>
-        <Login xmlns="http://tempuri.org/">
-          <userName>${formData.username}</userName>
-          <password>${formData.password}</password>
-          <pinCode>${formData.pinCode}</pinCode>
-          <policyNumber>${formData.policyNumber}</policyNumber>
-          <phoneNumber>${formData.phoneNumber}</phoneNumber>
-        </Login>
-      </soap12:Body>
-    </soap12:Envelope>`;
-
   return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx', true);
-
-
-    // Set the appropriate headers
-  // xhr.setRequestHeader('Content-Type', 'application/soap+xml; charset=utf-8');
-  // xhr.setRequestHeader('SOAPAction', 'http://tempuri.org/Login');
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) { // When the request is complete
-        if (xhr.status === 200) {
-          const responseText = xhr.responseText;
-
-          if (responseText.includes('<LoginResult>')) {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(responseText, 'text/xml');
-            resolve(xmlDoc.getElementsByTagName('LoginResult')[0].textContent);
-          } else {
-            reject('Invalid login data');
-          }
-        } else {
-          reject(`Network error: ${xhr.statusText}`);
-        }
+    // Step 1: Make a request to the PHP proxy (not directly to the SOAP service)
+    fetch('https://a-group.az/cabinet/api.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData), // Send form data as JSON
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
-
-    // Handle request errors
-    xhr.onerror = function () {
-      reject('Request failed');
-    };
-
-    // Send the SOAP request
-    xhr.send(soapRequest);
+      return response.json(); // Expect the PHP script to return JSON
+    })
+    .then((data) => {
+      if (data.error) {
+        reject(`API error: ${data.error}`);
+      } else {
+        resolve(data); // Resolve with the data received from the PHP proxy
+      }
+    })
+    .catch((error) => {
+      reject(`Network error: ${error.message}`);
+    });
   });
 };

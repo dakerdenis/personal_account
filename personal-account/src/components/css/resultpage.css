@@ -1,0 +1,53 @@
+.result__container {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .result__title {
+    font-size: 2em;
+    color: #333;
+  }
+  
+  .customer__info__container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .customer__info {
+    background-color: #eef;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    text-align: left;
+  }
+  
+  .logout__button {
+    margin-top: 20px;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .logout__button:hover {
+    background-color: #cc0000;
+  }
+  
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .loading {
+    color: #555;
+    font-style: italic;
+  }
+  

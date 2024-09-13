@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // For navigation
 import './css/style.css'; // Styling
 import company_logo from './css/assets/company_logo.svg';
 import { loginUser } from './api/loginApi'; // Import the API call
+import Cookies from 'js-cookie'; // For handling cookies
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -24,25 +25,33 @@ function LoginForm() {
     }));
   };
 
-  const showPopup = (message) => {
-    setError(message);
-    setTimeout(() => {
-      setError(null);
-    }, 2000); // Hide the error message after 2 seconds
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const result = await loginUser(formData); // Call the login API
+
+      // Store login information and pinCode in cookie and localStorage with a 1-hour expiry
+      const expiryTime = Date.now() + 3600000; // 1 hour in milliseconds
+      localStorage.setItem('loginSession', JSON.stringify({ result, expiryTime }));
+
+      // Store pinCode in a cookie with an expiry of 1 hour
+      Cookies.set('pinCode', formData.pinCode, { expires: 1 / 24 });
 
       // If login is successful, navigate to the result page
       navigate('/result', { state: { result } });
     } catch (error) {
-      showPopup('Incorrect login data, please try again.');
+      setError('Incorrect login data, please try again.');
     }
   };
+  
+  // Check session expiration
+  useEffect(() => {
+    const session = JSON.parse(localStorage.getItem('loginSession'));
+    if (session && session.expiryTime > Date.now()) {
+      navigate('/result', { state: { result: session.result } });
+    }
+  }, [navigate]);
 
   return (
     <div className="login__container">
@@ -107,7 +116,7 @@ function LoginForm() {
         </div>
 
         <div className="form__input__button">
-          <button type="submit">Daxil olmaq</button>
+          <button type="submit">Login</button>
         </div>
 
         {error && <div className="popup">{error}</div>}
