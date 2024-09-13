@@ -80,40 +80,28 @@ function sendSoapRequest($soapUrl, $xml_post_string, $soapAction) {
     return $response;
 }
 
+// Fetch data from SOAP and parse the XML response
 try {
-    // Check action and call the corresponding SOAP method
-    if ($action === 'login') {
-        $response = login($username, $password, $pinCode, $policyNumber, $phoneNumber);
-        $xml = simplexml_load_string($response);
-        if ($xml === false) {
-            echo json_encode(['error' => 'Failed to parse XML', 'response' => $response]);
-            exit;
-        }
-
-        $namespaces = $xml->getNamespaces(true);
-        $soapBody = $xml->children($namespaces['soap'])->Body;
-        $loginResult = $soapBody->children('http://tempuri.org/')->LoginResponse->LoginResult;
-
-        echo json_encode(['result' => (string) $loginResult]);
-
-    } elseif ($action === 'getCustomerInfo') {
-        $response = getCustomerInformation($username, $password, $pinCode);
-        $xml = simplexml_load_string($response);
-        if ($xml === false) {
-            echo json_encode(['error' => 'Failed to parse XML', 'response' => $response]);
-            exit;
-        }
-
-        $namespaces = $xml->getNamespaces(true);
-        $soapBody = $xml->children($namespaces['soap'])->Body;
-        $customerInfo = $soapBody->children('http://tempuri.org/')->GetCustomerInformtaionsResponse->GetCustomerInformtaionsResult;
-
-        echo json_encode(['result' => (string) $customerInfo]);
-
-    } else {
-        echo json_encode(['error' => 'Invalid action specified']);
+    $response = login($username, $password, $pinCode, $policyNumber, $phoneNumber);
+    $xml = simplexml_load_string($response);
+    
+    if ($xml === false) {
+        echo json_encode(['error' => 'Failed to parse XML', 'response' => $response]);
+        exit;
     }
 
+    // Check for error messages in the XML response
+    $message = $xml->xpath('//MESSAGE');
+    if ($message) {
+        echo $xml->asXML(); // Return the error message as XML
+        exit;
+    }
+
+    $namespaces = $xml->getNamespaces(true);
+    $soapBody = $xml->children($namespaces['soap'])->Body;
+    $loginResult = $soapBody->children('http://tempuri.org/')->LoginResponse->LoginResult;
+    
+    echo json_encode(['name' => $loginResult->name, 'surname' => $loginResult->surname, 'result' => (string) $loginResult]);
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }

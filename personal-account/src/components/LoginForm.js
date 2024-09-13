@@ -9,9 +9,9 @@ function LoginForm() {
   const [formData, setFormData] = useState({
     username: 'AQWeb',
     password: '@QWeb',
-    pinCode: 'A111111',
-    policyNumber: 'MDC2400047-100887/01',
-    phoneNumber: '994516704118',
+    pinCode: '',
+    policyNumber: '',
+    phoneNumber: '',
   });
 
   const [error, setError] = useState(null);
@@ -27,24 +27,42 @@ function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const result = await loginUser(formData); // Call the login API
 
-      // Store login information and pinCode in cookie and localStorage with a 1-hour expiry
-      const expiryTime = Date.now() + 3600000; // 1 hour in milliseconds
-      localStorage.setItem('loginSession', JSON.stringify({ result, expiryTime }));
+      // Check for error messages in the response from the API
+      if (result && result.includes('<MESSAGE>')) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(result, 'text/xml');
+        const errorMessage = xmlDoc.getElementsByTagName('MESSAGE')[0]?.textContent;
 
-      // Store pinCode in a cookie with an expiry of 1 hour
-      Cookies.set('pinCode', formData.pinCode, { expires: 1 / 24 });
+        // Handle specific error messages
+        if (errorMessage === 'incorrect_phone_number' || errorMessage === 'repeated_phone_number' || errorMessage === 'user_not_found') {
+          setError(`Error: ${errorMessage.replace('_', ' ')}`);
+          return;
+        }
+      }
 
-      // If login is successful, navigate to the result page
-      navigate('/result', { state: { result } });
+      // If the response contains valid name and surname, proceed to result page
+      if (result && result.name && result.surname) {
+        // Store login information in localStorage with a 1-hour expiry
+        const expiryTime = Date.now() + 3600000; // 1 hour in milliseconds
+        localStorage.setItem('loginSession', JSON.stringify({ result, expiryTime }));
+
+        // Store the pinCode in cookies for further API requests
+        Cookies.set('pinCode', formData.pinCode, { expires: 1 / 24 }); // Cookie valid for 1 hour
+
+        // Navigate to the result page if successful login
+        navigate('/result', { state: { result } });
+      } else {
+        setError('Unexpected error occurred. Please try again.');
+      }
     } catch (error) {
       setError('Incorrect login data, please try again.');
     }
   };
-  
+
   // Check session expiration
   useEffect(() => {
     const session = JSON.parse(localStorage.getItem('loginSession'));
