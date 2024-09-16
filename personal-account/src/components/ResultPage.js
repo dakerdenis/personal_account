@@ -48,7 +48,7 @@ function ResultPage() {
     // Clear the session and cookies on logout
     localStorage.removeItem('loginSession');
     Cookies.remove('pinCode');
-    window.location.href = '/'; // Redirect to login page
+    window.location.href = '/cabinet/'; // Redirect to /cabinet on logout
   };
 
   return (

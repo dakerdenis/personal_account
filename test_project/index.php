@@ -26,7 +26,7 @@
                     <p class="form__input__desc">
                     userName:
                     </p>
-                    <input value="AQWeb" type="text" name="username" id="username">
+                    <input  value="AQWeb" type="text" name="username" id="username">
                 </div>
 
                 <div class="form__input__container">
@@ -40,20 +40,20 @@
                     <p class="form__input__desc">
                         pinCode:
                     </p>
-                    <input type="text" name="pinCode" id="pinCode">
+                    <input value="A111111" type="text" name="pinCode" id="pinCode">
                 </div>
 
                 <div class="form__input__container">
                     <p class="form__input__desc">
                         policyNumber:
                     </p>
-                    <input type="text" name="policyNumber" id="phoneNumber">
+                    <input value="MDC2400047-100887/01"  type="text" name="policyNumber" id="phoneNumber">
                 </div>
                 <div class="form__input__container">
                     <p class="form__input__desc">
                     phoneNumber:
                     </p>
-                    <input type="text" name="phoneNumber" id="phoneNumber">
+                    <input value="994516704118" type="text" name="phoneNumber" id="phoneNumber">
                 </div>
 
                 <div class="form__input__button">
