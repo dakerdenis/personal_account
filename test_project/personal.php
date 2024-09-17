@@ -2,8 +2,8 @@
 session_start(); // Start the session
 
 // Check if the user is logged in and OTP has been verified
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    // Redirect to login page if not logged in
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION['otp_pending'] === true) {
+    // If not, redirect to login page
     header("Location: /cabinet/index.php");
     exit();
 }

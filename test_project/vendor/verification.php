@@ -1,9 +1,9 @@
 <?php
 session_start(); // Start the session
 
-// Ensure the user is logged in and OTP is pending
+// Check if the user is logged in and OTP is pending
 if (!isset($_SESSION['otp_pending']) || $_SESSION['otp_pending'] !== true) {
-    // Redirect to login if OTP is not pending
+    // If not, redirect to login
     header("Location: /cabinet/index.php");
     exit();
 }
@@ -11,11 +11,10 @@ if (!isset($_SESSION['otp_pending']) || $_SESSION['otp_pending'] !== true) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $enteredOtp = isset($_POST['otp']) ? $_POST['otp'] : '';
 
-    // Check if the entered OTP matches the expected one (hardcoded as 1234 for testing)
+    // Check if OTP is correct (hardcoded as '1234')
     if ($enteredOtp == '1234') {
-        // OTP is correct, mark as logged in
-        $_SESSION['otp_pending'] = false; // OTP validated
-        $_SESSION['loggedin'] = true;
+        // OTP is correct, mark OTP as verified
+        $_SESSION['otp_pending'] = false; // OTP verified
 
         // Redirect to personal.php
         header("Location: /cabinet/personal.php");
