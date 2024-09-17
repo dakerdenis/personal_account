@@ -54,7 +54,7 @@ if ($isLoggedIn && $otpVerified && !$loginExpired) {
             </div>
             <div class="form__input__container">
                 <p class="form__input__desc">phoneNumber:</p>
-                <input value="994516704118" type="text" name="phoneNumber" id="phoneNumber">
+                <input value="994507506901" type="text" name="phoneNumber" id="phoneNumber">
             </div>
             <div class="form__input__button">
                 <button type="submit">Daxil olmaq</button>

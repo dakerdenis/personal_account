@@ -1,6 +1,13 @@
 <?php
 session_start(); // Start the session
 
+// Check if the request is a POST request (i.e., form submission)
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    // If it's not a POST request, redirect to the login page
+    header("Location: /cabinet/index.php");
+    exit();
+}
+
 // Log the session path and session ID for debugging
 error_log("Session ID: " . session_id());
 error_log("Session save path: " . ini_get('session.save_path'));
@@ -34,9 +41,6 @@ function login($username, $password, $pinCode, $policyNumber, $phoneNumber) {
         '</soap12:Body>' .
         '</soap12:Envelope>';
 
-    // Log the constructed request for debugging
-    error_log("SOAP request: $xml_post_string");
-
     // SOAP Headers (matching Postman request)
     $headers = array(
         "Content-type: text/xml; charset=utf-8",  // Match Postman header
@@ -64,9 +68,7 @@ function login($username, $password, $pinCode, $policyNumber, $phoneNumber) {
     }
     curl_close($ch);
 
-    // Log the raw response for debugging
-    error_log("SOAP response: $response");
-
+    // Return the SOAP response
     return $response;
 }
 
@@ -74,11 +76,10 @@ try {
     // Make the login request and get the response
     $response = login($username, $password, $pinCode, $policyNumber, $phoneNumber);
 
-    // Parse the XML response (match namespaces correctly)
+    // Parse the XML response
     $xml = simplexml_load_string($response);
     if ($xml === false) {
-        error_log("Failed to parse XML. Response: " . $response); // Log failed XML parsing
-        echo json_encode(['error' => 'Failed to parse XML', 'response' => $response]);
+        echo "Failed to parse XML. Response: <br><pre>$response</pre><br>"; // Echo failed XML parsing
         exit;
     }
 
@@ -87,9 +88,6 @@ try {
     $soapBody = $xml->children($namespaces['soap'])->Body;
     $loginResponse = $soapBody->children('http://tempuri.org/')->LoginResponse;
     $loginResult = (string) $loginResponse->LoginResult;
-
-    // Log the extracted login result for debugging
-    error_log("LoginResult: " . $loginResult);
 
     // Parse the login result to extract user data
     $resultXml = simplexml_load_string(html_entity_decode($loginResult));
@@ -107,23 +105,14 @@ try {
         $_SESSION['otp_pending'] = true; // OTP pending
         $_SESSION['login_time'] = time(); // Set login time
 
-        // Log session data for verification
-        error_log("Session data after login: " . print_r($_SESSION, true));
-
         // Redirect to OTP verification page
         header("Location: /cabinet/vendor/verification.php");
         exit();
     } else {
-        // Handle failed login
-        echo($_POST['username'] . '<br>');
-        echo($_POST['password'] . '<br>');
-        echo($_POST['pinCode'] . '<br>');
-        echo($_POST['policyNumber'] . '<br>');
-        echo($_POST['phoneNumber'] . '<br>');
-        error_log("Invalid credentials provided");
-        echo 'Invalid credentials';
+        echo "Invalid credentials";
     }
 } catch (Exception $e) {
-    error_log("Exception: " . $e->getMessage()); // Log exceptions
-    echo json_encode(['error' => $e->getMessage()]);
+    echo "Exception: " . $e->getMessage() . "<br>"; // Echo exceptions
+    exit();
 }
+?>
