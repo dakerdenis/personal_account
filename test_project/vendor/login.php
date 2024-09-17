@@ -76,26 +76,21 @@ try {
     // Parse the result to extract user data
     $resultXml = simplexml_load_string(html_entity_decode($loginResult));
     $isLogged = (string)$resultXml->LOGIN->IS_LOGGED;
+
     if ($isLogged == '1') {
         // Get the user's name, surname, and pinCode
         $name = (string)$resultXml->LOGIN->NAME;
         $surname = (string)$resultXml->LOGIN->SURNAME;
 
-        // Hardcoded OTP for testing
-        $otp = '1234'; // Set OTP to 1234 for testing purposes
-        $_SESSION['otp'] = $otp;
-        $_SESSION['otp_pending'] = true; // OTP is pending
+        // Store user data in session
+        $_SESSION['loggedin'] = true;
         $_SESSION['name'] = $name;
         $_SESSION['surname'] = $surname;
         $_SESSION['pinCode'] = $pinCode;
+        $_SESSION['login_time'] = time(); // Set session login time
 
-        // Clear any previous otp_attempted flag
-        unset($_SESSION['otp_attempted']);
-
-        // (Here you would normally send the OTP to the user via SMS or email, but for testing it's hardcoded)
-
-        // Redirect to OTP verification page
-        header("Location: /cabinet/vendor/verification.php");
+        // Redirect to personal.php
+        header("Location: /cabinet/personal.php");
         exit();
     } else {
         // Handle failed login
@@ -105,4 +100,3 @@ try {
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
-?>

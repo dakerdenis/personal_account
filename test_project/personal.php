@@ -1,18 +1,14 @@
 <?php
 session_start(); // Start the session
 
-// Debugging session values (remove this after checking)
-var_dump($_SESSION); // Check session values
-exit();
-
-// Check if the user is logged in
+// Check if the user is logged in and OTP has been verified
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    // If not, redirect to login page
+    // Redirect to login page if not logged in
     header("Location: /cabinet/index.php");
     exit();
 }
 
-// Get the user's name, surname, and pinCode from the session
+// Get user details from session
 $name = isset($_SESSION['name']) ? htmlspecialchars($_SESSION['name']) : 'Guest';
 $surname = isset($_SESSION['surname']) ? htmlspecialchars($_SESSION['surname']) : '';
 $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) : 'N/A';
@@ -27,9 +23,7 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
 <body>
     <h1>Welcome, <?php echo $name . ' ' . $surname; ?>!</h1>
     <p>Your PinCode: <?php echo $pinCode; ?></p>
-    <p>This is your personal page.</p>
 
-    <!-- Logout button -->
     <form action="./vendor/logout.php" method="post">
         <button type="submit">Logout</button>
     </form>
