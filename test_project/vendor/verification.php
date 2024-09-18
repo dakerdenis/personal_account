@@ -29,20 +29,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTP Verification</title>
+    <title>Login A-Group</title>
+    <link rel="stylesheet" href="../style/style.css">
 </head>
-<body>
-    <h1>OTP Verification</h1>
-    <p>An OTP has been sent to your phone number. Please enter it below to verify your identity.</p>
 
-    <form action="./verification.php" method="POST">
-        <input type="text" name="otp" placeholder="Enter OTP" required>
-        <button type="submit">Verify</button>
-    </form>
+<body>
+    <div class="login__container">
+        <div class="login__container-form">
+            <form action="./verification.php" method="POST" class="form__container">
+
+
+                <div class="form__desc form__desc-otp">
+                    <p>OTP Verification</p>
+                    <span>An OTP has been sent to your phone number. Please enter it below to verify your identity.</span>
+                </div>
+
+                <div class="form__input__container ">
+                    <p class="form__input__desc">Mobil nömrə:</p>
+                    <input type="text" name="otp" placeholder="Enter OTP |" required>
+                </div>
+
+
+                <div class="form__input__button">
+                    <button type="submit">Daxil olmaq</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="login__logo">
+            <img src="../style/assets/company_logo.svg" alt="" srcset="">
+        </div>
+
+        <div class="login__container-image">
+            <img src="https://a-group.az/storage/uploaded_files/WZ0D/login.jpg" alt="">
+        </div>
+
+
+    </div>
 </body>
+
 </html>

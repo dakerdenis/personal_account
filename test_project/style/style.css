@@ -1,3 +1,5 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 /**! ***COLORS*************/
 /**! ***COLORS*************/
 /**! ***COLORS*************/
@@ -58,7 +60,7 @@
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Inter", sans-serif;
   }
   
   body::-webkit-scrollbar {
@@ -123,7 +125,8 @@
     height: 100%;
     display: flex;
 justify-content: space-between;
-    background-color: #e3e3e3;
+    background-color: #fff;
+    position: relative;
 }
 .login__container-form{
   display: flex;
@@ -134,17 +137,23 @@ justify-content: space-between;
 .login__container-image{
   width: 50%;
   overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.50) 0px 10px 55px;
 }
-.form__container {
-    width: 300px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 1px 0px 10px #00000038;
-    padding: 20px;
-    display: flex;
 
-    flex-direction: column;
-    align-items: center;
+.login__logo{
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: calc(50% - 50px);
+  top: 50px;
+}
+.login__logo img {
+  width: 100%;
+}
+
+.form__container {
+    width: 400px;
+
 
 }
 .form__image {
@@ -153,18 +162,81 @@ justify-content: space-between;
 .form__input__container {
     width: 100%;
     margin-bottom: 10px;
+    position: relative;
+    border: 1px solid #242323;
+    height: 62px;
+    width: 400px;
+    border-radius: 5px;
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 15px;
+    margin-bottom: 30px;
+}
+.form__input__container-hidden{
+  display: none;
+  visibility: hidden;
+  height: 0px;
+  width: 0px;
+}
+.form__input__container p {
+  position: absolute;
+  background-color: #fff;
+  left: 15px;
+  top: -10px;
+  padding: 0px 10px;
+  color: #be0a04;
+  font-size: 15px;
+  font-weight: 500;
 }
 .form__input__container input{
-    border: 1px solid #000;
+
     width: 100%;
     margin-top: 5px;height: 30px;
     padding: 0px 10px;
+  color: #242323;
+  font-weight: 500;
+  font-size: 16px;
 }
 .form__input__desc {
 }
+.form__input__button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+}
+
 .form__input__button button{
     background-color: #be0a04;
     color: #fff;
-    padding: 10px 30px;
+    padding: 10px 50px;
     font-size: 18px;
+    border-radius: 55px;
+}
+.form__desc{
+  width: 100%;
+  text-align: center;
+  color: #242323;
+  margin-bottom: 45px;
+
+}
+
+.form__desc p {
+
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}.form__desc span {
+  font-size: 500;
+  font-size: 19px;
+
+}
+
+.form__desc-otp{
+
+  font-size: 18px;
+  line-height: 28px;
 }
