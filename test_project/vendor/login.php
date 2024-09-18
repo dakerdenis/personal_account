@@ -1,6 +1,10 @@
 <?php
 session_start(); // Start the session
 
+// Log the session path and session ID for debugging
+error_log("Session ID: " . session_id());
+error_log("Session save path: " . ini_get('session.save_path'));
+
 // Get form data
 $username = isset($_POST['username']) ? $_POST['username'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
@@ -8,10 +12,13 @@ $pinCode = isset($_POST['pinCode']) ? $_POST['pinCode'] : '';
 $policyNumber = isset($_POST['policyNumber']) ? $_POST['policyNumber'] : '';
 $phoneNumber = isset($_POST['phoneNumber']) ? $_POST['phoneNumber'] : '';
 
+// Log form data to ensure the correct values are being received
+error_log("Form data: Username: $username, Password: $password, PinCode: $pinCode, Policy: $policyNumber, Phone: $phoneNumber");
+
 function login($username, $password, $pinCode, $policyNumber, $phoneNumber) {
     $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // API endpoint
 
-    // SOAP Request
+    // SOAP Request matching Postman structure
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .
         '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
         'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' .
@@ -26,6 +33,9 @@ function login($username, $password, $pinCode, $policyNumber, $phoneNumber) {
         '</Login>' .
         '</soap12:Body>' .
         '</soap12:Envelope>';
+
+    // Log the constructed request for debugging
+    error_log("SOAP request: $xml_post_string");
 
     // SOAP Headers
     $headers = array(
@@ -47,10 +57,15 @@ function login($username, $password, $pinCode, $policyNumber, $phoneNumber) {
     // Execute curl and get response
     $response = curl_exec($ch);
     if ($response === false) {
+        error_log("Curl error: " . curl_error($ch)); // Log curl error
+        echo json_encode(['error' => curl_error($ch)]);
         curl_close($ch);
-        return false;
+        exit;
     }
     curl_close($ch);
+
+    // Log the raw response for debugging
+    error_log("SOAP response: $response");
 
     return $response;
 }
@@ -59,43 +74,30 @@ try {
     // Make the login request and get the response
     $response = login($username, $password, $pinCode, $policyNumber, $phoneNumber);
 
-    if ($response === false) {
-        // Curl failed
-        $_SESSION['login_error'] = 'Unable to connect to the server. Please try again.';
-        header("Location: /cabinet/index.php");
-        exit();
-    }
-
     // Parse the XML response
     $xml = simplexml_load_string($response);
     if ($xml === false) {
-        // Failed to parse the XML response
-        $_SESSION['login_error'] = 'Server error: Invalid response format.';
-        header("Location: /cabinet/index.php");
-        exit();
+        error_log("Failed to parse XML. Response: " . $response); // Log failed XML parsing
+        echo json_encode(['error' => 'Failed to parse XML', 'response' => $response]);
+        exit;
     }
 
-    // Extract the result
+    // Extract data from the response
     $namespaces = $xml->getNamespaces(true);
     $soapBody = $xml->children($namespaces['soap12'])->Body;
     $loginResult = $soapBody->children('http://tempuri.org/')->LoginResponse->LoginResult;
+
+    // Log the extracted login result
+    error_log("LoginResult: " . $loginResult);
 
     // Parse the result to extract user data
     $resultXml = simplexml_load_string(html_entity_decode($loginResult));
     $isLogged = (string)$resultXml->LOGIN->IS_LOGGED;
 
-    // Check if login was successful
     if ($isLogged == '1') {
-        // Get the user's name and surname from the response
+        // Get the user's name, surname, and pinCode
         $name = (string)$resultXml->LOGIN->NAME;
         $surname = (string)$resultXml->LOGIN->SURNAME;
-
-        // If name or surname is missing, treat it as an invalid response
-        if (empty($name) || empty($surname)) {
-            $_SESSION['login_error'] = 'Invalid credentials. Please try again.';
-            header("Location: /cabinet/index.php");
-            exit();
-        }
 
         // Set session data
         $_SESSION['loggedin'] = true;
@@ -114,7 +116,7 @@ try {
         exit();
     }
 } catch (Exception $e) {
-    $_SESSION['login_error'] = 'An error occurred. Please try again.';
-    header("Location: /cabinet/index.php");
-    exit();
+    error_log("Exception: " . $e->getMessage()); // Log exceptions
+    echo json_encode(['error' => $e->getMessage()]);
 }
+?>

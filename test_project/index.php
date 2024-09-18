@@ -20,11 +20,8 @@ if ($isLoggedIn && $otpVerified && !$loginExpired) {
     exit();
 }
 
-// Check if there's a login error in the session
-$loginError = isset($_SESSION['login_error']) ? $_SESSION['login_error'] : '';
-unset($_SESSION['login_error']); // Clear the error after displaying it
+// If the user is not logged in, show the login form
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +36,7 @@ unset($_SESSION['login_error']); // Clear the error after displaying it
     <div class="login__container">
         <div class="login__container-form">
             <form action="./vendor/login.php" method="POST" class="form__container">
-                <!-- Form fields -->
+                <!-------->
                 <div class="form__input__container form__input__container-hidden">
                     <p class="form__input__desc">userName:</p>
                     <input value="AQWeb" type="text" name="username" id="username">
@@ -48,10 +45,11 @@ unset($_SESSION['login_error']); // Clear the error after displaying it
                     <p class="form__input__desc">password:</p>
                     <input value="@QWeb" type="password" name="password" id="password">
                 </div>
+                <!-------->
 
                 <div class="form__desc">
                     <p>Xoş gəldiniz!</p>
-                    <span>A-Group şəxsi kabineti</span>
+                    <span>A-Group şəhsi kabineti</span>
                 </div>
 
                 <div class="form__input__container">
@@ -62,22 +60,21 @@ unset($_SESSION['login_error']); // Clear the error after displaying it
                     <p class="form__input__desc">Şəhədətnamə nömrəsi:</p>
                     <input value="MDC2400047-100887/01" type="text" name="policyNumber" id="policyNumber">
                 </div>
-                <div class="form__input__container">
+                <div class="form__input__container ">
                     <p class="form__input__desc">Mobil nömrə:</p>
                     <input value="994507506901" type="text" name="phoneNumber" id="phoneNumber">
                 </div>
+
 
                 <div class="form__input__button">
                     <button type="submit">Daxil olmaq</button>
                 </div>
 
-                <?php if ($loginError): ?>
-                    <!-- Display the error message if there's an error -->
-                    <div class="error__container">
-                        <?php echo htmlspecialchars($loginError); ?>
-                    </div>
-                <?php endif; ?>
+                <div class="error__container">
+                    Error message !
+                </div>
             </form>
+
         </div>
 
         <div class="login__logo">
@@ -87,6 +84,8 @@ unset($_SESSION['login_error']); // Clear the error after displaying it
         <div class="login__container-image">
             <img src="https://a-group.az/storage/uploaded_files/WZ0D/login.jpg" alt="">
         </div>
+
+
     </div>
 </body>
 
