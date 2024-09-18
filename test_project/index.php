@@ -32,6 +32,7 @@ if ($isLoggedIn && $otpVerified && !$loginExpired) {
 </head>
 <body>
     <div class="login__container">
+        <div class="login__container-form">
         <form action="./vendor/login.php" method="POST" class="form__container">
             <div class="form__image">
                 <img src="<?php echo './style/assets/company_logo.svg'; ?>" alt="">
@@ -60,6 +61,13 @@ if ($isLoggedIn && $otpVerified && !$loginExpired) {
                 <button type="submit">Daxil olmaq</button>
             </div>
         </form>
+        </div>
+
+        <div class="login__container-image">
+            <img src="./style/assets/login.webp" alt="">
+        </div>
+
+
     </div>
 </body>
 </html>

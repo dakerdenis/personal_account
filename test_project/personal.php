@@ -11,7 +11,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION
 // Get user details from session
 $name = isset($_SESSION['name']) ? htmlspecialchars($_SESSION['name']) : 'Guest';
 $surname = isset($_SESSION['surname']) ? htmlspecialchars($_SESSION['surname']) : '';
-$pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) : 'N/A';
+$pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) : 'N/A'; // Ensure pinCode is displayed
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +22,7 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
 </head>
 <body>
     <h1>Welcome, <?php echo $name . ' ' . $surname; ?>!</h1>
-    <p>Your PinCode: <?php echo $pinCode; ?></p>
+    <p>Your PinCode: <?php echo $pinCode; ?></p> <!-- Display the pinCode -->
 
     <form action="./vendor/logout.php" method="post">
         <button type="submit">Logout</button>

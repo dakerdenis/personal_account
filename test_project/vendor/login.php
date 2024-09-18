@@ -22,7 +22,8 @@ $phoneNumber = isset($_POST['phoneNumber']) ? $_POST['phoneNumber'] : '';
 // Log form data to ensure the correct values are being received
 error_log("Form data: Username: $username, Password: $password, PinCode: $pinCode, Policy: $policyNumber, Phone: $phoneNumber");
 
-function login($username, $password, $pinCode, $policyNumber, $phoneNumber) {
+function login($username, $password, $pinCode, $policyNumber, $phoneNumber)
+{
     $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // API endpoint
 
     // SOAP Request matching Postman structure
@@ -94,19 +95,22 @@ try {
     $isLogged = (string)$resultXml->LOGIN->IS_LOGGED;
 
     if ($isLogged == '1') {
-        // Get the user's name, surname, and pinCode
-        $name = (string)$resultXml->LOGIN->NAME;
-        $surname = (string)$resultXml->LOGIN->SURNAME;
+    // Get the user's name, surname, and pinCode
+    $name = (string)$resultXml->LOGIN->NAME;
+    $surname = (string)$resultXml->LOGIN->SURNAME;
+    $pinCode = htmlspecialchars($pinCode); // Make sure it's sanitized
 
         // Set session data
         $_SESSION['loggedin'] = true;
         $_SESSION['name'] = $name;
         $_SESSION['surname'] = $surname;
+        $_SESSION['phoneNumber'] = $phoneNumber; // Store the user's phone number for OTP generation
+        $_SESSION['pinCode'] = $pinCode; 
         $_SESSION['otp_pending'] = true; // OTP pending
         $_SESSION['login_time'] = time(); // Set login time
 
-        // Redirect to OTP verification page
-        header("Location: /cabinet/vendor/verification.php");
+        // Redirect to otp.php to generate and send the OTP
+        header("Location: /cabinet/vendor/otp.php");
         exit();
     } else {
         echo "Invalid credentials";
@@ -115,4 +119,3 @@ try {
     echo "Exception: " . $e->getMessage() . "<br>"; // Echo exceptions
     exit();
 }
-?>
