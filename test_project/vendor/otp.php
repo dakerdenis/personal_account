@@ -1,7 +1,7 @@
 <?php
 session_start(); // Start the session
 
-// Check if the user is logged in and phone number is available
+// Ensure the user is logged in and phone number is available
 if (!isset($_SESSION['loggedin']) || !isset($_SESSION['phoneNumber'])) {
     header("Location: /cabinet/index.php");
     exit();
@@ -44,6 +44,7 @@ function generateOtp($userName, $password, $phoneNumber) {
     // Execute curl and get response
     $response = curl_exec($ch);
     if ($response === false) {
+        error_log("Curl error: " . curl_error($ch)); // Log any curl error
         echo json_encode(['error' => curl_error($ch)]);
         curl_close($ch);
         exit();
@@ -54,7 +55,6 @@ function generateOtp($userName, $password, $phoneNumber) {
     return $response;
 }
 
-// Call the function to generate OTP and send it to the user
 try {
     // Get the phone number from the session
     $phoneNumber = $_SESSION['phoneNumber'];
@@ -89,15 +89,17 @@ try {
         // Store the OTP in the session for verification
         $_SESSION['otp'] = $otpCode;
 
-        // Temporarily echo the OTP for debugging (REMOVE THIS IN PRODUCTION)
-        echo json_encode(['success' => true, 'otp' => $otpCode]); // Debugging: echo OTP code
+        // Log OTP for debugging (REMOVE IN PRODUCTION)
+        error_log("Generated OTP: $otpCode");
+
+        // Redirect to verification page
+        header("Location: /cabinet/vendor/verification.php");
+        exit();
     } else {
         echo json_encode(['error' => 'Failed to generate OTP.']);
     }
 
-    // Redirect to verification page
-    header("Location: /cabinet/vendor/verification.php");
-    exit();
 } catch (Exception $e) {
+    error_log("Exception while generating OTP: " . $e->getMessage());
     echo json_encode(['error' => $e->getMessage()]);
 }

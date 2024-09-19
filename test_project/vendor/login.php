@@ -1,10 +1,6 @@
 <?php
 session_start(); // Start the session
 
-// Log the session path and session ID for debugging
-error_log("Session ID: " . session_id());
-error_log("Session save path: " . ini_get('session.save_path'));
-
 // Get form data
 $username = isset($_POST['username']) ? $_POST['username'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
@@ -12,13 +8,13 @@ $pinCode = isset($_POST['pinCode']) ? $_POST['pinCode'] : '';
 $policyNumber = isset($_POST['policyNumber']) ? $_POST['policyNumber'] : '';
 $phoneNumber = isset($_POST['phoneNumber']) ? $_POST['phoneNumber'] : '';
 
-// Log form data to ensure the correct values are being received
-error_log("Form data: Username: $username, Password: $password, PinCode: $pinCode, Policy: $policyNumber, Phone: $phoneNumber");
+// Log form data for debugging
+error_log("Form data received: Username=$username, Password=$password, PinCode=$pinCode, PolicyNumber=$policyNumber, PhoneNumber=$phoneNumber");
 
 function login($username, $password, $pinCode, $policyNumber, $phoneNumber) {
-    $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // API endpoint
+    $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // SOAP endpoint
 
-    // SOAP Request matching Postman structure
+    // SOAP Request
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .
         '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
         'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' .
@@ -34,7 +30,7 @@ function login($username, $password, $pinCode, $policyNumber, $phoneNumber) {
         '</soap12:Body>' .
         '</soap12:Envelope>';
 
-    // Log the constructed request for debugging
+    // Log the SOAP request for debugging
     error_log("SOAP request: $xml_post_string");
 
     // SOAP Headers
@@ -51,8 +47,8 @@ function login($username, $password, $pinCode, $policyNumber, $phoneNumber) {
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_post_string);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Disable SSL verification if necessary
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // Disable SSL verification if necessary
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
     // Execute curl and get response
     $response = curl_exec($ch);
@@ -64,7 +60,7 @@ function login($username, $password, $pinCode, $policyNumber, $phoneNumber) {
     }
     curl_close($ch);
 
-    // Log the raw response for debugging
+    // Log the raw SOAP response for debugging
     error_log("SOAP response: $response");
 
     return $response;
@@ -74,44 +70,69 @@ try {
     // Make the login request and get the response
     $response = login($username, $password, $pinCode, $policyNumber, $phoneNumber);
 
-    // Parse the XML response
-    $xml = simplexml_load_string($response);
-    if ($xml === false) {
-        error_log("Failed to parse XML. Response: " . $response); // Log failed XML parsing
-        echo json_encode(['error' => 'Failed to parse XML', 'response' => $response]);
-        exit;
+    // Check if the SOAP response contains valid data
+    if (!$response) {
+        error_log("Empty response from server");
+        $_SESSION['login_error'] = 'Invalid response from server. Please try again.';
+        header("Location: /cabinet/index.php");
+        exit();
     }
 
-    // Extract data from the response
-    $namespaces = $xml->getNamespaces(true);
-    $soapBody = $xml->children($namespaces['soap12'])->Body;
-    $loginResult = $soapBody->children('http://tempuri.org/')->LoginResponse->LoginResult;
+    // Use regex to extract the LoginResult XML part manually
+    if (preg_match('/<LoginResult>(.*?)<\/LoginResult>/s', $response, $matches)) {
+        $loginResult = htmlspecialchars_decode($matches[1]);
+        $cleanedLoginResult = trim($loginResult);
 
-    // Log the extracted login result
-    error_log("LoginResult: " . $loginResult);
+        // Log the cleaned LoginResult for debugging
+        error_log("Cleaned LoginResult: $cleanedLoginResult");
 
-    // Parse the result to extract user data
-    $resultXml = simplexml_load_string(html_entity_decode($loginResult));
-    $isLogged = (string)$resultXml->LOGIN->IS_LOGGED;
+        // Parse the cleaned result directly
+        $loginXml = simplexml_load_string($cleanedLoginResult);
+        if ($loginXml === false) {
+            error_log("Failed to parse cleaned LoginResult: $cleanedLoginResult");
+            echo "<h1>Failed to parse cleaned LoginResult</h1>";
+            exit();
+        }
 
-    if ($isLogged == '1') {
-        // Get the user's name, surname, and pinCode
-        $name = (string)$resultXml->LOGIN->NAME;
-        $surname = (string)$resultXml->LOGIN->SURNAME;
+        // Log successful parsing
+        error_log("Successfully parsed LoginResult");
 
-        // Set session data
-        $_SESSION['loggedin'] = true;
-        $_SESSION['name'] = $name;
-        $_SESSION['surname'] = $surname;
-        $_SESSION['otp_pending'] = true; // OTP pending
-        $_SESSION['login_time'] = time(); // Set login time
+        // Access the IS_LOGGED, NAME, and SURNAME values
+        $isLogged = (string)$loginXml->LOGIN->IS_LOGGED;
+        $name = (string)$loginXml->LOGIN->NAME;
+        $surname = (string)$loginXml->LOGIN->SURNAME;
 
-        // Redirect to OTP verification page
-        header("Location: /cabinet/vendor/verification.php");
-        exit();
+        // Log the parsed values
+        error_log("Parsed IS_LOGGED: $isLogged, Name: $name, Surname: $surname");
+
+        // Check if the user is logged in based on IS_LOGGED value
+        if ($isLogged === '1') {
+            // Set session data
+            $_SESSION['loggedin'] = true;
+            $_SESSION['name'] = $name;
+            $_SESSION['surname'] = $surname;
+            $_SESSION['otp_pending'] = true; // OTP is now pending
+            $_SESSION['login_time'] = time(); // Store login time
+            $_SESSION['phoneNumber'] = $phoneNumber; // Store phone number for OTP
+            $_SESSION['pinCode'] = $pinCode;
+
+            // Log session data for verification
+            error_log("Session data after login: " . print_r($_SESSION, true));
+
+            // Redirect to otp.php to generate OTP and send SMS
+            header("Location: /cabinet/vendor/otp.php"); // This will generate OTP and redirect to verification.php
+            exit();
+        } else {
+            // If IS_LOGGED is not 1, show an error message
+            error_log("Invalid credentials. IS_LOGGED=$isLogged");
+            $_SESSION['login_error'] = 'Invalid credentials. Please try again.';
+            header("Location: /cabinet/index.php");
+            exit();
+        }
     } else {
-        // Invalid credentials, set the session error flag and redirect to index.php
-        $_SESSION['login_error'] = 'Invalid credentials. Please try again.';
+        // If LoginResult is missing, show an error
+        error_log("LoginResult not found in the SOAP response");
+        $_SESSION['login_error'] = 'Invalid response from server. Please try again.';
         header("Location: /cabinet/index.php");
         exit();
     }
@@ -119,4 +140,3 @@ try {
     error_log("Exception: " . $e->getMessage()); // Log exceptions
     echo json_encode(['error' => $e->getMessage()]);
 }
-?>

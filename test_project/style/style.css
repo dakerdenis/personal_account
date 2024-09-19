@@ -250,3 +250,55 @@ justify-content: space-between;
   color: #be0a04;
   font-weight: 600;
 }
+
+
+
+.personal__wrapper {
+  width: 100%;
+  height: 100%;
+  height: 100vh;
+  background-color: #e3e3e3;
+  display: flex;
+  justify-content: space-between;
+}
+.perosnal__account__info {
+  width: 350px;
+  height: 100%;
+  background-color: #e3e3e3;
+  border: 1px solid #1E1E1E;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+.personal__account__info-additional {
+  margin-top: 50px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+}
+.personal__account__info-additional a {
+  color: #be0a04;
+  font-weight: 600;
+}
+.perosnal__account__info button {
+  background-color: #be0a04;
+  color: #fff;
+  margin-top: 20px;
+  padding: 10px 30px;
+}
+.perosnal__account__info h1 {
+  font-size: 20px;
+  font-weight: 700;
+}
+.personal__account__data-wrapper {
+  overflow-x: auto;
+  width: calc(100% - 350px)
+}
+.personal__account__data-lock{
+  height: 150vh;
+  padding: 20px;
+}
