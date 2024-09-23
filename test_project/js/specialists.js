@@ -74,6 +74,7 @@ function loadSpecialists(specialityId) {
 }
 
 // Function to load doctor details including their career
+// Function to load doctor details including their career
 function loadDoctorDetails(doctorId, doctorImage) {
     console.log(`Fetching career details for doctor ID: ${doctorId}`);
 
@@ -103,15 +104,27 @@ function loadDoctorDetails(doctorId, doctorImage) {
                     <img src="${doctorImage}" alt="Doctor's image" style="width:150px; height:150px;" /><br>
                     <ul>
                 `;
+                
                 data.DOCTOR_CAREER.forEach(career => {
-                    careerHtml += `
-                        <li>
-                            <strong>Specialty: ${career.SPECIALITY_AZ}</strong><br>
-                            Institution: ${career.ENTERPRISE_AZ}<br>
-                            Location: ${career.PLACE_AZ}<br>
-                            Period: ${career.START_YEAR} - ${career.END_YEAR || 'Present'}<br>
-                        </li>
-                    `;
+                    const speciality = career.SPECIALITY_AZ && typeof career.SPECIALITY_AZ === 'string' ? career.SPECIALITY_AZ : '';
+                    const institution = career.ENTERPRISE_AZ && typeof career.ENTERPRISE_AZ === 'string' ? career.ENTERPRISE_AZ : '';
+                    const location = career.PLACE_AZ && typeof career.PLACE_AZ === 'string' ? career.PLACE_AZ : '';
+                    const startYear = career.START_YEAR ? career.START_YEAR : 'N/A';
+                    const endYear = career.END_YEAR ? career.END_YEAR : 'Present';
+
+                    // Only show the fields if they are not empty
+                    careerHtml += '<li>';
+                    if (speciality) {
+                        careerHtml += `<strong>Specialty: ${speciality}</strong><br>`;
+                    }
+                    if (institution) {
+                        careerHtml += `Institution: ${institution}<br>`;
+                    }
+                    if (location) {
+                        careerHtml += `Location: ${location}<br>`;
+                    }
+                    careerHtml += `Period: ${startYear} - ${endYear}<br>`;
+                    careerHtml += '</li>';
                 });
                 careerHtml += '</ul>';
 
