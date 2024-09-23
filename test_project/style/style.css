@@ -299,6 +299,18 @@ justify-content: space-between;
   width: calc(100% - 350px)
 }
 .personal__account__data-lock{
-  height: 150vh;
+  height: 120px;
   padding: 20px;
+}
+/* Some basic styles to manage tab content */
+.tab-content {
+  display: none;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+.tab-content.active {
+  display: block;
 }

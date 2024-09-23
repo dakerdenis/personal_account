@@ -22,18 +22,7 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
     <title>Personal Page</title>
     <link rel="stylesheet" href="./style/style.css">
     <style>
-        /* Some basic styles to manage tab content */
-        .tab-content {
-            display: none;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            margin-top: 10px;
-        }
 
-        .tab-content.active {
-            display: block;
-        }
     </style>
 </head>
 
@@ -57,7 +46,10 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
         <div class="personal__account__data-wrapper">
             <div class="personal__account__data-lock">
                 <h1>Добро пожаловать, <?php echo $name . ' ' . $surname; ?>!</h1>
-                <p>Your PinCode: <?php echo $pinCode; ?></p> 
+                <p>Your PinCode: <?php echo $pinCode; ?></p>
+
+
+
             </div>
 
             <!-- Tab content for various sections -->
@@ -78,7 +70,14 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
         </div>
     </div>
 
-        <script src="./js/script.js"></script>
+    <script>
+        console.log('Script is loaded and running.');
+
+    </script>
+    <script src="./js/script.js"></script>
+
+    
+
 
 </body>
 
