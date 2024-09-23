@@ -9,7 +9,7 @@ function loadDoctors() {
                                      data.SPECIALITIES : 
                                      [data.SPECIALITIES];  // Handle both array and single object case
 
-                let specialitiesHtml = '<h2>Specialities List</h2><ul>';
+                let specialitiesHtml = '<h2>Specialities List</h2> <br> <ul>';
                 specialities.forEach(speciality => {
                     specialitiesHtml += `
                         <li class="doktor_list_speciality_element" data-speciality-id="${speciality.SPECIALITY_ID}">

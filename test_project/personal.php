@@ -72,6 +72,12 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
         </div>
     </div>
 
+    <div id="preloader" class="preloader" style="display: none;">
+    <div class="loader"></div>
+    <p>Loading...</p>
+</div>
+
+
     <script src="./js/main.js"></script>
     <script src="./js/policies.js"></script>
     <script src="./js/doctors.js"></script>
