@@ -60,9 +60,9 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
             </div>
 
             <div id="specialists" class="tab-content">
-                <h2>List of Specialists</h2>
-                <!-- Specialists will be rendered here -->
-            </div>
+    <!-- Specialists will be rendered here -->
+</div>
+
 
 
             <div id="refund" class="tab-content">

@@ -11,7 +11,7 @@ function loadDoctors() {
 
                 let specialitiesHtml = '<h2>Specialities List</h2><ul>';
                 specialities.forEach(speciality => {
-                    specialitiesHtml += `
+                    specialitiesHtml += `<br>
                         <li data-speciality-id="${speciality.SPECIALITY_ID}">
                             <strong>Speciality Name: ${speciality.SPECIALITY_NAME}</strong><br>
                             Speciality ID: ${speciality.SPECIALITY_ID}
@@ -27,6 +27,7 @@ function loadDoctors() {
                 document.querySelectorAll('#doctors li').forEach(item => {
                     item.addEventListener('click', function () {
                         const specialityId = this.getAttribute('data-speciality-id');
+                        console.log('Specialization clicked with ID:', specialityId);  // Debug log
                         loadSpecialists(specialityId); // Call function to load specialists
                     });
                 });

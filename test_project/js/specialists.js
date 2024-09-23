@@ -1,38 +1,42 @@
 function loadSpecialists(specialityId) {
-    // Fetch specialists based on the selected specialization
-    fetch('./vendor/GetSpecialists.php', {
+    console.log(`Fetching specialists for speciality ID: ${specialityId}`);
+
+    fetch('./vendor/GetDoctorsBySpeciality.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: `specialityId=${encodeURIComponent(specialityId)}`
     })
-        .then(response => response.json())
+        .then(response => {
+            // Check for HTTP errors
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Ensure response is JSON
+        })
         .then(data => {
             console.log('Specialists data:', data);  // Log the response to check the structure
 
-            // Check if the expected specialists data exists
-            if (data && data.SPECIALISTS) {
-                let specialistsHtml = '<h2>Specialists List</h2><ul>';
-                data.SPECIALISTS.forEach(specialist => {
-                    specialistsHtml += `
+            if (data && data.DOCTORS) {
+                let doctorsHtml = '<h2>Specialists List</h2><ul>';
+                data.DOCTORS.forEach(doctor => {
+                    doctorsHtml += `
                         <li>
-                            <strong>Doctor Name: ${specialist.DOCTOR_NAME}</strong><br>
-                            Doctor ID: ${specialist.DOCTOR_ID}
+                            <strong>Doctor Name: ${doctor.NAME}</strong><br>
+                            Workplace: ${doctor.WORKPLACE_NAME}<br>
+                            <img src="data:image/jpeg;base64,${doctor.FILE_CONTENT}" alt="Doctor's image" style="width:100px; height:100px;" /><br>
                         </li>
                     `;
                 });
-                specialistsHtml += '</ul>';
+                doctorsHtml += '</ul>';
 
                 // Display the specialists in the "Specialists" tab
-                document.getElementById('specialists').innerHTML = specialistsHtml;
-
-                // Show the "Specialists" tab and hide other content
+                document.getElementById('specialists').innerHTML = doctorsHtml;
                 document.getElementById('specialists').style.display = 'block';
                 document.getElementById('doctors').style.display = 'none';
             } else {
-                console.error('Unexpected data structure:', data);
-                document.getElementById('specialists').innerHTML = '<p>Error loading data: Invalid response structure.</p>';
+                throw new Error('Unexpected data structure');
             }
         })
         .catch(error => {

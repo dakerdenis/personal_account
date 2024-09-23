@@ -1,28 +1,28 @@
 <?php
 session_start(); // Start the session
 
-// SOAP request to get specialists based on specialization
-function getSpecialists($userName, $password, $specialityId) {
+// SOAP request to get doctors based on specialization
+function getDoctorsBySpeciality($userName, $password, $specialityId) {
     $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // API endpoint
 
-    // Build the SOAP request with the correct parameters
+    // Build the SOAP request
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .
         '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
         'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' .
         'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' .
         '<soap:Body>' .
-        '<GetSpecialists xmlns="http://tempuri.org/">' .
+        '<GetDoctorsBySpecialtiy xmlns="http://tempuri.org/">' .
         '<userName>' . htmlspecialchars($userName) . '</userName>' .
         '<password>' . htmlspecialchars($password) . '</password>' .
-        '<specialityId>' . htmlspecialchars($specialityId) . '</specialityId>' . // Pass the specialization ID
-        '</GetSpecialists>' .
+        '<specialityId>' . htmlspecialchars($specialityId) . '</specialityId>' .
+        '</GetDoctorsBySpecialtiy>' .
         '</soap:Body>' .
         '</soap:Envelope>';
 
     // SOAP headers
     $headers = array(
         "Content-type: text/xml; charset=utf-8",
-        "SOAPAction: \"http://tempuri.org/GetSpecialists\"",
+        "SOAPAction: \"http://tempuri.org/GetDoctorsBySpecialtiy\"",
         "Content-length: " . strlen($xml_post_string),
     );
 
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['specialityId'])) {
         $specialityId = $_POST['specialityId'];
 
         // Call the function to get specialists
-        $response = getSpecialists($userName, $password, $specialityId);
+        $response = getDoctorsBySpeciality($userName, $password, $specialityId);
 
         // Extract the relevant part from the SOAP response
         $xml = simplexml_load_string($response);
@@ -69,8 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['specialityId'])) {
         // Extract the data inside the <string> tag
         $namespaces = $xml->getNamespaces(true);
         $soapBody = $xml->children($namespaces['soap'])->Body;
-        $specialistsResponse = $soapBody->children('http://tempuri.org/')->GetSpecialistsResponse;
-        $specialistsResult = (string) $specialistsResponse->GetSpecialistsResult;
+        $specialistsResponse = $soapBody->children('http://tempuri.org/')->GetDoctorsBySpecialtiyResponse;
+        $specialistsResult = (string) $specialistsResponse->GetDoctorsBySpecialtiyResult;
 
         // Parse the inner XML (inside the <string>)
         $innerXml = simplexml_load_string(html_entity_decode($specialistsResult));
