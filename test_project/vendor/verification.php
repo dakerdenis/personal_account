@@ -56,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
                 <div class="form__desc form__desc-otp">
-                    <?php echo($_SESSION['phoneNumber'])?>
                     <p>OTP Verification</p>
                     <span>An OTP has been sent to your phone number. Please enter it below to verify your identity.</span>
                 </div>

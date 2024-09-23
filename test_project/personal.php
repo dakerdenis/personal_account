@@ -70,13 +70,13 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
         </div>
     </div>
 
-    <script>
-        console.log('Script is loaded and running.');
+    <script src="./js/main.js"></script>
+    <script src="./js/policies.js"></script>
+    <script src="./js/doctors.js"></script>
+    <script src="./js/refund.js"></script>
 
-    </script>
-    <script src="./js/script.js"></script>
 
-    
+
 
 
 </body>
