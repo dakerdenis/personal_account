@@ -21,7 +21,7 @@ function loadSpecialists(specialityId) {
             if (data && data.DOCTORS) {
                 let doctorsHtml = '<h2>Specialists List</h2><ul>';
                 data.DOCTORS.forEach(doctor => {
-                    doctorsHtml += `
+                    doctorsHtml += `<br>
                         <li>
                             <strong>Doctor Name: ${doctor.NAME}</strong><br>
                             Workplace: ${doctor.WORKPLACE_NAME}<br>

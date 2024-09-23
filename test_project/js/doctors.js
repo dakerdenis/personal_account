@@ -11,9 +11,9 @@ function loadDoctors() {
 
                 let specialitiesHtml = '<h2>Specialities List</h2><ul>';
                 specialities.forEach(speciality => {
-                    specialitiesHtml += `<br>
-                        <li data-speciality-id="${speciality.SPECIALITY_ID}">
-                            <strong>Speciality Name: ${speciality.SPECIALITY_NAME}</strong><br>
+                    specialitiesHtml += `
+                        <li class="doktor_list_speciality_element" data-speciality-id="${speciality.SPECIALITY_ID}">
+                            <p>Speciality Name: <strong> ${speciality.SPECIALITY_NAME}</strong><br></p>
                             Speciality ID: ${speciality.SPECIALITY_ID}
                         </li>
                     `;

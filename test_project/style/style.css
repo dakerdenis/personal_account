@@ -314,3 +314,25 @@ justify-content: space-between;
 .tab-content.active {
   display: block;
 }
+
+.doktor_list_speciality_element{
+  background-color: #e3e3e3;
+  width: 300px;
+  height: 50px;
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #be0a04;
+  cursor: pointer;
+}
+.doktor_list_speciality_element:hover {
+  background-color: #be0a04;
+  color: #fff;
+}
+.doktor_list_speciality_element:hover p {
+  color: #fff;
+}
+.doktor_list_speciality_element p{
+  color: #be0a04;
+  margin-bottom: 5px;
+}
