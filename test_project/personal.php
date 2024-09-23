@@ -47,9 +47,6 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
             <div class="personal__account__data-lock">
                 <h1>Добро пожаловать, <?php echo $name . ' ' . $surname; ?>!</h1>
                 <p>Your PinCode: <?php echo $pinCode; ?></p>
-
-
-
             </div>
 
             <!-- Tab content for various sections -->
@@ -59,9 +56,14 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
             </div>
 
             <div id="doctors" class="tab-content">
-                <h2>Список врачей</h2>
-                <p>Список врачей здесь...</p>
+                <!-- Specializations will be rendered here -->
             </div>
+
+            <div id="specialists" class="tab-content">
+                <h2>List of Specialists</h2>
+                <!-- Specialists will be rendered here -->
+            </div>
+
 
             <div id="refund" class="tab-content">
                 <h2>Запрос на возврат средств</h2>
@@ -74,8 +76,7 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
     <script src="./js/policies.js"></script>
     <script src="./js/doctors.js"></script>
     <script src="./js/refund.js"></script>
-
-
+    <script src="./js/specialists.js"></script>
 
 
 
