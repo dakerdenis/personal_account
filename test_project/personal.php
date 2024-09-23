@@ -60,8 +60,12 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
             </div>
 
             <div id="specialists" class="tab-content">
-    <!-- Specialists will be rendered here -->
-</div>
+                <!-- Specialists will be rendered here -->
+            </div>
+            
+            <div id="doctor-details" class="tab-content">
+                <!-- Doctor details will be rendered here -->
+            </div>
 
 
 
@@ -69,13 +73,15 @@ $pinCode = isset($_SESSION['pinCode']) ? htmlspecialchars($_SESSION['pinCode']) 
                 <h2>Запрос на возврат средств</h2>
                 <p>Запрос на возврат средств здесь...</p>
             </div>
+
+
         </div>
     </div>
 
     <div id="preloader" class="preloader" style="display: none;">
-    <div class="loader"></div>
-    <p>Loading...</p>
-</div>
+        <div class="loader"></div>
+        <p>Loading...</p>
+    </div>
 
 
     <script src="./js/main.js"></script>

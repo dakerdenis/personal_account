@@ -336,3 +336,67 @@ justify-content: space-between;
   color: #be0a04;
   margin-bottom: 5px;
 }
+/* Preloader styles */
+.preloader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 9999;
+}
+
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.doktor_single_element{
+  margin-bottom: 20px;
+  background-color: #e3e3e3;
+  border-radius: 8px;
+  border: 1px solid #be0a04;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  position: relative;
+}
+.doktor_single_element div{
+  color: #1E1E1E;
+}
+.doktor_single_element div p:nth-child(1){
+  color: #be0a04;
+  font-size: 29px;
+}
+
+.doktor_single_element img {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
+.doktor_single_element button {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  width: 130px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #be0a04;
+  color: #f9f9f9;
+  font-size: 14px;
+}
