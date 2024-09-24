@@ -264,31 +264,52 @@ justify-content: space-between;
 .perosnal__account__info {
   width: 350px;
   height: 100%;
-  background-color: #e3e3e3;
-  border: 1px solid #1E1E1E;
+  background-color: #fff;
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
 }
+.perosnal__account__info h1{
+  font-size: 20px;
+  text-align: center;
+  max-width: 80%;
+  margin-top: 15px;
+  font-family: "Inter", sans-serif;
+  line-height: 28px;
+}
 .personal__account__info-additional {
   margin-top: 50px;
-  height: 150px;
+  height: 110px;
   display: flex;
   flex-direction: column;
 
   justify-content: space-between;
 }
 .personal__account__info-additional a {
-  color: #be0a04;
+  color: #323232;
   font-weight: 600;
+  font-size: 17px;
+
+}
+.personal__account__info-additional a:hover {
+  color: #be0a04;
 }
 .perosnal__account__info button {
   background-color: #be0a04;
   color: #fff;
-  margin-top: 20px;
-  padding: 10px 30px;
+  margin-top: 40px;
+  padding: 10px 50px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  border: 2px solid #be0a04;
+}
+.perosnal__account__info button:hover{
+  color: #be0a04;
+  background-color: #fff;
 }
 .perosnal__account__info h1 {
   font-size: 20px;
@@ -400,3 +421,18 @@ justify-content: space-between;
   color: #f9f9f9;
   font-size: 14px;
 }
+
+.personal__account_image{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+}
+.personal__account_image img {
+  width: 100px;
+  height: 100px;
+}
+
+
+
+

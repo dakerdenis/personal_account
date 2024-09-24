@@ -2,6 +2,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const tabs = document.querySelectorAll('.tab-link');
     const contentDivs = document.querySelectorAll('.tab-content');
 
+    // Function to show the default tab (policies)
+    function showDefaultTab() {
+        const defaultTabId = 'policies'; // ID of the tab to open by default
+        contentDivs.forEach(div => {
+            if (div.id === defaultTabId) {
+                div.style.display = 'block';
+            } else {
+                div.style.display = 'none';
+            }
+        });
+
+        // Automatically load data for the default tab (policies)
+        loadPolicies();
+    }
+
+    // Show the default tab and load its content when the page loads
+    showDefaultTab();
+
+    // Handle tab clicks
     tabs.forEach(tab => {
         tab.addEventListener('click', function(event) {
             event.preventDefault();
@@ -25,10 +44,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 loadRefund();  // This function will be in refund.js
             }
         });
-    });
-
-    // Initially hide all content
-    contentDivs.forEach(div => {
-        div.style.display = 'none';
     });
 });
