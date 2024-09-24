@@ -48,11 +48,6 @@
             </div>
 
             <div class="personal__account__data-wrapper">
-                <div class="personal__account__data-lock">
-                    <h1>Добро пожаловать, <?php echo $name . ' ' . $surname; ?>!</h1>
-                    <p>Your PinCode: <?php echo $pinCode; ?></p>
-                </div>
-
                 <!-- Tab content for various sections -->
                 <div id="policies" class="tab-content">
                     Ebanat

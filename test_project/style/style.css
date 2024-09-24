@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 /**! ***COLORS*************/
 /**! ***COLORS*************/
 /**! ***COLORS*************/
@@ -257,7 +258,7 @@ justify-content: space-between;
   width: 100%;
   height: 100%;
   height: 100vh;
-  background-color: #e3e3e3;
+
   display: flex;
   justify-content: space-between;
 }
@@ -265,7 +266,7 @@ justify-content: space-between;
   width: 350px;
   height: 100%;
   background-color: #fff;
-  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -327,9 +328,7 @@ justify-content: space-between;
 .tab-content {
   display: none;
   padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  margin-top: 10px;
+
 }
 
 .tab-content.active {
@@ -337,25 +336,30 @@ justify-content: space-between;
 }
 
 .doktor_list_speciality_element{
-  background-color: #e3e3e3;
-  width: 400px;
-  height: 50px;
+
+  width: 500px;
+  height: 100px;
   margin-bottom: 10px;
   padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #be0a04;
+  display: flex;
+  align-items: center;
+
+  border-bottom: 1px solid #e3e3e34b;
   cursor: pointer;
 }
 .doktor_list_speciality_element:hover {
-  background-color: #be0a04;
-  color: #fff;
+  border-bottom: 1px solid #be0a04;
+
 }
 .doktor_list_speciality_element:hover p {
-  color: #fff;
+  color: #be0a04;
+}
+.doktor_list_speciality_element img{
+  margin-right: 18px;
 }
 .doktor_list_speciality_element p{
-  color: #be0a04;
-  margin-bottom: 5px;
+  font-family: "Gentium Plus", serif;
+  font-size: 20px;
 }
 /* Preloader styles */
 .preloader {
@@ -432,7 +436,12 @@ justify-content: space-between;
   width: 100px;
   height: 100px;
 }
-
+.doctors_desc{
+  font-size: 45px;
+  color: #be0a04;
+  font-family: "Gentium Plus", serif;
+  font-weight: bold;
+}
 
 
 

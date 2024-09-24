@@ -5,17 +5,19 @@ function loadDoctors() {
             console.log('Specialities data:', data);  // Log the response to check the structure
 
             if (data && data.SPECIALITIES) {
-                const specialities = Array.isArray(data.SPECIALITIES) ? 
-                                     data.SPECIALITIES : 
-                                     [data.SPECIALITIES];  // Handle both array and single object case
+                const specialities = Array.isArray(data.SPECIALITIES) ?
+                    data.SPECIALITIES :
+                    [data.SPECIALITIES];  // Handle both array and single object case
 
-                let specialitiesHtml = '<h2>Specialities List</h2> <br> <ul>';
+                let specialitiesHtml = '<h2 class="doctors_desc">Həkimlər</h2> <br> <ul>';
                 specialities.forEach(speciality => {
                     specialitiesHtml += `
                         <li class="doktor_list_speciality_element" data-speciality-id="${speciality.SPECIALITY_ID}">
-                            <p>Speciality Name: <strong> ${speciality.SPECIALITY_NAME}</strong><br></p>
-                            Speciality ID: ${speciality.SPECIALITY_ID}
+                            <img src="https://a-group.az/assets/images/healthicons_doctor-male-outline.svg" alt="" srcset="">
+                            <p>${speciality.SPECIALITY_NAME}</p>
+
                         </li>
+                                                    Speciality ID: ${speciality.SPECIALITY_ID}
                     `;
                 });
                 specialitiesHtml += '</ul>';
