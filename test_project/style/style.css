@@ -443,5 +443,10 @@ justify-content: space-between;
   font-weight: bold;
 }
 
+.personal__account-desc{
+  font-size: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+}
 
 

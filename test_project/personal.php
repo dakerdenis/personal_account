@@ -48,6 +48,9 @@
             </div>
 
             <div class="personal__account__data-wrapper">
+                <div class="personal__account-desc">
+                    Hörmətli <?php echo ($name . " " . $surname) ?> A-Group şəxsi kabinetə xoş gəldiniz !
+                </div>
                 <!-- Tab content for various sections -->
                 <div id="policies" class="tab-content">
                     Ebanat
