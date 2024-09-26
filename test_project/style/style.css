@@ -146,7 +146,7 @@ justify-content: space-between;
   width: 100px;
   height: 100px;
   position: absolute;
-  left: calc(50% - 50px);
+  left: calc(3%);
   top: 50px;
 }
 .login__logo img {
@@ -265,7 +265,7 @@ justify-content: space-between;
 .perosnal__account__info {
   width: 350px;
   height: 100%;
-  background-color: #fff;
+  background-color: #be0a04;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
   display: flex;
   flex-direction: column;
@@ -280,6 +280,7 @@ justify-content: space-between;
   margin-top: 15px;
   font-family: "Inter", sans-serif;
   line-height: 28px;
+  color: #fff;
 }
 .personal__account__info-additional {
   margin-top: 50px;
@@ -290,27 +291,36 @@ justify-content: space-between;
   justify-content: space-between;
 }
 .personal__account__info-additional a {
-  color: #323232;
+  color: #fff;
   font-weight: 600;
   font-size: 17px;
-
+  position: relative;
 }
-.personal__account__info-additional a:hover {
-  color: #be0a04;
+.personal__account__info-additional a::before{
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 2px;
+  background-color: #fff;
+  bottom: -10px;
+}
+.personal__account__info-additional a:hover::before {
+  width: 100%;
 }
 .perosnal__account__info button {
-  background-color: #be0a04;
-  color: #fff;
+  background-color: #fff;
+  color: #be0a04;
   margin-top: 40px;
   padding: 10px 50px;
   border-radius: 50px;
   font-size: 18px;
   font-weight: 600;
-  border: 2px solid #be0a04;
+
 }
 .perosnal__account__info button:hover{
   color: #be0a04;
   background-color: #fff;
+
 }
 .perosnal__account__info h1 {
   font-size: 20px;

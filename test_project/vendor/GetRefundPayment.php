@@ -4,7 +4,7 @@ session_start(); // Start the session
 // SOAP request to get refund payment information
 function getRefundPayment($userName, $password, $pinCode) {
     $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // API endpoint
-    $pinCode = "6WP9W1L";
+  //  $pinCode = "6WP9W1L";
     // SOAP request
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .
         '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .

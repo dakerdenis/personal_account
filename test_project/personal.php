@@ -21,9 +21,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>A-Group Şəxsi kabinet</title>
         <link rel="stylesheet" href="./style/style.css">
-        <style>
-
-        </style>
     </head>
 
     <body>
@@ -31,7 +28,7 @@
         <div class="personal__wrapper">
             <div class="perosnal__account__info">
                 <div class="personal__account_image">
-                    <img src="./style/assets/company_logo.svg" alt="" srcset="">
+                    <img src="https://a-group.az/storage/uploaded_files/Z6zB/company_logo.png" alt="" srcset="">
                 </div>
                 <h1>A-Group şəxsi kabinetə xoş gəlmisiniz !</h1>
 
