@@ -61,7 +61,7 @@
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    font-family: "Inter", sans-serif;
+    font-family: "Gentium Plus", serif;
   }
   
   body::-webkit-scrollbar {
@@ -296,17 +296,23 @@ justify-content: space-between;
   font-size: 17px;
   position: relative;
 }
-.personal__account__info-additional a::before{
+
+/* Initial state of the pseudo-element */
+.personal__account__info-additional a::before {
   content: "";
   position: absolute;
   width: 50px;
   height: 2px;
   background-color: #fff;
   bottom: -10px;
+  transition: width 0.4s ease-in-out; /* Add transition for the width */
 }
+
+/* Hover state of the pseudo-element */
 .personal__account__info-additional a:hover::before {
   width: 100%;
 }
+
 .perosnal__account__info button {
   background-color: #fff;
   color: #be0a04;
@@ -454,9 +460,27 @@ justify-content: space-between;
 }
 
 .personal__account-desc{
-  font-size: 20px;
+  font-size: 25px;
+  font-weight: 600;
   margin-top: 20px;
   margin-left: 20px;
+  line-height: 32px;
 }
 
-
+.polis__nam-desc {
+  color: #be0a04;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  margin-top: 25px;
+  font-family: "Gentium Plus", serif;
+}
+.polis_single_element{
+  margin-bottom: 20px;
+}
+.polis__single__name{
+  color: #be0a04;
+  font-weight: 600;
+  font-size: 17px;
+  margin-bottom: 5px;
+}

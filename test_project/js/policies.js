@@ -26,7 +26,7 @@ function loadPolicies() {
         })
         .then(response => response.json())
         .then(policiesData => {
-            console.log('Policies data:', policiesData); // Log the response to check the structure
+            console.log('Sizin müqavilələr:', policiesData); // Log the response to check the structure
 
             // Check if the expected policies data exists
             if (policiesData && policiesData.POLICIES) {
@@ -35,15 +35,15 @@ function loadPolicies() {
                                  [policiesData.POLICIES];
 
                 // Create HTML for policies list
-                let policiesHtml = '<h3>Policies:</h3><ul>';
+                let policiesHtml = '<h3 class="polis__nam-desc">Polislər:</h3><ul>';
                 policies.forEach(policy => {
                     policiesHtml += `
-                        <li>
-                            <strong>${policy.INSURANCE_NAME}</strong><br>
-                            Policy Number: ${policy.POLICY_NUMBER}<br>
-                            Insurance Code: ${policy.INSURANCE_CODE}<br>
-                            Status: ${policy.STATUS}<br>
-                            End Date: ${policy.INSURANCE_END_DATE}
+                        <li class="polis_single_element">
+                            <p class="polis__single__name">${policy.INSURANCE_NAME}</p>
+                            <p>Policy Number: ${policy.POLICY_NUMBER}</p>
+                            <p>Insurance Code: ${policy.INSURANCE_CODE}</p>
+                            <p>Status: ${policy.STATUS}</p>
+                            <p>End Date: ${policy.INSURANCE_END_DATE}</p>
                         </li>
                     `;
                 });
