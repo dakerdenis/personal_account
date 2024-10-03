@@ -73,7 +73,7 @@ try {
 
     // Decode the result into an XML structure
     $resultXml = simplexml_load_string(html_entity_decode($policiesResult));
-    if (!$resultXml) {
+    if (!$resultXml || !$resultXml->POLICIES) { // Check if POLICIES element exists
         echo json_encode(['error' => 'Failed to parse policies result']);
         exit();
     }
@@ -82,7 +82,7 @@ try {
     $policies = json_decode(json_encode($resultXml), true);
 
     // Return the policies as a JSON response
-    echo json_encode($policies);
+    echo json_encode(['POLICIES' => $policies['POLICIES']]); // Adjust to send only relevant data
 
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
