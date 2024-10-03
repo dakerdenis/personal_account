@@ -1,28 +1,28 @@
 <?php
 session_start(); // Start the session
 
-// SOAP request to get customer information
-function getCustomerInformation($userName, $password, $pinCode) {
+// SOAP request to fetch customer policies
+function getCustomerPolicies($userName, $password, $pinCode) {
     $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // API endpoint
 
-    // SOAP request
+    // Build the SOAP request XML
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .
         '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
         'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' .
         'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' .
         '<soap:Body>' .
-        '<GetCustomerInformtaions xmlns="http://tempuri.org/">' .
+        '<GetCustomerPolicies xmlns="http://tempuri.org/">' .
         '<userName>' . htmlspecialchars($userName) . '</userName>' .
         '<password>' . htmlspecialchars($password) . '</password>' .
         '<pinCode>' . htmlspecialchars($pinCode) . '</pinCode>' .
-        '</GetCustomerInformtaions>' .
+        '</GetCustomerPolicies>' .
         '</soap:Body>' .
         '</soap:Envelope>';
 
     // SOAP headers
     $headers = array(
         "Content-type: text/xml; charset=utf-8",
-        "SOAPAction: \"http://tempuri.org/GetCustomerInformtaions\"",
+        "SOAPAction: \"http://tempuri.org/GetCustomerPolicies\"",
         "Content-length: " . strlen($xml_post_string),
     );
 
@@ -45,42 +45,45 @@ function getCustomerInformation($userName, $password, $pinCode) {
     }
     curl_close($ch);
 
-    // Parse the response and return the relevant data
+    // Return the SOAP response
     return $response;
 }
 
-// Call the function to get customer information
 try {
     // Example: Replace with actual credentials
-    $userName = 'AQWeb';
-    $password = '@QWeb';
-    $pinCode = $_SESSION['pinCode']; // Ensure you store pinCode during login
+    $userName = 'AQWeb'; // Replace with your actual API username
+    $password = '@QWeb'; // Replace with your actual API password
+    $pinCode = $_SESSION['pinCode']; // Get the user's pinCode from the session
 
-    // Get the response from the SOAP API
-    $response = getCustomerInformation($userName, $password, $pinCode);
+    // Call the SOAP function to get policies
+    $response = getCustomerPolicies($userName, $password, $pinCode);
 
-    // Extract the relevant part from the SOAP response
+    // Parse the response XML
     $xml = simplexml_load_string($response);
     if ($xml === false) {
-        echo json_encode(['error' => 'Failed to parse XML response.']);
+        echo json_encode(['error' => 'Failed to parse XML response']);
         exit();
     }
 
-    // Extract the data inside the <string> tag
+    // Extract the relevant data from the SOAP response
     $namespaces = $xml->getNamespaces(true);
     $soapBody = $xml->children($namespaces['soap'])->Body;
-    $customerInfoResponse = $soapBody->children('http://tempuri.org/')->GetCustomerInformtaionsResponse;
-    $customerInfoResult = (string) $customerInfoResponse->GetCustomerInformtaionsResult;
+    $policiesResponse = $soapBody->children('http://tempuri.org/')->GetCustomerPoliciesResponse;
+    $policiesResult = (string)$policiesResponse->GetCustomerPoliciesResult;
 
-    // Parse the inner XML (inside the <string>)
-    $innerXml = simplexml_load_string(html_entity_decode($customerInfoResult));
-    if (!$innerXml) {
-        echo json_encode(['error' => 'Failed to parse inner XML.']);
+    // Decode the result into an XML structure
+    $resultXml = simplexml_load_string(html_entity_decode($policiesResult));
+    if (!$resultXml || !$resultXml->POLICIES) { // Check if POLICIES element exists
+        echo json_encode(['error' => 'Failed to parse policies result']);
         exit();
     }
 
-    // Convert the parsed XML to JSON and send it back
-    echo json_encode($innerXml);
+    // Convert the result to a JSON-friendly structure
+    $policies = json_decode(json_encode($resultXml), true);
+
+    // Return the policies as a JSON response
+    echo json_encode(['POLICIES' => $policies['POLICIES']]); // Adjust to send only relevant data
+
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
