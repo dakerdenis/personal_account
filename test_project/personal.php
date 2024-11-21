@@ -47,12 +47,24 @@
             <div class="personal__account__data-wrapper">
                 <div class="personal__account-desc">
                     Hörmətli <?php echo ($name . " " . $surname) ?>, <br>
-                     A-Group şəxsi kabinetə xoş gəldiniz !
+                    A-Group şəxsi kabinetə xoş gəldiniz !
                 </div>
                 <!-- Tab content for various sections -->
                 <div id="policies" class="tab-content">
                     Ebanat
                 </div>
+
+                <!-----Policies info Auto---->
+                <div id="policies__additional-auto" class="tab-content">
+
+                </div>
+                
+                <!-----Policies info Medical---->
+                <div id="policies__additional-medical" class="tab-content">
+
+                </div>
+
+
 
                 <div id="doctors" class="tab-content">
                     <!-- Specializations will be rendered here -->
@@ -71,6 +83,15 @@
                 <div id="refund" class="tab-content">
 
                 </div>
+
+
+
+                <div id="policy-popup" class="popup" style="display: none;">
+    <div id="policy-popup-content" class="popup-content">
+        <!-- Policy details will be rendered here -->
+    </div>
+</div>
+
             </div>
 
         </div>

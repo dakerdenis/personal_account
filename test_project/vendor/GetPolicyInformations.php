@@ -1,8 +1,8 @@
 <?php
 session_start(); // Start the session
 
-// SOAP request to fetch customer information
-function getCustomerInformation($userName, $password, $pinCode) {
+// SOAP request to fetch policy information
+function getPolicyInformation($userName, $password, $policyNumber) {
     $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // API endpoint
 
     // Build the SOAP request XML
@@ -11,18 +11,18 @@ function getCustomerInformation($userName, $password, $pinCode) {
         'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' .
         'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' .
         '<soap:Body>' .
-        '<GetCustomerInformtaions xmlns="http://tempuri.org/">' .
+        '<GetPolicyInformations xmlns="http://tempuri.org/">' .
         '<userName>' . htmlspecialchars($userName) . '</userName>' .
         '<password>' . htmlspecialchars($password) . '</password>' .
-        '<pinCode>' . htmlspecialchars($pinCode) . '</pinCode>' .
-        '</GetCustomerInformtaions>' .
+        '<policyNumber>' . htmlspecialchars($policyNumber) . '</policyNumber>' .
+        '</GetPolicyInformations>' .
         '</soap:Body>' .
         '</soap:Envelope>';
 
     // SOAP headers
     $headers = array(
         "Content-type: text/xml; charset=utf-8",
-        "SOAPAction: \"http://tempuri.org/GetCustomerInformtaions\"",
+        "SOAPAction: \"http://tempuri.org/GetPolicyInformations\"",
         "Content-length: " . strlen($xml_post_string),
     );
 
@@ -45,49 +45,44 @@ function getCustomerInformation($userName, $password, $pinCode) {
     }
     curl_close($ch);
 
+    // Return the SOAP response
     return $response;
 }
 
 try {
     // Example: Replace with actual credentials
-    $userName = 'AQWeb';
-    $password = '@QWeb';
-    $pinCode = $_SESSION['pinCode']; // Get the user's pinCode from the session
+    $userName = 'AQWeb'; // Replace with your actual API username
+    $password = '@QWeb'; // Replace with your actual API password
+    $policyNumber = $_POST['policyNumber']; // Get the policy number from the request
 
-    // Fetch customer information
-    $response = getCustomerInformation($userName, $password, $pinCode);
+    // Call the SOAP function to get policy information
+    $response = getPolicyInformation($userName, $password, $policyNumber);
 
-    // Parse the SOAP response
+    // Parse the response XML
     $xml = simplexml_load_string($response);
     if ($xml === false) {
-        echo json_encode(['error' => 'Failed to parse XML response.']);
+        echo json_encode(['error' => 'Failed to parse XML response']);
         exit();
     }
 
-    // Extract data from SOAP response
+    // Extract the relevant data from the SOAP response
     $namespaces = $xml->getNamespaces(true);
     $soapBody = $xml->children($namespaces['soap'])->Body;
-    $customerInfoResponse = $soapBody->children('http://tempuri.org/')->GetCustomerInformtaionsResponse;
-    $customerInfoResult = (string) $customerInfoResponse->GetCustomerInformtaionsResult;
+    $policyInfoResponse = $soapBody->children('http://tempuri.org/')->GetPolicyInformationsResponse;
+    $policyInfoResult = (string)$policyInfoResponse->GetPolicyInformationsResult;
 
-    // Parse the inner XML
-    $innerXml = simplexml_load_string(html_entity_decode($customerInfoResult));
-    if (!$innerXml) {
-        echo json_encode(['error' => 'Failed to parse inner XML.']);
+    // Decode the result into an XML structure
+    $resultXml = simplexml_load_string(html_entity_decode($policyInfoResult));
+    if (!$resultXml) {
+        echo json_encode(['error' => 'Failed to parse policy information result']);
         exit();
     }
 
-    // Convert the parsed XML to a JSON-friendly structure
-    $customerInfo = json_decode(json_encode($innerXml), true);
+    // Convert the result to a JSON-friendly structure
+    $policyInformation = json_decode(json_encode($resultXml), true);
 
-    // Check for expected structure
-    if (!isset($customerInfo['CUSTOMER_INFORMATION']) || !isset($customerInfo['CARD_INFORMATION'])) {
-        echo json_encode(['error' => 'Invalid customer data structure.']);
-        exit();
-    }
-
-    // Return the data
-    echo json_encode($customerInfo);
+    // Return the policy information as a JSON response
+    echo json_encode($policyInformation);
 
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);

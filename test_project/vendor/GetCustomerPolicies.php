@@ -74,6 +74,7 @@ try {
     // Decode the result into an XML structure
     $resultXml = simplexml_load_string(html_entity_decode($policiesResult));
     if (!$resultXml || !$resultXml->POLICIES) { // Check if POLICIES element exists
+        error_log('Policies result: ' . print_r($policiesResult, true));
         echo json_encode(['error' => 'Failed to parse policies result']);
         exit();
     }
