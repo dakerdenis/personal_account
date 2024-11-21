@@ -37,6 +37,7 @@
                 <div class="personal__account__info-additional">
                     <a href="#" class="tab-link" data-target="policies">Şəhadətləmələr</a>
                     <a href="#" class="tab-link" data-target="doctors">Həkimlər siyahısı</a>
+                    <a href="#" class="tab-link" data-target="complaints">Mənim müraciyətlərim</a>
                     <a href="#" class="tab-link" data-target="refund">Geyriödəniş üçün müraciyət</a>
                 </div>
                 <form action="./vendor/logout.php" method="post">
@@ -58,7 +59,7 @@
                 <div id="policies__additional-auto" class="tab-content">
 
                 </div>
-                
+
                 <!-----Policies info Medical---->
                 <div id="policies__additional-medical" class="tab-content">
 
@@ -78,6 +79,10 @@
                     <!-- Doctor details will be rendered here -->
                 </div>
 
+                <div id="complaints" class="tab-content">
+                    тут жалобы ебаные
+                </div>
+
 
 
                 <div id="refund" class="tab-content">
@@ -87,10 +92,12 @@
 
 
                 <div id="policy-popup" class="popup" style="display: none;">
-    <div id="policy-popup-content" class="popup-content">
-        <!-- Policy details will be rendered here -->
-    </div>
-</div>
+                    <div id="policy-popup-content" class="popup-content">
+                        <!-- Policy details will be rendered here -->
+                    </div>
+                </div>
+
+
 
             </div>
 
