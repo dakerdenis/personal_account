@@ -57,6 +57,6 @@ function loadPolicies() {
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-            document.getElementById('policies').innerHTML = '<p>Error loading data.</p>';
+            document.getElementById('policies').innerHTML = '<p>Error loading policies data.</p>';
         });
 }
