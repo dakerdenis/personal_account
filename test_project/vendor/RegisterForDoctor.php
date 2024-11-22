@@ -1,8 +1,7 @@
 <?php
 session_start();
 
-// SOAP request to fetch customer information
-function getCustomerInformation($userName, $password, $pinCode) {
+function registerForDoctor($userName, $password, $pinCode, $cardNumber, $doctorId) {
     $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx";
 
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .
@@ -10,17 +9,19 @@ function getCustomerInformation($userName, $password, $pinCode) {
         'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' .
         'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' .
         '<soap:Body>' .
-        '<GetCustomerInformtaions xmlns="http://tempuri.org/">' .
+        '<RegistrationForDoctor xmlns="http://tempuri.org/">' .
         '<userName>' . htmlspecialchars($userName) . '</userName>' .
         '<password>' . htmlspecialchars($password) . '</password>' .
         '<pinCode>' . htmlspecialchars($pinCode) . '</pinCode>' .
-        '</GetCustomerInformtaions>' .
+        '<cardNumber>' . htmlspecialchars($cardNumber) . '</cardNumber>' .
+        '<customerId>' . htmlspecialchars($doctorId) . '</customerId>' .
+        '</RegistrationForDoctor>' .
         '</soap:Body>' .
         '</soap:Envelope>';
 
     $headers = array(
         "Content-type: text/xml; charset=utf-8",
-        "SOAPAction: \"http://tempuri.org/GetCustomerInformtaions\"",
+        "SOAPAction: \"http://tempuri.org/RegistrationForDoctor\"",
         "Content-length: " . strlen($xml_post_string),
     );
 
@@ -41,16 +42,6 @@ function getCustomerInformation($userName, $password, $pinCode) {
     }
     curl_close($ch);
 
-    return $response;
-}
-
-try {
-    $userName = 'AQWeb';
-    $password = '@QWeb';
-    $pinCode = $_SESSION['pinCode'];
-
-    $response = getCustomerInformation($userName, $password, $pinCode);
-
     $xml = simplexml_load_string($response);
     if ($xml === false) {
         echo json_encode(['error' => 'Failed to parse XML response']);
@@ -59,40 +50,20 @@ try {
 
     $namespaces = $xml->getNamespaces(true);
     $soapBody = $xml->children($namespaces['soap'])->Body;
-    $customerInfoResponse = $soapBody->children('http://tempuri.org/')->GetCustomerInformtaionsResponse;
-    $customerInfoResult = (string)$customerInfoResponse->GetCustomerInformtaionsResult;
+    $registerResponse = $soapBody->children('http://tempuri.org/')->RegistrationForDoctorResponse;
+    $registerResult = (string)$registerResponse->RegistrationForDoctorResult;
 
-    $innerXml = simplexml_load_string(html_entity_decode($customerInfoResult));
-    if (!$innerXml) {
-        echo json_encode(['error' => 'Failed to parse inner XML']);
-        exit();
-    }
+    echo json_encode(['success' => $registerResult === 'true']);
+}
 
-    $customerInfo = json_decode(json_encode($innerXml), true);
+try {
+    $userName = 'AQWeb';
+    $password = '@QWeb';
+    $pinCode = $_SESSION['pinCode'];
+    $cardNumber = $_POST['cardNumber'];
+    $doctorId = $_POST['doctorId'];
 
-    if (!isset($customerInfo['CUSTOMER_INFORMATION']) || !isset($customerInfo['CARD_INFORMATION'])) {
-        echo json_encode(['error' => 'Invalid customer data structure']);
-        exit();
-    }
-
-    // Check for medical policy
-    $medicalPolicy = null;
-    if (isset($customerInfo['CARD_INFORMATION'])) {
-        $policies = $customerInfo['CARD_INFORMATION'];
-        foreach ($policies as $policy) {
-            if ($policy['INSURANCE_NAME'] === 'Tibbi sığorta') {
-                $medicalPolicy = $policy['CARD_NUMBER'];
-                break;
-            }
-        }
-    }
-
-    if ($medicalPolicy) {
-        $_SESSION['medicalPolicyNumber'] = $medicalPolicy; // Cache the policy number in the session
-    }
-
-    echo json_encode($customerInfo);
-
+    registerForDoctor($userName, $password, $pinCode, $cardNumber, $doctorId);
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }

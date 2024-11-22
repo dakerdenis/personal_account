@@ -125,7 +125,7 @@
         <script src="./js/refund.js"></script>
         <script src="./js/specialists.js"></script>
         <script src="./js/complaints.js"></script>
-
+        <script src="./js/complaints_not_medical.js"></script>
 
 
     </body>

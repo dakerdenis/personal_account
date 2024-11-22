@@ -28,11 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
             loadRefund(); // This function will be in refund.js
         } else if (tabId === 'complaints') {
             loadComplaints(); // This function will be in complaints.js
-        }
-        else if (targetId === 'complaints_not_medical') {
+        } else if (tabId === 'complaints_not_medical') { // Corrected from `targetId` to `tabId`
             loadNonMedicalComplaints(); // This function will be in complaints_not_medical.js
         }
-        
     }
 
     // Function to handle tab clicks

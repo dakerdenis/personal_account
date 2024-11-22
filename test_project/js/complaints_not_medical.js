@@ -8,31 +8,47 @@ function loadNonMedicalComplaints() {
     // Ensure preloader is visible for at least 1.5 seconds
     setTimeout(() => {
         fetch('./vendor/GetNonMedicalClaimInformations.php') // Replace with your actual endpoint
-            .then(response => response.json())
+            .then(response => {
+                console.log('Raw Response:', response);
+                return response.json();
+            })
             .then(data => {
                 console.log('Non-Medical Complaints Data:', data); // Log the response to check the structure
 
+                // Check if data is valid
                 if (data && data.CLM_NOTICE_DISPETCHER) {
                     const complaints = Array.isArray(data.CLM_NOTICE_DISPETCHER)
                         ? data.CLM_NOTICE_DISPETCHER
                         : [data.CLM_NOTICE_DISPETCHER];
 
+                    // Check if complaints are empty
+                    if (complaints.length === 0 || Object.keys(complaints[0]).length === 0) {
+                        complaintsTab.innerHTML = '<p>You don\'t have complaints.</p>';
+                        return;
+                    }
+
+                    // Create HTML for complaints
                     let complaintsHtml = '<h2>Non-Medical Complaints</h2><ul>';
                     complaints.forEach(complaint => {
                         complaintsHtml += `
                             <li>
                                 <p><strong>PIN Code:</strong> ${complaint.PIN_CODE || 'N/A'}</p>
                                 <p><strong>Clinic Name:</strong> ${complaint.CLINIC_NAME || 'N/A'}</p>
-                                <p><strong>Event Date:</strong> ${new Date(complaint.EVENT_OCCURRENCE_DATE).toLocaleString()}</p>
+                                <p><strong>Event Date:</strong> ${
+                                    complaint.EVENT_OCCURRENCE_DATE
+                                        ? new Date(complaint.EVENT_OCCURRENCE_DATE).toLocaleString()
+                                        : 'N/A'
+                                }</p>
                             </li>
                         `;
                     });
                     complaintsHtml += '</ul>';
 
-                    // Display the complaints in the tab
+                    // Render complaints in the tab
                     complaintsTab.innerHTML = complaintsHtml;
                 } else {
-                    throw new Error('Invalid non-medical complaints data structure.');
+                    // Handle completely empty responses
+                    complaintsTab.innerHTML = '<p>You don\'t have complaints.</p>';
                 }
             })
             .catch(error => {

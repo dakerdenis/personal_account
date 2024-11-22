@@ -1,9 +1,8 @@
 <?php
 session_start(); // Start the session
 
-// SOAP request to fetch non-medical claim information
 function getNonMedicalClaimInformations($userName, $password, $pinCode) {
-    $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // API endpoint
+    $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx";
 
     // Build the SOAP request XML
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .
@@ -20,11 +19,11 @@ function getNonMedicalClaimInformations($userName, $password, $pinCode) {
         '</soap:Envelope>';
 
     // SOAP headers
-    $headers = array(
+    $headers = [
         "Content-type: text/xml; charset=utf-8",
         "SOAPAction: \"http://tempuri.org/GetNonMedicalClaimInformations\"",
         "Content-length: " . strlen($xml_post_string),
-    );
+    ];
 
     // Initialize curl
     $ch = curl_init();
@@ -45,45 +44,36 @@ function getNonMedicalClaimInformations($userName, $password, $pinCode) {
     }
     curl_close($ch);
 
-    // Return the SOAP response
     return $response;
 }
 
 try {
-    // Example: Replace with actual credentials
-    $userName = 'AQWeb'; // Replace with your actual API username
-    $password = '@QWeb'; // Replace with your actual API password
-    $pinCode = $_SESSION['pinCode']; // Get the user's pinCode from the session
+    $userName = 'AQWeb'; 
+    $password = '@QWeb'; 
+    $pinCode = $_SESSION['pinCode'];
 
-    // Call the SOAP function to get non-medical claim information
     $response = getNonMedicalClaimInformations($userName, $password, $pinCode);
 
-    // Parse the response XML
     $xml = simplexml_load_string($response);
     if ($xml === false) {
         echo json_encode(['error' => 'Failed to parse XML response']);
         exit();
     }
 
-    // Extract the relevant data from the SOAP response
     $namespaces = $xml->getNamespaces(true);
     $soapBody = $xml->children($namespaces['soap'])->Body;
     $claimResponse = $soapBody->children('http://tempuri.org/')->GetNonMedicalClaimInformationsResponse;
-    $claimResult = (string)$claimResponse->GetNonMedicalClaimInformationsResult;
+    $claimResult = (string) $claimResponse->GetNonMedicalClaimInformationsResult;
 
-    // Decode the result into an XML structure
     $resultXml = simplexml_load_string(html_entity_decode($claimResult));
-    if (!$resultXml || !$resultXml->CLM_NOTICE_DISPETCHER) { // Check if CLM_NOTICE_DISPETCHER element exists
-        echo json_encode(['error' => 'Invalid non-medical claims result']);
+    if (!$resultXml || !$resultXml->CLM_NOTICE_DISPETCHER) {
+        echo json_encode(['CLM_NOTICE_DISPETCHER' => []]); // Return empty array for no data
         exit();
     }
 
-    // Convert the result to a JSON-friendly structure
     $claims = json_decode(json_encode($resultXml), true);
 
-    // Return the claims as a JSON response
-    echo json_encode(['CLM_NOTICE_DISPETCHER' => $claims['CLM_NOTICE_DISPETCHER']]); // Adjust to send only relevant data
-
+    echo json_encode(['CLM_NOTICE_DISPETCHER' => $claims['CLM_NOTICE_DISPETCHER']]);
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
