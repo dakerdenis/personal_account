@@ -29,6 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (tabId === 'complaints') {
             loadComplaints(); // This function will be in complaints.js
         }
+        else if (targetId === 'complaints_not_medical') {
+            loadNonMedicalComplaints(); // This function will be in complaints_not_medical.js
+        }
+        
     }
 
     // Function to handle tab clicks

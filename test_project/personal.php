@@ -21,6 +21,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>A-Group Şəxsi kabinet</title>
         <link rel="stylesheet" href="./style/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
     <body>
@@ -37,12 +38,18 @@
                 <div class="personal__account__info-additional">
                     <a href="#" class="tab-link" data-target="policies">Şəhadətləmələr</a>
                     <a href="#" class="tab-link" data-target="doctors">Həkimlər siyahısı</a>
-                    <a href="#" class="tab-link" data-target="complaints">Mənim müraciyətlərim</a>
+                    <a href="#" class="tab-link" data-target="complaints">Mənim müraciyətlərim (Tibbi)</a>
+                    <a href="#" class="tab-link" data-target="complaints_not_medical">Mənim müraciyətlərim (Qeyri-Tibbi)</a>
                     <a href="#" class="tab-link" data-target="refund">Geyriödəniş üçün müraciyət</a>
                 </div>
                 <form action="./vendor/logout.php" method="post">
                     <button type="submit">Çıxış</button>
                 </form>
+                <a target="_blank" class="whatsapp" href="https://wa.me/994502285753?text=Salam,%20Dərman%20çatdırılması%20haqqında%20məlumat%20ala%20bilərəmmi?">
+                    <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                    <p>Dərman çatdırılması</p>
+                </a>
+
             </div>
 
             <div class="personal__account__data-wrapper">
@@ -82,7 +89,9 @@
                 <div id="complaints" class="tab-content">
                     тут жалобы ебаные
                 </div>
-
+                <div id="complaints_not_medical" class="tab-content">
+    <!-- Non-Medical Claims will be rendered here -->
+</div>
 
 
                 <div id="refund" class="tab-content">

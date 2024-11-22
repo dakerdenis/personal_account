@@ -22,9 +22,9 @@ function loadComplaints() {
                     data.COMPLAINTS.forEach(complaint => {
                         complaintsHtml += `
                             <li>
-                                <p><strong>Complaint ID:</strong> ${complaint.ID}</p>
-                                <p><strong>Complaint Date:</strong> ${new Date(complaint.DATE).toLocaleDateString()}</p>
-                                <p><strong>Description:</strong> ${complaint.DESCRIPTION}</p>
+                                <p><strong>PIN Code:</strong> ${complaint.PIN_CODE}</p>
+                                <p><strong>Clinic Name:</strong> ${complaint.CLINIC_NAME}</p>
+                                <p><strong>Event Occurrence Date:</strong> ${new Date(complaint.EVENT_OCCURRENCE_DATE).toLocaleDateString()}</p>
                             </li>
                         `;
                     });
