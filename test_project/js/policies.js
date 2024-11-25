@@ -1,6 +1,20 @@
 function loadPolicies() {
     fetch('./vendor/GetCustomerInformation.php')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status} ${response.statusText}`);
+            }
+            return response.text(); // Read as text first to debug malformed JSON
+        })
+        .then(responseText => {
+            try {
+                // Parse the JSON from the response text
+                return JSON.parse(responseText);
+            } catch (error) {
+                console.error('Failed to parse JSON:', responseText); // Log the raw response
+                throw new Error('Invalid JSON response from server.');
+            }
+        })
         .then(customerData => {
             if (customerData && customerData.CUSTOMER_INFORMATION) {
                 const customerInfoHtml = `
@@ -15,7 +29,21 @@ function loadPolicies() {
                 throw new Error('Invalid customer data structure.');
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status} ${response.statusText}`);
+            }
+            return response.text(); // Read as text first
+        })
+        .then(responseText => {
+            try {
+                // Parse the JSON from the response text
+                return JSON.parse(responseText);
+            } catch (error) {
+                console.error('Failed to parse JSON:', responseText); // Log the raw response
+                throw new Error('Invalid JSON response from server.');
+            }
+        })
         .then(policiesData => {
             if (policiesData && policiesData.POLICIES) {
                 const policies = Array.isArray(policiesData.POLICIES) ? policiesData.POLICIES : [policiesData.POLICIES];
@@ -47,9 +75,11 @@ function loadPolicies() {
             }
         })
         .catch(error => {
+            console.error('Error loading policies data:', error);
             document.getElementById('policies').innerHTML = `<p>Error loading policies data: ${error.message || 'Unknown error'}.</p>`;
         });
 }
+
 
 // Function to open popup and fetch policy details
 function openPolicyDetailsPopup(policyNumber) {
