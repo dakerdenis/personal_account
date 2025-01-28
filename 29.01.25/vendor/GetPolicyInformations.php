@@ -3,7 +3,7 @@ session_start(); // Start the session
 
 // SOAP request to fetch policy information
 function getPolicyInformation($userName, $password, $policyNumber) {
-    $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // API endpoint
+    $soapUrl = "https://insure.a-group.az/insureazSvcTest/AQroupMobileIntegrationSvc.asmx"; // API endpoint
 
     // Build the SOAP request XML
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .

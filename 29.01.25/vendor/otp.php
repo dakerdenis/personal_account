@@ -9,7 +9,7 @@ if (!isset($_SESSION['loggedin']) || !isset($_SESSION['phoneNumber'])) {
 
 // SOAP request to generate OTP
 function generateOtp($userName, $password, $phoneNumber) {
-    $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // API endpoint
+    $soapUrl = "https://insure.a-group.az/insureazSvcTest/AQroupMobileIntegrationSvc.asmx"; // API endpoint
 
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .
         '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .

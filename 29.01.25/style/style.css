@@ -469,22 +469,34 @@ justify-content: space-between;
 
 .polis__nam-desc {
   color: #be0a04;
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 600;
   margin-bottom: 15px;
   margin-top: 25px;
   font-family: "Gentium Plus", serif;
 }
 .polis_single_element{
-  margin-bottom: 20px;
+  margin-bottom: 45px;
+
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.polis_single_element:hover{
+  box-shadow: rgba(190, 10, 4, 0.5) 0px 2px 8px 0px;
 }
 .polis__single__name{
-  color: #be0a04;
+  color: rgb(190, 10, 4);
   font-weight: 600;
-  font-size: 17px;
-  margin-bottom: 5px;
+  font-size: 20px;
+  margin-bottom: 10px;
 }
-
+.polis_line{
+  width: 150px;
+  height: 1px;
+  background-color: #be0a04;
+  margin-bottom: 15px;
+}
 .popup {
   position: fixed;
   top: 0;
@@ -502,24 +514,31 @@ justify-content: space-between;
   background: #fff;
   padding: 20px;
   border-radius: 5px;
-  max-width: 500px;
-  width: 100%;
-  text-align: center;
+  width: 500px;
+
+  text-align: left;
+  position: absolute;
+  left: calc(50% - 250px);
+  top: 18%;
 }
 
 #close-popup {
   margin-top: 10px;
-  padding: 10px 20px;
-  background: #007bff;
+  height: 40px;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #be0a04;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
-#close-popup:hover {
-  background: #0056b3;
-}
+
 .whatsapp{
   display: flex;
   align-items: center;
@@ -538,4 +557,77 @@ justify-content: space-between;
 .whatsapp p {
   font-size: 18px;
   font-weight: 600;
+}
+.policy-details-button{
+  width: 120px;
+  height: 30px;
+  margin-top: 10px;
+  background-color: #be0a04;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 20px;
+}
+
+.policy_font{
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.policy_font span{
+  font-weight: 400;
+}
+
+.policy__popup-wrapper{
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  flex-direction: column;
+}
+.policy__popup-name {
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  color: #be0a04;
+
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.policy__popup-line{
+  width: 50px;
+  height: 2px;
+  background-color: #be0a04;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+.policy__popup-number {
+  width: 100%;
+  margin-bottom: 5px;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+}
+.policy__popup-number p{
+  font-size: 18px;
+  font-weight: 600;
+}
+.policy__popup-number span{
+  font-size: 18px;
+  font-weight: 400;
+}
+.policy__info-section p {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+.policy__collateral-section h4{
+  color: #be0a04;
+  font-weight: 600;
+  
+}
+.policy__collateral-section li{
+  margin-bottom: 6px;
 }

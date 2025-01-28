@@ -2,7 +2,7 @@
 session_start();
 
 function registerForDoctor($userName, $password, $pinCode, $cardNumber, $doctorId) {
-    $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx";
+    $soapUrl = "https://insure.a-group.az/insureazSvcTest/AQroupMobileIntegrationSvc.asmx";
 
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .
         '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .

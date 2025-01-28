@@ -3,7 +3,7 @@ session_start(); // Start the session
 
 // SOAP request to get specialists based on specialization
 function getSpecialists($userName, $password, $specialityId) {
-    $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // API endpoint
+    $soapUrl = "https://insure.a-group.az/insureazSvcTest/AQroupMobileIntegrationSvc.asmx"; // API endpoint
 
     // Build the SOAP request with the correct parameters
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .

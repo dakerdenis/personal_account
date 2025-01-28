@@ -12,7 +12,7 @@ $phoneNumber = isset($_POST['phoneNumber']) ? $_POST['phoneNumber'] : '';
 error_log("Form data received: Username=$username, Password=$password, PinCode=$pinCode, PolicyNumber=$policyNumber, PhoneNumber=$phoneNumber");
 
 function login($username, $password, $pinCode, $policyNumber, $phoneNumber) {
-    $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // SOAP endpoint
+    $soapUrl = "https://insure.a-group.az/insureazSvcTest/AQroupMobileIntegrationSvc.asmx"; // SOAP endpoint
 
     // SOAP Request
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .

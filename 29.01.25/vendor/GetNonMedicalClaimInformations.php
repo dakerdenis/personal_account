@@ -2,7 +2,7 @@
 session_start(); // Start the session
 
 function getNonMedicalClaimInformations($userName, $password, $pinCode) {
-    $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx";
+    $soapUrl = "https://insure.a-group.az/insureazSvcTest/AQroupMobileIntegrationSvc.asmx";
 
     // Build the SOAP request XML
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .

@@ -3,7 +3,7 @@ session_start();
 
 // SOAP request to fetch medical claim information
 function getMedicalClaimInformations($userName, $password, $pinCode) {
-    $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx"; // API endpoint
+    $soapUrl = "https://insure.a-group.az/insureazSvcTest/AQroupMobileIntegrationSvc.asmx"; // API endpoint
 
     // Build the SOAP request XML
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .

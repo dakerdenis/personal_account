@@ -5,8 +5,20 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-function getCustomerPolicies($userName, $password, $pinCode) {
-    $soapUrl = "https://insure.a-group.az/insureazSvc/AQroupMobileIntegrationSvc.asmx";
+// Enable or disable logging
+$enableLogging = true;
+
+function logMessage($filename, $message)
+{
+    global $enableLogging;
+    if ($enableLogging) {
+        @file_put_contents($filename, $message . PHP_EOL, FILE_APPEND);
+    }
+}
+
+function getCustomerPolicies($userName, $password, $pinCode)
+{
+    $soapUrl = "https://insure.a-group.az/insureazSvcTest/AQroupMobileIntegrationSvc.asmx";
 
     $xml_post_string = '<?xml version="1.0" encoding="utf-8"?>' .
         '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' .
@@ -34,19 +46,19 @@ function getCustomerPolicies($userName, $password, $pinCode) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_post_string);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
     $response = curl_exec($ch);
 
     if ($response === false) {
-        file_put_contents('curl_error.log', curl_error($ch));
+        logMessage('curl_error.log', "CURL Error: " . curl_error($ch));
         curl_close($ch);
         throw new Exception("CURL Error: " . curl_error($ch));
     }
 
-    curl_close($ch);
+    logMessage('soap_response.log', $response);
 
-    // Log raw response for debugging
-    file_put_contents('soap_response.log', $response);
+    curl_close($ch);
 
     return $response;
 }
@@ -54,13 +66,15 @@ function getCustomerPolicies($userName, $password, $pinCode) {
 try {
     $userName = 'AQWeb';
     $password = '@QWeb';
-    $pinCode = $_SESSION['pinCode'] ?? 'A111111'; // Default for debugging
+    $pinCode = $_SESSION['pinCode'] ?? 'A222222';
+
+    logMessage('request_params.log', "userName: $userName, password: $password, pinCode: $pinCode");
 
     $response = getCustomerPolicies($userName, $password, $pinCode);
 
     $xml = simplexml_load_string($response);
     if ($xml === false) {
-        file_put_contents('error_log.log', "Failed to parse XML: $response");
+        logMessage('error_log.log', "Failed to parse XML: $response");
         throw new Exception('Failed to parse XML response.');
     }
 
@@ -71,14 +85,18 @@ try {
 
     $resultXml = simplexml_load_string(html_entity_decode($policiesResult));
     if (!$resultXml || !$resultXml->POLICIES) {
-        file_put_contents('error_log.log', "Invalid policies result: $policiesResult");
+        logMessage('error_log.log', "Invalid policies result: $policiesResult");
         throw new Exception('Invalid policies result.');
     }
 
     $policies = json_decode(json_encode($resultXml), true);
-    echo json_encode(['POLICIES' => $policies['POLICIES']]);
+    logMessage('decoded_policies.log', json_encode($policies, JSON_PRETTY_PRINT));
 
+    // Ensure no PHP warnings interfere with the JSON response
+    header('Content-Type: application/json');
+    echo json_encode(['POLICIES' => $policies['POLICIES']]);
 } catch (Exception $e) {
-    file_put_contents('error_log.log', $e->getMessage(), FILE_APPEND);
+    logMessage('error_log.log', $e->getMessage());
+    header('Content-Type: application/json');
     echo json_encode(['error' => $e->getMessage()]);
 }
