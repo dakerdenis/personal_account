@@ -59,7 +59,7 @@
                 </div>
                 <!-- Tab content for various sections -->
                 <div id="policies" class="tab-content">
-                    Loading data
+                Loading...
                 </div>
 
                 <!-----Policies info Auto---->
@@ -87,7 +87,7 @@
                 </div>
 
                 <div id="complaints" class="tab-content">
-                    peyser
+                    Loading...
                 </div>
                 <div id="complaints_not_medical" class="tab-content">
                     <!-- Non-Medical Claims will be rendered here -->
