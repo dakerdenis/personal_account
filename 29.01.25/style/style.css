@@ -626,8 +626,19 @@ justify-content: space-between;
 .policy__collateral-section h4{
   color: #be0a04;
   font-weight: 600;
-  
+
 }
 .policy__collateral-section li{
   margin-bottom: 6px;
+}
+.policy__collateral-section li span {
+  color: #be0a04;
+}
+.policy__collateral-line{
+  width: 100px;
+  height: 1px;
+  background-color: #be0a04;
+  margin: 0 auto;
+  margin-top: 15px;
+  margin-bottom:15px;
 }

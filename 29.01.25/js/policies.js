@@ -1,39 +1,91 @@
 function loadPolicies() {
+    // Function to get insurance code descriptions
+    const getInsuranceDescription = (code) => {
+        const insuranceCodeDescriptions = {
+            "AATPL": "Avtomobilin İcbari Sığortası",
+            "AS": "Avtomobilin Kasko Sığortası",
+            "VMI": "Avtomobilin Kasko Sığortası",
+            "AS-A47-GD": "Avtomobilin Kasko Sığortası",
+            "AS-FQ": "Avtomobilin Kasko Sığortası",
+            "AS-F": "Avtomobilin Kasko Sığortası",
+            "AS-H": "Avtomobilin Kasko Sığortası",
+            "REVAS": "Avtomobilin Kasko Sığortası",
+            "EE": "Elektron cihazların sığortası",
+            "DETPL": "Əmlak İstismarın İcbari Sığortası",
+            "DE": "Əmlakın İcbari Sığortası",
+            "VHI": "Əmlakın könüllü sığortası",
+            "VPI-FL": "Əmlakın könüllü sığortası",
+            "VPI-F": "Əmlakın könüllü sığortası",
+            "VPI-H": "Əmlakın könüllü sığortası",
+            "VPI": "Əmlakın könüllü sığortası",
+            "VPI-HN": "Əmlakın könüllü sığortası",
+            "VPI-FN": "Əmlakın könüllü sığortası",
+            "REVPI": "Əmlakın könüllü sığortası",
+            "CPA": "Fərdi qəza sığortası",
+            "PA": "Fərdi qəza sığortası",
+            "CAR": "İnşaat risklərin sığortası",
+            "EL": "İşəgötürənin məsuliyyətinin sığortası",
+            "ELN": "İşəgötürənin məsuliyyətinin sığortası",
+            "TPL": "Məsuliyyət sığortası",
+            "TPLN": "Məsuliyyət sığortası",
+            "CMMI": "Peşə Məsuliyyətinin sığortası",
+            "PI": "Peşə Məsuliyyətinin sığortası",
+            "CDOL": "Peşə Məsuliyyətinin sığortası",
+            "CPM": "Podratçının maşın və avadanlığın sığortası",
+            "TI": "Səyahət sığortası",
+            "VPI-R": "Təkərlərin sığortası",
+            "LI": "Tibbi Sığorta",
+            "LE": "Tibbi Sığorta",
+            "ONK-A47": "Tibbi Sığorta",
+            "ONK": "Tibbi Sığorta",
+            "TTU": "Tibbi Sığorta",
+            "LE-D": "Tibbi Sığorta",
+            "YK": "Yaşıl Kart",
+            "YS-OC": "Yük sığortası",
+            "YS": "Yük sığortası",
+            "YSN": "Yük sığortası"
+        };
+        return insuranceCodeDescriptions[code] || code; // Return description or fallback to the code
+    };
+
+    // Function to get status descriptions
+    const getStatusDescription = (status) => {
+        const statusDescriptions = {
+            "B": "Bitdi",
+            "D": "Davam Edir",
+            "E": "Sonlandırıldı"
+        };
+        return statusDescriptions[status] || status; // Return description or fallback to the status
+    };
+
+    // Fetch policies from the server
     fetch('./vendor/GetCustomerPolicies.php')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Server error: ${response.status} ${response.statusText}`);
             }
-            return response.text(); // Read as text to handle unexpected responses
-        })
-        .then(responseText => {
-            try {
-                // Parse JSON from response text
-                return JSON.parse(responseText);
-            } catch (error) {
-                console.error('Failed to parse JSON:', responseText); // Log raw response for debugging
-                throw new Error('Invalid JSON response from server.');
-            }
+            return response.json(); // Parse response as JSON
         })
         .then(policiesData => {
             if (policiesData && policiesData.POLICIES) {
                 const policies = Array.isArray(policiesData.POLICIES) ? policiesData.POLICIES : [policiesData.POLICIES];
-                let policiesHtml = '<h3 class="polis__nam-desc">Polislər:</h3><ul>';
-                policies.forEach(policy => {
-                    policiesHtml += `
+                const policiesHtml = policies.map(policy => {
+                    const insuranceDescription = getInsuranceDescription(policy.INSURANCE_CODE);
+                    const statusDescription = getStatusDescription(policy.STATUS);
+
+                    return `
                         <li class="polis_single_element">
-                            <p class="polis__single__name">${policy.INSURANCE_NAME}</p>
+                            <p class="polis__single__name">${insuranceDescription}</p>
                             <div class="polis_line"></div>
                             <p class="policy_font policy_number">Policy Number: <span>${policy.POLICY_NUMBER}</span></p>
-                            <p class="policy_font insurance_code">Insurance Code: <span>${policy.INSURANCE_CODE}</span></p>
-                            <p class="policy_font status_code">Status: <span>${policy.STATUS}</span></p>
+                            <p class="policy_font status_code">Status: <span>${statusDescription}</span></p>
                             <p class="policy_font policy_enddate">End Date: <span>${policy.INSURANCE_END_DATE}</span></p>
                             <button class="policy-details-button" data-policy-number="${policy.POLICY_NUMBER}">View Details</button>
                         </li>
                     `;
-                });
-                policiesHtml += '</ul>';
-                document.getElementById('policies').innerHTML = policiesHtml;
+                }).join(''); // Join array of HTML strings into one string
+
+                document.getElementById('policies').innerHTML = `<h3 class="polis__nam-desc">Polislər:</h3><ul>${policiesHtml}</ul>`;
 
                 // Attach click event listeners to "View Details" buttons
                 document.querySelectorAll('.policy-details-button').forEach(button => {
@@ -51,6 +103,9 @@ function loadPolicies() {
             document.getElementById('policies').innerHTML = `<p>Error loading policies data: ${error.message || 'Unknown error'}.</p>`;
         });
 }
+
+
+
 
 
 // Function to open popup and fetch policy details
@@ -84,31 +139,66 @@ function openPolicyDetailsPopup(policyNumber) {
                 // Check for POLICY_INFORMATION
                 if (policyDetails.POLICY_INFORMATION) {
                     const policyInfo = policyDetails.POLICY_INFORMATION;
-                    popupHtml += `
-                        <div class="policy__info-section">
-                            <p>Insurance Start Date: <span>${policyInfo.INSURANCE_START_DATE || 'N/A'}</span></p>
-                            <p>Policy Sale Date: <span>${policyInfo.POLICY_SALE_DATE || 'N/A'}</span></p>
-                            <p>Price: <span>${policyInfo.PRICE || 'N/A'} ${policyInfo.CURRENCY_CODE || ''}</span></p>
-                            <p>Total Insurance Price: <span>${policyInfo.TOTAL_INSURANCE_PRICE || 'N/A'} ${policyInfo.CURRENCY_CODE || ''}</span></p>
-                            ${policyInfo.INSURER_CUSTOMER_NAME ? `<p>Insurer Name: <span>${policyInfo.INSURER_CUSTOMER_NAME}</span></p>` : ''}
-                            ${policyInfo.INSURED_CUSTOMER_NAME ? `<p>Insured Name: <span>${policyInfo.INSURED_CUSTOMER_NAME}</span></p>` : ''}
-                            ${policyInfo.PROGRAM_NAME ? `<p>Program Name: <span>${policyInfo.PROGRAM_NAME}</span></p>` : ''}
-                            ${policyInfo.PLATE_NUMBER_FULL ? `<p>Plate Number: <span>${policyInfo.PLATE_NUMBER_FULL}</span></p>` : ''}
-                            ${policyInfo.BRAND_NAME ? `<p>Brand: <span>${policyInfo.BRAND_NAME}</span></p>` : ''}
-                            ${policyInfo.MODEL_NAME ? `<p>Model: <span>${policyInfo.MODEL_NAME}</span></p>` : ''}
-                        </div>
-                    `;
+
+                    // Identify policy type based on INSURANCE_CODE
+                    const insuranceCode = policyInfo.INSURANCE_CODE;
+                    const medicalCodes = ["LI", "LE", "ONK-A47", "ONK", "TTU", "LE-D", "YK", "YS-OC", "YS", "YSN"];
+                    const carCodes = ["AATPL", "AS", "VMI", "AS-A47-GD", "AS-FQ", "AS-F", "AS-H", "REVAS"];
+
+                    if (medicalCodes.includes(insuranceCode)) {
+                        // Medical Policy Structure
+                        popupHtml += `
+                            <div class="policy__info-section">
+                                ${policyInfo.INSURER_CUSTOMER_NAME ? `<p>Insurer Name: <span>${policyInfo.INSURER_CUSTOMER_NAME}</span></p>` : ''}
+                                ${policyInfo.INSURED_CUSTOMER_NAME ? `<p>Insured Name: <span>${policyInfo.INSURED_CUSTOMER_NAME}</span></p>` : ''}
+                                <p>Policy Sale Date: <span>${policyInfo.POLICY_SALE_DATE || 'N/A'}</span></p>
+                                <p>Insurance Start Date: <span>${policyInfo.INSURANCE_START_DATE || 'N/A'}</span></p>
+                                <p>End Date: <span>${policyInfo.END_DATE || 'N/A'}</span></p>
+                                <p>Price: <span>${policyInfo.PRICE || 'N/A'} ${policyInfo.CURRENCY_CODE || ''}</span></p>
+                                <p>Total Insurance Price: <span>${policyInfo.TOTAL_INSURANCE_PRICE || 'N/A'} ${policyInfo.CURRENCY_CODE || ''}</span></p>
+                                ${policyInfo.PROGRAM_NAME ? `<p>Program Name: <span>${policyInfo.PROGRAM_NAME}</span></p>` : ''}
+                                <p>Status: <span>${policyInfo.STATUS || 'N/A'}</span></p>
+                            </div>
+                        `;
+                    } else if (carCodes.includes(insuranceCode)) {
+                        // Car Policy Structure
+                        popupHtml += `
+                            <div class="policy__info-section">
+                                <p>Policy Sale Date: <span>${policyInfo.POLICY_SALE_DATE || 'N/A'}</span></p>
+                                <p>Insurance Start Date: <span>${policyInfo.INSURANCE_START_DATE || 'N/A'}</span></p>
+                                <p>End Date: <span>${policyInfo.END_DATE || 'N/A'}</span></p>
+                                ${policyInfo.BRAND_NAME ? `<p>Brand: <span>${policyInfo.BRAND_NAME}</span></p>` : ''}
+                                ${policyInfo.MODEL_NAME ? `<p>Model: <span>${policyInfo.MODEL_NAME}</span></p>` : ''}
+                                ${policyInfo.PLATE_NUMBER_FULL ? `<p>Plate Number: <span>${policyInfo.PLATE_NUMBER_FULL}</span></p>` : ''}
+                                <p>Price: <span>${policyInfo.PRICE || 'N/A'} ${policyInfo.CURRENCY_CODE || ''}</span></p>
+                                <p>Total Insurance Price: <span>${policyInfo.TOTAL_INSURANCE_PRICE || 'N/A'} ${policyInfo.CURRENCY_CODE || ''}</span></p>
+                                <p>Status: <span>${policyInfo.STATUS || 'N/A'}</span></p>
+                            </div>
+                        `;
+                    } else {
+                        // Other Policy Structure
+                        popupHtml += `
+                            <div class="policy__info-section">
+                                <p>Policy Sale Date: <span>${policyInfo.POLICY_SALE_DATE || 'N/A'}</span></p>
+                                <p>Insurance Start Date: <span>${policyInfo.INSURANCE_START_DATE || 'N/A'}</span></p>
+                                <p>End Date: <span>${policyInfo.END_DATE || 'N/A'}</span></p>
+                                <p>Price: <span>${policyInfo.PRICE || 'N/A'} ${policyInfo.CURRENCY_CODE || ''}</span></p>
+                                <p>Total Insurance Price: <span>${policyInfo.TOTAL_INSURANCE_PRICE || 'N/A'} ${policyInfo.CURRENCY_CODE || ''}</span></p>
+                                <p>Status: <span>${policyInfo.STATUS || 'N/A'}</span></p>
+                            </div>
+                        `;
+                    }
                 }
 
                 // Check for COLLATERAL_NAMES
                 if (policyDetails.COLLATERAL_NAMES && Array.isArray(policyDetails.COLLATERAL_NAMES)) {
                     popupHtml += `
                         <div class="policy__collateral-section">
-                            <h4>Строковые параметры:</h4>
+                            <div class="policy__collateral-line"></div>
                             <ul>
                     `;
                     policyDetails.COLLATERAL_NAMES.forEach(collateral => {
-                        popupHtml += `<li>${collateral.COLLATERAL_NAME || 'N/A'}</li>`;
+                        popupHtml += `<li><span>&#9679; </span> ${collateral.COLLATERAL_NAME || 'N/A'}</li>`;
                     });
                     popupHtml += `</ul></div>`;
                 }
@@ -137,3 +227,5 @@ function openPolicyDetailsPopup(policyNumber) {
             preloader.style.display = 'none';
         });
 }
+
+
