@@ -12,12 +12,12 @@ function loadDoctors() {
                 let specialitiesHtml = '<h2 class="doctors_desc">Həkimlər</h2> <br> <ul>';
                 specialities.forEach(speciality => {
                     specialitiesHtml += `
-                        <li class="doktor_list_speciality_element" data-speciality-id="${speciality.SPECIALITY_ID}">
+                        <li class="complaints_medical-li doktor_list_speciality_element" data-speciality-id="${speciality.SPECIALITY_ID}">
                             <img src="https://a-group.az/assets/images/healthicons_doctor-male-outline.svg" alt="" srcset="">
                             <p>${speciality.SPECIALITY_NAME}</p>
 
                         </li>
-                                                    Speciality ID: ${speciality.SPECIALITY_ID}
+                        <p class="hidden"> Speciality ID: ${speciality.SPECIALITY_ID}</p>                       
                     `;
                 });
                 specialitiesHtml += '</ul>';

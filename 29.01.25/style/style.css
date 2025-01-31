@@ -393,12 +393,13 @@ justify-content: space-between;
 
 .loader {
   border: 8px solid #f3f3f3;
-  border-top: 8px solid #3498db;
+  border-top: 8px solid #be0a04;
   border-radius: 50%;
   width: 60px;
   height: 60px;
   animation: spin 1s linear infinite;
 }
+
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
@@ -653,11 +654,21 @@ justify-content: space-between;
   font-family: "Gentium Plus", serif;
 }
 .complaints_medical-li{
+  max-width: 800px;
   margin-bottom: 45px;
   padding: 20px;
   border-radius: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
+.doctors__single{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  position: relative;
+
+}
+
 .complaints_medical-block{
   display: flex;
   align-items: center;
@@ -673,4 +684,18 @@ justify-content: space-between;
   font-weight: 400;
   font-size: 20px;
 }
+.hidden{
+  opacity: 0;
+  visibility: hidden;
+}
+.doctor-details-button{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
 
+.register-doctor-button{
+  position: absolute;
+  right: 0;
+  top: 0;
+}

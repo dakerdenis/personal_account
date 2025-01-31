@@ -23,17 +23,18 @@ function loadSpecialists(specialityId) {
                 console.log('Specialists data:', data); // Log the response to check the structure
 
                 if (data && data.DOCTORS) {
-                    let doctorsHtml = '<h2>Specialists List</h2><ul><br>';
+                    let doctorsHtml = '<h2 class="complaints_medical-name">Specialists List</h2><ul><br>';
                     data.DOCTORS.forEach(doctor => {
                         doctorsHtml += `
-                            <li class="doktor_single_element">
+                            <li class="complaints_medical-li doctors__single">
                                 <div>
                                     <p><strong>Doctor Name: ${doctor.NAME}</strong></p>
                                     <p>Workplace: ${doctor.WORKPLACE_NAME}</p>
                                     <p>Doctor ID: ${doctor.CUSTOMER_ID}</p>
                                 </div>
                                 <img src="data:image/jpeg;base64,${doctor.FILE_CONTENT}" alt="Doctor's image" style="width:100px; height:100px;" /><br>
-                                <button class="doctor-details-button" data-doctor-id="${doctor.CUSTOMER_ID}" data-doctor-image="data:image/jpeg;base64,${doctor.FILE_CONTENT}">Write to doctor</button>
+                                <button class="doctor-details-button" data-doctor-id="${doctor.CUSTOMER_ID}">Подробно о докторе</button>
+                                <!--Запись к доктору--->
                                 <button class="register-doctor-button" data-doctor-id="${doctor.CUSTOMER_ID}">Записаться к доктору</button>
                             </li>
                         `;
@@ -87,7 +88,7 @@ function loadSpecialists(specialityId) {
                 // Hide preloader after data is loaded or error occurs
                 preloader.style.display = 'none';
             });
-    }, 1500); // Minimum preloader time of 1.5 seconds
+    }, 1000); // Minimum preloader time of 1.5 seconds
 }
 
 // Helper function to fetch medical policies

@@ -115,7 +115,6 @@
 
         <div id="preloader" class="preloader" style="display: none;">
             <div class="loader"></div>
-            <p>Loading...</p>
         </div>
 
 
