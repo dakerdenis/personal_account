@@ -642,3 +642,35 @@ justify-content: space-between;
   margin-top: 15px;
   margin-bottom:15px;
 }
+
+
+.complaints_medical-name{
+  color: #be0a04;
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  margin-top: 25px;
+  font-family: "Gentium Plus", serif;
+}
+.complaints_medical-li{
+  margin-bottom: 45px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.complaints_medical-block{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+.complaints_medical-block p{
+  font-weight: 600;
+  font-size: 20px;
+
+}
+.complaints_medical-block span{
+  font-weight: 400;
+  font-size: 20px;
+}
+

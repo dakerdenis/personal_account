@@ -59,7 +59,7 @@
                 </div>
                 <!-- Tab content for various sections -->
                 <div id="policies" class="tab-content">
-                Loading...
+                    Loading...
                 </div>
 
                 <!-----Policies info Auto---->
@@ -131,3 +131,13 @@
     </body>
 
     </html>
+
+
+
+
+
+
+
+
+
+

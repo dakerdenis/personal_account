@@ -18,13 +18,13 @@ function loadComplaints() {
                 console.log('Complaints data:', data); // Log the response to check the structure
 
                 if (data && data.COMPLAINTS) {
-                    let complaintsHtml = '<h2>Complaints List</h2><ul>';
+                    let complaintsHtml = '<h2 class="complaints_medical-name">Complaints List</h2><ul>';
                     data.COMPLAINTS.forEach(complaint => {
                         complaintsHtml += `
-                            <li>
-                                <p><strong>PIN Code:</strong> ${complaint.PIN_CODE}</p>
-                                <p><strong>Clinic Name:</strong> ${complaint.CLINIC_NAME}</p>
-                                <p><strong>Event Occurrence Date:</strong> ${new Date(complaint.EVENT_OCCURRENCE_DATE).toLocaleDateString()}</p>
+                            <li class="complaints_medical-li">
+                                <div class="complaints_medical-block"><p>PIN Code:</p> <span>${complaint.PIN_CODE}</span></div>
+                                <div class="complaints_medical-block"><p>Clinic Name:</p> <span>${complaint.CLINIC_NAME}</span></div>
+                                <div class="complaints_medical-block"><p>Event Occurrence Date:</p> <span>${new Date(complaint.EVENT_OCCURRENCE_DATE).toLocaleDateString()}</span></div>
                             </li>
                         `;
                     });
