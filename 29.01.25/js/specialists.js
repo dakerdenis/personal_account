@@ -28,12 +28,15 @@ function loadSpecialists (specialityId) {
           data.DOCTORS.forEach(doctor => {
             doctorsHtml += `
                             <li class="complaints_medical-li doctors__single">
-                                <div>
-                                    <p><strong>Doctor Name: ${doctor.NAME}</strong></p>
-                                    <p>Workplace: ${doctor.WORKPLACE_NAME}</p>
-                                    <p>Doctor ID: ${doctor.CUSTOMER_ID}</p>
+                                <div  class="doctors__single-text">
+                                    <p  class="doctors__single-name"><strong> ${doctor.NAME}</strong></p>
+                                    <p  class="doctors__single-work">İş yeri: ${doctor.WORKPLACE_NAME}</p>
+                                    <p  class="doctors__single-id">Doctor ID: ${doctor.CUSTOMER_ID}</p>
                                 </div>
-                                <img src="data:image/jpeg;base64,${doctor.FILE_CONTENT}" alt="Doctor's image" style="width:100px; height:100px;" /><br>
+                                <div class="doctors__single-image">
+<img src="data:image/jpeg;base64,${doctor.FILE_CONTENT}" alt="Doctor's image"  /><br>
+                                </div>
+                                
                                 <button class="doctor-details-button" data-doctor-id="${doctor.CUSTOMER_ID}">Подробно о докторе</button>
                                 <!--Запись к доктору--->
                                 <button class="register-doctor-button" data-doctor-id="${doctor.CUSTOMER_ID}">Записаться к доктору</button>

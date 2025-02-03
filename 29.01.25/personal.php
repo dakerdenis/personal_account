@@ -106,6 +106,18 @@
                     </div>
                 </div>
 
+                <div id="doctor-popup" class="popup" style="display: none;">
+                
+                    <div class="doctor-popup__wrapper">
+                    <button id="close-doctor-popup" class="popup-close">Bağla</button>
+                    <div id="doctor-popup-content" class="popup-content2">
+                    
+                    <!-- Doctor details will be rendered here -->
+                </div>
+                    </div>    
+
+                    
+                </div>
 
 
             </div>
@@ -131,13 +143,3 @@
     </body>
 
     </html>
-
-
-
-
-
-
-
-
-
-
