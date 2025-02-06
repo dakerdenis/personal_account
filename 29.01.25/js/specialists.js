@@ -69,18 +69,16 @@ function loadSpecialists (specialityId) {
           )
           registerButtons.forEach(button => {
             button.addEventListener('click', async event => {
-              const doctorId = event.target.getAttribute('data-doctor-id')
-              console.log(`Register button clicked for Doctor ID: ${doctorId}`)
+              const doctorId = event.target.getAttribute('data-doctor-id');
+              console.log(`Register button clicked for Doctor ID: ${doctorId}`);
 
               // Fetch the medical policies
               const medicalPolicy = await fetchMedicalPolicies()
 
               if (!medicalPolicy) {
-                alert(
-                  'You do not have a valid medical policy to register with a doctor.'
-                )
-                return
-              }
+                alert('You do not have a valid medical policy to register with a doctor.');
+                return;
+            }
 
               // Proceed to register for the doctor
               registerForDoctor(doctorId, medicalPolicy)
@@ -102,67 +100,73 @@ function loadSpecialists (specialityId) {
 }
 
 // Helper function to fetch medical policies
-// Helper function to fetch medical policies
-async function fetchMedicalPolicies () {
+async function fetchMedicalPolicies() {
   try {
-    // Check if medical policy number is cached
-    const cachedPolicy = await fetch('./vendor/GetCachedPolicy.php')
-    const cachedPolicyData = await cachedPolicy.json()
+      // Check if medical policy number is cached
+      const cachedPolicy = await fetch('./vendor/GetCachedPolicy.php');
+      const cachedPolicyData = await cachedPolicy.json();
 
-    if (cachedPolicyData && cachedPolicyData.medicalPolicyNumber) {
-      console.log(
-        'Using cached medical policy:',
-        cachedPolicyData.medicalPolicyNumber
-      )
-      return cachedPolicyData.medicalPolicyNumber
-    }
-
-    // Fallback: Fetch policies dynamically if not cached
-    const response = await fetch('./vendor/GetCustomerPolicies.php')
-    const data = await response.json()
-
-    if (data && data.POLICIES) {
-      const policies = Array.isArray(data.POLICIES)
-        ? data.POLICIES
-        : [data.POLICIES]
-      const medicalPolicy = policies.find(
-        policy => policy.INSURANCE_NAME === 'Tibbi sığorta'
-      )
-
-      if (medicalPolicy) {
-        return medicalPolicy.CARD_NUMBER // Return the card number
+      if (cachedPolicyData && cachedPolicyData.medicalPolicyNumber) {
+          console.log('Using cached medical policy:', cachedPolicyData.medicalPolicyNumber);
+          return cachedPolicyData.medicalPolicyNumber;
       }
-    }
-    return null // No medical policy found
+
+      // Fallback: Fetch policies dynamically if not cached
+      const response = await fetch('./vendor/GetCustomerPolicies.php');
+      const data = await response.json();
+
+      if (data && data.POLICIES) {
+          const policies = Array.isArray(data.POLICIES) ? data.POLICIES : [data.POLICIES];
+          console.log('Fetched policies:', policies);
+
+          // List of valid medical policy codes
+          const validMedicalCodes = ['LI', 'LE', 'ONK-A47', 'ONK', 'TTU', 'LE-D', 'YK', 'YS-OC', 'YS', 'YSN'];
+
+          // Check for a valid medical policy
+          const medicalPolicy = policies.find(policy => validMedicalCodes.includes(policy.INSURANCE_CODE));
+
+          if (medicalPolicy) {
+              console.log('Medical policy found:', medicalPolicy);
+              return medicalPolicy.CARD_NUMBER || medicalPolicy.POLICY_NUMBER; // Return card or policy number
+          }
+      }
+
+      console.warn('No valid medical policy found.');
+      return null; // No valid medical policy found
   } catch (error) {
-    console.error('Error fetching policies:', error)
-    return null
+      console.error('Error fetching policies:', error);
+      return null;
   }
 }
+
+
 
 // Helper function to register for a doctor
-async function registerForDoctor (doctorId, cardNumber) {
+async function registerForDoctor(doctorId, cardNumber) {
   try {
-    const response = await fetch('./vendor/RegisterForDoctor.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: `doctorId=${encodeURIComponent(
-        doctorId
-      )}&cardNumber=${encodeURIComponent(cardNumber)}`
-    })
+      console.log(`Registering for doctor: ${doctorId} with card number: ${cardNumber}`);
 
-    const data = await response.json()
-    console.log('Doctor Registration Response:', data)
+      const response = await fetch('./vendor/RegisterForDoctor.php', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `doctorId=${encodeURIComponent(doctorId)}&cardNumber=${encodeURIComponent(cardNumber)}`,
+      });
 
-    if (data && data.success) {
-      alert('You have successfully registered with the doctor.')
-    } else {
-      alert('Registration failed. Please try again later.')
-    }
+      const data = await response.json();
+      console.log('Doctor Registration Response:', data);
+
+      if (data.success) {
+          alert('You have successfully registered with the doctor.');
+      } else {
+          alert('Registration failed. Please try again later.');
+          console.error('Error:', data.error || 'Unknown error');
+      }
   } catch (error) {
-    console.error('Error registering for doctor:', error)
-    alert('An error occurred while registering. Please try again later.')
+      console.error('Error registering for doctor:', error);
+      alert('An error occurred while registering. Please try again later.');
   }
 }
+
+

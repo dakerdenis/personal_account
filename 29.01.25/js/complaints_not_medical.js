@@ -18,33 +18,31 @@ function loadNonMedicalComplaints() {
                 // Check if data is valid
                 if (data && data.CLM_NOTICE_DISPETCHER) {
                     const complaints = Array.isArray(data.CLM_NOTICE_DISPETCHER)
-                        ? data.CLM_NOTICE_DISPETCHER
-                        : [data.CLM_NOTICE_DISPETCHER];
-
-                    // Check if complaints are empty
-                    if (complaints.length === 0 || Object.keys(complaints[0]).length === 0) {
-                        complaintsTab.innerHTML = '<p>You don\'t have complaints.</p>';
-                        return;
-                    }
+                    ? data.CLM_NOTICE_DISPETCHER
+                    : [data.CLM_NOTICE_DISPETCHER];
+            
+                if (complaints.length === 0 || Object.keys(complaints[0]).length === 0) {
+                    complaintsTab.innerHTML = '<p>You don\'t have complaints.</p>';
+                    return;
+                }
 
                     // Create HTML for complaints
-                    let complaintsHtml = '<h2  class="complaints_medical-name" >Non-Medical Complaints</h2><ul>';
+                    let complaintsHtml = '<h2  class="complaints_medical-name">Non-Medical Complaints</h2><ul>';
                     complaints.forEach(complaint => {
                         complaintsHtml += `
                             <li class="complaints_medical-li">
                                 <div><p>PIN Code:</p> <span>${complaint.PIN_CODE || 'N/A'}</span></div>
-                                <div><p>Clinic Name:</p><span> ${complaint.CLINIC_NAME || 'N/A'}</span></div>
+                                <div><p>Policy Number:</p> <span>${complaint.POLICY_NUMBER || 'N/A'}</span></div>
                                 <div><p>Event Date:</p><span> ${
                                     complaint.EVENT_OCCURRENCE_DATE
                                         ? new Date(complaint.EVENT_OCCURRENCE_DATE).toLocaleString()
                                         : 'N/A'
                                 }</span></div>
+                                <div><p>Status:</p> <span>${complaint.STATUS_NAME || 'N/A'}</span></div>
                             </li>
                         `;
                     });
                     complaintsHtml += '</ul>';
-
-                    // Render complaints in the tab
                     complaintsTab.innerHTML = complaintsHtml;
                 } else {
                     // Handle completely empty responses

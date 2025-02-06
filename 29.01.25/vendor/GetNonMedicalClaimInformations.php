@@ -1,5 +1,5 @@
 <?php
-session_start(); // Start the session
+session_start();
 
 function getNonMedicalClaimInformations($userName, $password, $pinCode) {
     $soapUrl = "https://insure.a-group.az/insureazSvcTest/AQroupMobileIntegrationSvc.asmx";
@@ -44,19 +44,29 @@ function getNonMedicalClaimInformations($userName, $password, $pinCode) {
     }
     curl_close($ch);
 
+    // Return raw SOAP response for debugging
     return $response;
 }
 
 try {
-    $userName = 'AQWeb'; 
-    $password = '@QWeb'; 
+    $userName = 'AQWeb';
+    $password = '@QWeb';
     $pinCode = $_SESSION['pinCode'];
 
     $response = getNonMedicalClaimInformations($userName, $password, $pinCode);
 
+    // Return raw SOAP response for debugging in the frontend
+    echo json_encode([
+        'rawResponse' => $response,
+    ]);
+
+    // Parse the SOAP response
     $xml = simplexml_load_string($response);
     if ($xml === false) {
-        echo json_encode(['error' => 'Failed to parse XML response']);
+        echo json_encode([
+            'error' => 'Failed to parse XML response',
+            'rawResponse' => $response,
+        ]);
         exit();
     }
 
@@ -65,15 +75,31 @@ try {
     $claimResponse = $soapBody->children('http://tempuri.org/')->GetNonMedicalClaimInformationsResponse;
     $claimResult = (string) $claimResponse->GetNonMedicalClaimInformationsResult;
 
+    // Parse the nested XML inside <string>
     $resultXml = simplexml_load_string(html_entity_decode($claimResult));
-    if (!$resultXml || !$resultXml->CLM_NOTICE_DISPETCHER) {
-        echo json_encode(['CLM_NOTICE_DISPETCHER' => []]); // Return empty array for no data
+    if (!$resultXml || !$resultXml->DocumentElement->CLM_NOTICES) {
+        echo json_encode([
+            'CLM_NOTICE_DISPETCHER' => [],
+            'rawNestedResponse' => $claimResult, // Add raw nested response for debugging
+        ]);
         exit();
     }
 
-    $claims = json_decode(json_encode($resultXml), true);
+    // Convert XML to array
+    $notices = $resultXml->DocumentElement->CLM_NOTICES;
 
-    echo json_encode(['CLM_NOTICE_DISPETCHER' => $claims['CLM_NOTICE_DISPETCHER']]);
+    $complaints = [];
+    foreach ($notices as $notice) {
+        $complaints[] = [
+            'PIN_CODE' => (string) $notice->PIN_CODE ?? 'N/A',
+            'POLICY_NUMBER' => (string) $notice->POLICY_NUMBER ?? 'N/A',
+            'INSURANCE_CODE' => (string) $notice->INSURANCE_CODE ?? 'N/A',
+            'EVENT_OCCURRENCE_DATE' => (string) $notice->EVENT_OCCURRENCE_DATE ?? 'N/A',
+            'STATUS_NAME' => (string) $notice->STATUS_NAME ?? 'N/A',
+        ];
+    }
+
+    echo json_encode(['CLM_NOTICE_DISPETCHER' => $complaints]);
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
