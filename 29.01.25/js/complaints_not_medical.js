@@ -2,60 +2,74 @@ function loadNonMedicalComplaints() {
     const complaintsTab = document.getElementById('complaints_not_medical');
     const preloader = document.getElementById('preloader');
 
-    // Show preloader
     preloader.style.display = 'flex';
 
-    // Ensure preloader is visible for at least 1.5 seconds
     setTimeout(() => {
-        fetch('./vendor/GetNonMedicalClaimInformations.php') // Replace with your actual endpoint
-            .then(response => {
-                console.log('Raw Response:', response);
-                return response.json();
-            })
+        fetch('./vendor/GetNonMedicalClaimInformations.php')
+            .then(response => response.json())
             .then(data => {
-                console.log('Non-Medical Complaints Data:', data); // Log the response to check the structure
+                console.log('Complaints data:', data);
+                console.log('Debug:', data.debug);
 
-                // Check if data is valid
-                if (data && data.CLM_NOTICE_DISPETCHER) {
-                    const complaints = Array.isArray(data.CLM_NOTICE_DISPETCHER)
-                    ? data.CLM_NOTICE_DISPETCHER
-                    : [data.CLM_NOTICE_DISPETCHER];
-            
-                if (complaints.length === 0 || Object.keys(complaints[0]).length === 0) {
+                // If API returned an error
+                if (data.error) {
+                    console.error('API Error:', data.error);
+                    complaintsTab.innerHTML = `<p>Error: ${data.error}</p>`;
+                    return;
+                }
+
+                // Parse the debug XML response if CLM_NOTICE_DISPETCHER is empty
+                let complaints = [];
+                if (data.CLM_NOTICE_DISPETCHER && data.CLM_NOTICE_DISPETCHER.length > 0) {
+                    complaints = data.CLM_NOTICE_DISPETCHER;
+                } else if (data.debug) {
+                    // Parse the `debug` property XML
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(data.debug, 'application/xml');
+                    const notices = xmlDoc.getElementsByTagName('CLM_NOTICES');
+
+                    for (let i = 0; i < notices.length; i++) {
+                        const notice = notices[i];
+                        complaints.push({
+                            PIN_CODE: notice.getElementsByTagName('PIN_CODE')[0]?.textContent || 'N/A',
+                            POLICY_NUMBER: notice.getElementsByTagName('POLICY_NUMBER')[0]?.textContent || 'N/A',
+                            INSURANCE_CODE: notice.getElementsByTagName('INSURANCE_CODE')[0]?.textContent || 'N/A',
+                            EVENT_OCCURRENCE_DATE: notice.getElementsByTagName('EVENT_OCCURRENCE_DATE')[0]?.textContent || 'N/A',
+                            STATUS_NAME: notice.getElementsByTagName('STATUS_NAME')[0]?.textContent || 'N/A',
+                        });
+                    }
+                }
+
+                // Render the complaints
+                if (complaints.length === 0) {
                     complaintsTab.innerHTML = '<p>You don\'t have complaints.</p>';
                     return;
                 }
 
-                    // Create HTML for complaints
-                    let complaintsHtml = '<h2  class="complaints_medical-name">Non-Medical Complaints</h2><ul>';
-                    complaints.forEach(complaint => {
-                        complaintsHtml += `
-                            <li class="complaints_medical-li">
-                                <div><p>PIN Code:</p> <span>${complaint.PIN_CODE || 'N/A'}</span></div>
-                                <div><p>Policy Number:</p> <span>${complaint.POLICY_NUMBER || 'N/A'}</span></div>
-                                <div><p>Event Date:</p><span> ${
-                                    complaint.EVENT_OCCURRENCE_DATE
-                                        ? new Date(complaint.EVENT_OCCURRENCE_DATE).toLocaleString()
-                                        : 'N/A'
-                                }</span></div>
-                                <div><p>Status:</p> <span>${complaint.STATUS_NAME || 'N/A'}</span></div>
-                            </li>
-                        `;
-                    });
-                    complaintsHtml += '</ul>';
-                    complaintsTab.innerHTML = complaintsHtml;
-                } else {
-                    // Handle completely empty responses
-                    complaintsTab.innerHTML = '<p>You don\'t have complaints.</p>';
-                }
+                let complaintsHtml = '<h2 class="complaints_medical-name">Non-Medical Complaints</h2><ul>';
+                complaints.forEach(complaint => {
+                    complaintsHtml += `
+                        <li class="complaints_medical-li">
+                            <div><p>PIN Code:</p> <span>${complaint.PIN_CODE}</span></div>
+                            <div><p>Policy Number:</p> <span>${complaint.POLICY_NUMBER}</span></div>
+                            <div><p>Event Date:</p> <span>${
+                                complaint.EVENT_OCCURRENCE_DATE
+                                    ? new Date(complaint.EVENT_OCCURRENCE_DATE).toLocaleString()
+                                    : 'N/A'
+                            }</span></div>
+                            <div><p>Status:</p> <span>${complaint.STATUS_NAME}</span></div>
+                        </li>
+                    `;
+                });
+                complaintsHtml += '</ul>';
+                complaintsTab.innerHTML = complaintsHtml;
             })
             .catch(error => {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching complaints data:', error);
                 complaintsTab.innerHTML = `<p>Error loading non-medical complaints data: ${error.message || 'Unknown error'}.</p>`;
             })
             .finally(() => {
-                // Hide preloader after data is loaded or error occurs
                 preloader.style.display = 'none';
             });
-    }, 1500); // Minimum preloader time of 1.5 seconds
+    }, 1500);
 }
