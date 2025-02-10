@@ -18,7 +18,7 @@ function loadComplaints() {
                 console.log('Complaints data:', data); // Log the response to check the structure
 
                 if (data && data.COMPLAINTS) {
-                    let complaintsHtml = '<h2 class="complaints_medical-name">Complaints List</h2><ul>';
+                    let complaintsHtml = '<h2 class="complaints_medical-name">Tibbi müraciyətlərim</h2><ul>';
                     data.COMPLAINTS.forEach(complaint => {
                         complaintsHtml += `
                             <li class="complaints_medical-li">

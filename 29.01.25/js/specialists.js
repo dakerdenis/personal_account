@@ -158,14 +158,14 @@ async function registerForDoctor(doctorId, cardNumber) {
       console.log('Doctor Registration Response:', data);
 
       if (data.success) {
-          alert('You have successfully registered with the doctor.');
+        alert('Siz uğurla həkimə qeydiyyatdan keçdiniz.');
       } else {
-          alert('Registration failed. Please try again later.');
+        alert('Qeydiyyat uğursuz oldu. Zəhmət olmasa bir az sonra yenidən cəhd edin.');
           console.error('Error:', data.error || 'Unknown error');
       }
   } catch (error) {
       console.error('Error registering for doctor:', error);
-      alert('An error occurred while registering. Please try again later.');
+      alert('Həkimə qeydiyyatdan keçərkən bir xəta baş verdi. Zəhmət olmasa bir az sonra yenidən cəhd edin.');
   }
 }
 

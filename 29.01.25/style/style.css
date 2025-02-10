@@ -861,3 +861,17 @@ h6 {
   margin-bottom: 5px;
   font-size: 14px;
 }
+
+.complaints_medical-div{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+padding: 5px 0px;
+}
+.complaints_medical-div p {
+  font-size: 14px;
+  font-weight: 600;
+}
+.complaints_medical-div span{
+  font-size: 14px;
+}

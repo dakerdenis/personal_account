@@ -46,18 +46,18 @@ function loadNonMedicalComplaints() {
                     return;
                 }
 
-                let complaintsHtml = '<h2 class="complaints_medical-name">Non-Medical Complaints</h2><ul>';
+                let complaintsHtml = '<h2 class="complaints_medical-name">Qeyri-Tibbi müraciyətlərim</h2><ul>';
                 complaints.forEach(complaint => {
                     complaintsHtml += `
                         <li class="complaints_medical-li">
-                            <div><p>PIN Code:</p> <span>${complaint.PIN_CODE}</span></div>
-                            <div><p>Policy Number:</p> <span>${complaint.POLICY_NUMBER}</span></div>
-                            <div><p>Event Date:</p> <span>${
+                            <div class="complaints_medical-div"><p>PIN Code:</p> <span>${complaint.PIN_CODE}</span></div>
+                            <div class="complaints_medical-div"><p>Policy Number:</p> <span>${complaint.POLICY_NUMBER}</span></div>
+                            <div class="complaints_medical-div"><p>Event Date:</p> <span>${
                                 complaint.EVENT_OCCURRENCE_DATE
                                     ? new Date(complaint.EVENT_OCCURRENCE_DATE).toLocaleString()
                                     : 'N/A'
                             }</span></div>
-                            <div><p>Status:</p> <span>${complaint.STATUS_NAME}</span></div>
+                            <div class="complaints_medical-div"><p>Status:</p> <span>${complaint.STATUS_NAME}</span></div>
                         </li>
                     `;
                 });
