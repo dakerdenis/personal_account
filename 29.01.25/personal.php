@@ -39,13 +39,15 @@
                     <a href="#" class="tab-link" data-target="policies">Şəhadətləmələr</a>
                     <a href="#" class="tab-link" data-target="doctors">Həkimlər siyahısı</a>
                     <a href="#" class="tab-link" data-target="complaints">Mənim müraciyətlərim (Tibbi)</a>
-                    <a href="#" class="tab-link" data-target="complaints_not_medical">Mənim müraciyətlərim (Qeyri-Tibbi)</a>
+                    <a href="#" class="tab-link" data-target="complaints_not_medical">Mənim müraciyətlərim
+                        (Qeyri-Tibbi)</a>
                     <a href="#" class="tab-link" data-target="refund">Geyriödəniş üçün müraciyət</a>
                 </div>
                 <form action="./vendor/logout.php" method="post">
                     <button type="submit">Çıxış</button>
                 </form>
-                <a target="_blank" class="whatsapp" href="https://wa.me/994502285753?text=Salam,%20Dərman%20çatdırılması%20haqqında%20məlumat%20ala%20bilərəmmi?">
+                <a target="_blank" class="whatsapp"
+                    href="https://wa.me/994502285753?text=Salam,%20Dərman%20çatdırılması%20haqqında%20məlumat%20ala%20bilərəmmi?">
                     <i class="fa fa-whatsapp" aria-hidden="true"></i>
                     <p>Dərman çatdırılması</p>
                 </a>
@@ -107,16 +109,16 @@
                 </div>
 
                 <div id="doctor-popup" class="popup" style="display: none;">
-                
-                    <div class="doctor-popup__wrapper">
-                    <button id="close-doctor-popup" class="popup-close">Bağla</button>
-                    <div id="doctor-popup-content" class="popup-content2">
-                    
-                    <!-- Doctor details will be rendered here -->
-                </div>
-                    </div>    
 
-                    
+                    <div class="doctor-popup__wrapper">
+                        <button id="close-doctor-popup" class="popup-close">Bağla</button>
+                        <div id="doctor-popup-content" class="popup-content2">
+
+                            <!-- Doctor details will be rendered here -->
+                        </div>
+                    </div>
+
+
                 </div>
 
 

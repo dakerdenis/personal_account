@@ -18,7 +18,7 @@ async function loadDoctorDetails(doctorId) {
         const doctorDetails = await response.json();
 
         if (doctorDetails && doctorDetails.DOCTOR_CAREER) {
-            let detailsHtml = `<h2 class="single_doctor-name">Doctor Career Details</h2><ul>`;
+            let detailsHtml = `<h2 class="single_doctor-name">Həkim haqqında</h2><ul>`;
 
             // Iterate over the career details array
             doctorDetails.DOCTOR_CAREER.forEach((career) => {

@@ -846,7 +846,23 @@ h6 {
 .popup-content2{
   overflow-y: scroll;
   height: 500px;
+  scroll-behavior: smooth;
 }
+/* Customize scrollbar for WebKit browsers */
+.popup-content2::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.popup-content2::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Background of the scrollbar track */
+  border-radius: 5px; /* Rounded corners for the track */
+}
+
+.popup-content2::-webkit-scrollbar-thumb {
+  background: #be0a04; /* Color of the scrollbar thumb */
+  border-radius: 5px; /* Rounded corners for the thumb */
+}
+
 .single_doctor-name{
   font-size: 20px;
   color: #be0a04;
