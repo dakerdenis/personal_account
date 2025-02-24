@@ -91,13 +91,20 @@ function loadPolicies () {
               : 'N/A'
 
             return `
-                        <li class="polis_single_element">
-                            <p class="polis__single__name">${insuranceDescription}</p>
-                            <div class="polis_line"></div>
-                            <p class="policy_font policy_number">Policy Number: <span>${policy.POLICY_NUMBER}</span></p>
-                            <p class="policy_font status_code">Status: <span>${policy.STATUS}</span></p>
-                            <p class="policy_font policy_enddate">End Date: <span>${formattedEndDate}</span></p>
-                            <button class="policy-details-button" data-policy-number="${policy.POLICY_NUMBER}">View Details</button>
+                        <li class="polis_single_element" style="justify-content: space-between;display: flex;align-items: center;">
+                            <div>
+                                <p class="polis__single__name">${insuranceDescription}</p>
+                              <div class="polis_line"></div>
+                              <p class="policy_font policy_number">Policy Number: <span>${policy.POLICY_NUMBER}</span></p>
+                              <p class="policy_font status_code">Status: <span>${statusDescription}</span></p>
+                              <p class="policy_font policy_enddate">End Date: <span>${formattedEndDate}</span></p>
+                              <button class="policy-details-button" data-policy-number="${policy.POLICY_NUMBER}">View Details</button>
+                            </div>
+
+                          <div style="width: 307px;height: 122px;margin-right: 125px;">
+                            <img  style="width: 100%; height: 100%; object-fit:contain;" src="https://a-group.az/storage/uploaded_files/xSzI/auto.png">
+                          </div>
+                            
                         </li>
                     `
           })
@@ -192,56 +199,126 @@ function openPolicyDetailsPopup (cachedPolicy) {
         const formatPrice = price => {
           return price ? `${parseFloat(price).toFixed(2)}` : 'N/A'
         }
-  // Function to get status descriptions
-  const getStatusDescription2 = status => {
-    const statusDescriptions = {
-      B: 'Bitdi',
-      D: 'Davam Edir',
-      E: 'Sonlandırıldı'
-    }
-    return statusDescriptions[status] || status // Return description or fallback to the status
-  }
+        // Function to get status descriptions
+        const getStatusDescription2 = status => {
+          const statusDescriptions = {
+            B: 'Bitdi',
+            D: 'Davam Edir',
+            E: 'Sonlandırıldı'
+          }
+          return statusDescriptions[status] || status // Return description or fallback to the status
+        }
         if (medicalCodes.includes(fullPolicyData.INSURANCE_CODE)) {
-            // Medical Policy
-            popupHtml += `
+          // Medical Policy
+          popupHtml += `
                 <div class="policy__info-section">
-                    <p>Insurer Name: <span>${fullPolicyData.INSURER_CUSTOMER_NAME || 'N/A'}</span></p>
-                    <p>Insured Name: <span>${fullPolicyData.INSURED_CUSTOMER_NAME || 'N/A'}</span></p>
-                    <p>Policy Sale Date: <span>${fullPolicyData.POLICY_SALE_DATE ? fullPolicyData.POLICY_SALE_DATE.split('T')[0] : 'N/A'}</span></p>
-                    <p>Insurance Start Date: <span>${fullPolicyData.INSURANCE_START_DATE ? fullPolicyData.INSURANCE_START_DATE.split('T')[0] : 'N/A'}</span></p>
-                    <p>End Date: <span>${fullPolicyData.INSURANCE_END_DATE ? fullPolicyData.INSURANCE_END_DATE.split('T')[0] : 'N/A'}</span></p>
-                    <p>Price: <span>${formatPrice(fullPolicyData.PRICE)} ${fullPolicyData.CURRENCY_CODE || ''}</span></p>
-                    <p>Total Insurance Price: <span>${formatPrice(fullPolicyData.TOTAL_INSURANCE_PRICE)} ${fullPolicyData.CURRENCY_CODE || ''}</span></p>
-                    <p>Status: <span>${getStatusDescription2(fullPolicyData.STATUS)}</span></p>
+                  <div>
+                                      <p>Insurer Name: <span>${
+                                        fullPolicyData.INSURER_CUSTOMER_NAME ||
+                                        'N/A'
+                                      }</span></p>
+                    <p>Insured Name: <span>${
+                      fullPolicyData.INSURED_CUSTOMER_NAME || 'N/A'
+                    }</span></p>
+                    <p>Policy Sale Date: <span>${
+                      fullPolicyData.POLICY_SALE_DATE
+                        ? fullPolicyData.POLICY_SALE_DATE.split('T')[0]
+                        : 'N/A'
+                    }</span></p>
+                    <p>Insurance Start Date: <span>${
+                      fullPolicyData.INSURANCE_START_DATE
+                        ? fullPolicyData.INSURANCE_START_DATE.split('T')[0]
+                        : 'N/A'
+                    }</span></p>
+                    <p>End Date: <span>${
+                      fullPolicyData.INSURANCE_END_DATE
+                        ? fullPolicyData.INSURANCE_END_DATE.split('T')[0]
+                        : 'N/A'
+                    }</span></p>
+                    <p>Price: <span>${formatPrice(fullPolicyData.PRICE)} ${
+            fullPolicyData.CURRENCY_CODE || ''
+          }</span></p>
+                    <p>Total Insurance Price: <span>${formatPrice(
+                      fullPolicyData.TOTAL_INSURANCE_PRICE
+                    )} ${fullPolicyData.CURRENCY_CODE || ''}</span></p>
+                    <p>Status: <span>${getStatusDescription2(
+                      fullPolicyData.STATUS
+                    )}</span></p>
+                  </div>
+
                 </div>
-            `;
+            `
         } else if (carCodes.includes(fullPolicyData.INSURANCE_CODE)) {
-            // Car Policy
-            popupHtml += `
+          // Car Policy
+          popupHtml += `
                 <div class="policy__info-section">
-                    <p>Policy Sale Date: <span>${fullPolicyData.POLICY_SALE_DATE ? fullPolicyData.POLICY_SALE_DATE.split('T')[0] : 'N/A'}</span></p>
-                    <p>Insurance Start Date: <span>${fullPolicyData.INSURANCE_START_DATE ? fullPolicyData.INSURANCE_START_DATE.split('T')[0] : 'N/A'}</span></p>
-                    <p>End Date: <span>${fullPolicyData.INSURANCE_END_DATE ? fullPolicyData.INSURANCE_END_DATE.split('T')[0] : 'N/A'}</span></p>
-                    <p>Brand: <span>${fullPolicyData.BRAND_NAME || 'N/A'}</span></p>
-                    <p>Model: <span>${fullPolicyData.MODEL_NAME || 'N/A'}</span></p>
-                    <p>Plate Number: <span>${fullPolicyData.PLATE_NUMBER_FULL || 'N/A'}</span></p>
-                    <p>Price: <span>${formatPrice(fullPolicyData.PRICE)} ${fullPolicyData.CURRENCY_CODE || ''}</span></p>
-                    <p>Total Insurance Price: <span>${formatPrice(fullPolicyData.TOTAL_INSURANCE_PRICE)} ${fullPolicyData.CURRENCY_CODE || ''}</span></p>
-                    <p>Status: <span>${getStatusDescription2(fullPolicyData.STATUS)}</span></p>
+                    <p>Policy Sale Date: <span>${
+                      fullPolicyData.POLICY_SALE_DATE
+                        ? fullPolicyData.POLICY_SALE_DATE.split('T')[0]
+                        : 'N/A'
+                    }</span></p>
+                    <p>Insurance Start Date: <span>${
+                      fullPolicyData.INSURANCE_START_DATE
+                        ? fullPolicyData.INSURANCE_START_DATE.split('T')[0]
+                        : 'N/A'
+                    }</span></p>
+                    <p>End Date: <span>${
+                      fullPolicyData.INSURANCE_END_DATE
+                        ? fullPolicyData.INSURANCE_END_DATE.split('T')[0]
+                        : 'N/A'
+                    }</span></p>
+                    <p>Brand: <span>${
+                      fullPolicyData.BRAND_NAME || 'N/A'
+                    }</span></p>
+                    <p>Model: <span>${
+                      fullPolicyData.MODEL_NAME || 'N/A'
+                    }</span></p>
+                    <p>Plate Number: <span>${
+                      fullPolicyData.PLATE_NUMBER_FULL || 'N/A'
+                    }</span></p>
+                    <p>Price: <span>${formatPrice(fullPolicyData.PRICE)} ${
+            fullPolicyData.CURRENCY_CODE || ''
+          }</span></p>
+                    <p>Total Insurance Price: <span>${formatPrice(
+                      fullPolicyData.TOTAL_INSURANCE_PRICE
+                    )} ${fullPolicyData.CURRENCY_CODE || ''}</span></p>
+                    <p>Status: <span>${getStatusDescription2(
+                      fullPolicyData.STATUS
+                    )}</span></p>
+
                 </div>
-            `;
+            `
         } else {
-            // Other Policy
-            popupHtml += `
+          // Other Policy
+          popupHtml += `
                 <div class="policy__info-section">
-                    <p>Policy Sale Date: <span>${fullPolicyData.POLICY_SALE_DATE ? fullPolicyData.POLICY_SALE_DATE.split('T')[0] : 'N/A'}</span></p>
-                    <p>Insurance Start Date: <span>${fullPolicyData.INSURANCE_START_DATE ? fullPolicyData.INSURANCE_START_DATE.split('T')[0] : 'N/A'}</span></p>
-                    <p>End Date: <span>${fullPolicyData.INSURANCE_END_DATE ? fullPolicyData.INSURANCE_END_DATE.split('T')[0] : 'N/A'}</span></p>
-                    <p>Price: <span>${formatPrice(fullPolicyData.PRICE)} ${fullPolicyData.CURRENCY_CODE || ''}</span></p>
-                    <p>Total Insurance Price: <span>${formatPrice(fullPolicyData.TOTAL_INSURANCE_PRICE)} ${fullPolicyData.CURRENCY_CODE || ''}</span></p>
-                    <p>Status: <span>${getStatusDescription2(fullPolicyData.STATUS)}</span></p>
+                    <p>Policy Sale Date: <span>${
+                      fullPolicyData.POLICY_SALE_DATE
+                        ? fullPolicyData.POLICY_SALE_DATE.split('T')[0]
+                        : 'N/A'
+                    }</span></p>
+                    <p>Insurance Start Date: <span>${
+                      fullPolicyData.INSURANCE_START_DATE
+                        ? fullPolicyData.INSURANCE_START_DATE.split('T')[0]
+                        : 'N/A'
+                    }</span></p>
+                    <p>End Date: <span>${
+                      fullPolicyData.INSURANCE_END_DATE
+                        ? fullPolicyData.INSURANCE_END_DATE.split('T')[0]
+                        : 'N/A'
+                    }</span></p>
+                    <p>Price: <span>${formatPrice(fullPolicyData.PRICE)} ${
+            fullPolicyData.CURRENCY_CODE || ''
+          }</span></p>
+                    <p>Total Insurance Price: <span>${formatPrice(
+                      fullPolicyData.TOTAL_INSURANCE_PRICE
+                    )} ${fullPolicyData.CURRENCY_CODE || ''}</span></p>
+                    <p>Status: <span>${getStatusDescription2(
+                      fullPolicyData.STATUS
+                    )}</span></p>
+
                 </div>
-            `;
+            `
         }
 
         // Collateral Names
