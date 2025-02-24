@@ -95,7 +95,7 @@ function loadPolicies () {
                             <p class="polis__single__name">${insuranceDescription}</p>
                             <div class="polis_line"></div>
                             <p class="policy_font policy_number">Policy Number: <span>${policy.POLICY_NUMBER}</span></p>
-                            <p class="policy_font status_code">Status: <span>${statusDescription}</span></p>
+                            <p class="policy_font status_code">Status: <span>${policy.STATUS}</span></p>
                             <p class="policy_font policy_enddate">End Date: <span>${formattedEndDate}</span></p>
                             <button class="policy-details-button" data-policy-number="${policy.POLICY_NUMBER}">View Details</button>
                         </li>
