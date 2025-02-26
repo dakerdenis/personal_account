@@ -43,6 +43,17 @@
                         (Qeyri-Tibbi)</a>
                     <a href="#" class="tab-link" data-target="refund">Geyriödəniş üçün müraciyət</a>
                 </div>
+                <?php
+                if (isset($_SESSION['medical_policies']) && !empty($_SESSION['medical_policies'])) {
+                    echo "<div class='medical-policies-list'>";
+                    echo "<h4>Active Medical Policies:</h4><ul>";
+                    foreach ($_SESSION['medical_policies'] as $policyNumber) {
+                        echo "<li>$policyNumber</li>";
+                    }
+                    echo "</ul></div>";
+                }
+                ?>
+
                 <form action="./vendor/logout.php" method="post">
                     <button type="submit">Çıxış</button>
                 </form>

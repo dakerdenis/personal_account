@@ -78,6 +78,44 @@ function loadPolicies () {
           : [policiesData.POLICIES]
         policiesCache = policies // Store policies in the cache for later use
 
+        const medicalCodes = [
+          'LI',
+          'LE',
+          'ONK-A47',
+          'ONK',
+          'TTU',
+          'LE-D',
+          'YK',
+          'YS-OC',
+          'YS',
+          'YSN'
+        ]
+
+        // Collect active medical policy numbers (status "D")
+        let activeMedicalPolicies = policies
+          .filter(
+            policy =>
+              medicalCodes.includes(policy.INSURANCE_CODE) &&
+              policy.STATUS === 'D'
+          )
+          .map(policy => policy.POLICY_NUMBER)
+
+        // Send the active medical policies to the session
+        if (activeMedicalPolicies.length > 0) {
+          fetch('./vendor/storeMedicalPolicies.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ medicalPolicies: activeMedicalPolicies })
+          })
+            .then(response => response.json())
+            .then(data => console.log('Stored in session:', data))
+            .catch(error =>
+              console.error('Error storing policies in session:', error)
+            )
+        }
+
         const policiesHtml = policies
           .map(policy => {
             const insuranceDescription = getInsuranceDescription(
@@ -91,22 +129,20 @@ function loadPolicies () {
               : 'N/A'
 
             return `
-                        <li class="polis_single_element" style="justify-content: space-between;display: flex;align-items: center;">
-                            <div>
-                                <p class="polis__single__name">${insuranceDescription}</p>
-                              <div class="polis_line"></div>
-                              <p class="policy_font policy_number">Policy Number: <span>${policy.POLICY_NUMBER}</span></p>
-                              <p class="policy_font status_code">Status: <span>${statusDescription}</span></p>
-                              <p class="policy_font policy_enddate">End Date: <span>${formattedEndDate}</span></p>
-                              <button class="policy-details-button" data-policy-number="${policy.POLICY_NUMBER}">View Details</button>
-                            </div>
-
-                          <div style="width: 307px;height: 122px;margin-right: 125px;">
-                            <img  style="width: 100%; height: 100%; object-fit:contain;" src="https://a-group.az/storage/uploaded_files/xSzI/auto.png">
-                          </div>
-                            
-                        </li>
-                    `
+                    <li class="polis_single_element" style="justify-content: space-between; display: flex; align-items: center;">
+                        <div>
+                            <p class="polis__single__name">${insuranceDescription}</p>
+                            <div class="polis_line"></div>
+                            <p class="policy_font policy_number">Policy Number: <span>${policy.POLICY_NUMBER}</span></p>
+                            <p class="policy_font status_code">Status: <span>${statusDescription}</span></p>
+                            <p class="policy_font policy_enddate">End Date: <span>${formattedEndDate}</span></p>
+                            <button class="policy-details-button" data-policy-number="${policy.POLICY_NUMBER}">View Details</button>
+                        </div>
+                        <div style="width: 307px; height: 122px; margin-right: 125px;">
+                            <img style="width: 100%; height: 100%; object-fit: contain;" src="https://a-group.az/storage/uploaded_files/xSzI/auto.png">
+                        </div>
+                    </li>
+                `
           })
           .join('')
 
