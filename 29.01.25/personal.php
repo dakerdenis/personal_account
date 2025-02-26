@@ -151,6 +151,7 @@
         <script src="./js/doctorDetails.js"></script>
         <script src="./js/complaints.js"></script>
         <script src="./js/complaints_not_medical.js"></script>
+        <script src="./js/registerDoctorPopup.js"></script>
 
 
     </body>

@@ -66,27 +66,21 @@ function loadSpecialists (specialityId) {
           // Attach click event listeners to "Записаться к доктору" buttons
           const registerButtons = document.querySelectorAll(
             '.register-doctor-button'
-          )
+          );
           registerButtons.forEach(button => {
-            button.addEventListener('click', async event => {
-              const doctorId = event.target.getAttribute('data-doctor-id');
-              console.log(`Register button clicked for Doctor ID: ${doctorId}`);
-
-              // Fetch the medical policies
-              const medicalPolicy = await fetchMedicalPolicies()
-
-              if (!medicalPolicy) {
-                alert('You do not have a valid medical policy to register with a doctor.');
-                return;
-            }
-
-              // Proceed to register for the doctor
-              registerForDoctor(doctorId, medicalPolicy)
-            })
-          })
+            button.addEventListener("click", async event => {
+                const doctorId = event.target.getAttribute("data-doctor-id");
+                console.log(`Register button clicked for Doctor ID: ${doctorId}`);
+        
+                // Open the popup to select a policy before proceeding
+                openRegisterDoctorPopup(doctorId);
+            });
+        });
         } else {
           throw new Error('Unexpected data structure')
         }
+
+        
       })
       .catch(error => {
         console.error('Error fetching data:', error)

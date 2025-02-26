@@ -1,16 +1,16 @@
 <?php
 session_start();
+header("Content-Type: application/json");
 
 function registerForDoctor($userName, $password, $pinCode, $cardNumber, $doctorId)
 {
     $soapUrl = "https://insure.a-group.az/insureazSvcTest/AQroupMobileIntegrationSvc.asmx";
 
-    // Extract the last portion of the card number (e.g., "100887/01")
+    // Extract the formatted card number (e.g., "100887/01")
     $matches = [];
     if (preg_match('/\d{6}\/\d{2}$/', $cardNumber, $matches)) {
         $formattedCardNumber = $matches[0];
     } else {
-        // If the card number doesn't match the expected format, return an error
         echo json_encode(['success' => false, 'error' => 'Invalid card number format']);
         exit();
     }
@@ -30,11 +30,11 @@ function registerForDoctor($userName, $password, $pinCode, $cardNumber, $doctorI
         '</soap:Body>' .
         '</soap:Envelope>';
 
-    $headers = array(
+    $headers = [
         "Content-type: text/xml; charset=utf-8",
         "SOAPAction: \"http://tempuri.org/RegistrationForDoctor\"",
         "Content-length: " . strlen($xml_post_string),
-    );
+    ];
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $soapUrl);
@@ -55,7 +55,6 @@ function registerForDoctor($userName, $password, $pinCode, $cardNumber, $doctorI
 
     curl_close($ch);
 
-    // Log the SOAP response for debugging
     error_log("SOAP Response: $response");
 
     // Parse the SOAP response
@@ -65,43 +64,34 @@ function registerForDoctor($userName, $password, $pinCode, $cardNumber, $doctorI
         exit();
     }
 
-    // Extract the relevant data from the XML response
     $namespaces = $xml->getNamespaces(true);
     $soapBody = $xml->children($namespaces['soap'])->Body;
 
-    // Extract the result
+    // Extract response
     $registrationResponse = $soapBody->children('http://tempuri.org/')->RegistrationForDoctorResponse;
     $registrationResult = (string)$registrationResponse->RegistrationForDoctorResult;
 
-    // Parse the nested XML result inside <string>
     $innerXml = simplexml_load_string(html_entity_decode($registrationResult));
     if (!$innerXml) {
         echo json_encode(['success' => false, 'error' => 'Failed to parse inner XML response']);
         exit();
     }
 
-    // Check for <SUCCESS>true</SUCCESS> in the parsed XML
+    // Check for success response
     $success = (string)$innerXml->RESULT->SUCCESS;
-
     if ($success === 'true') {
-        echo json_encode(['success' => true]); // Return success
+        echo json_encode(['success' => true]);
     } else {
-        echo json_encode(['success' => false]); // Return failure
+        echo json_encode(['success' => false]);
     }
 }
 
-try {
-    $userName = 'AQWeb';
-    $password = '@QWeb';
-    $pinCode = $_SESSION['pinCode'];
-    $cardNumber = $_POST['cardNumber'];
-    $doctorId = $_POST['doctorId'];
+// Call the function
+$userName = 'AQWeb';
+$password = '@QWeb';
+$pinCode = $_SESSION['pinCode'];
+$cardNumber = $_POST['cardNumber'];
+$doctorId = $_POST['doctorId'];
 
-    // Debugging logs
-    error_log("Registration inputs - PinCode: $pinCode, CardNumber: $cardNumber, DoctorId: $doctorId");
-
-    registerForDoctor($userName, $password, $pinCode, $cardNumber, $doctorId);
-} catch (Exception $e) {
-    error_log("Registration error: " . $e->getMessage());
-    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
-}
+registerForDoctor($userName, $password, $pinCode, $cardNumber, $doctorId);
+?>
