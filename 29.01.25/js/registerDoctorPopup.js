@@ -5,12 +5,16 @@ document.addEventListener("DOMContentLoaded", function () {
     popupContainer.className = "popup";
     popupContainer.style.display = "none"; // Initially hidden
     popupContainer.innerHTML = `
-        <div class="popup-content">
+        <div class="popup-content popup-content-policy">
             <h2>Həkimə Qeydiyyat</h2>
-            <p>Zəhmət olmasa tibbi sığorta polisiniz seçin:</p>
-            <ul id="policy-list"></ul>
-            <button id="confirm-registration">Təsdiqlə</button>
-            <button id="close-popup">Bağla</button>
+            <p class="desc-policy-p">Zəhmət olmasa tibbi sığorta polisiniz seçin:</p>
+            <ul class="policy_select" id="policy-list">
+            </ul>
+            <div class="button-register">
+<button id="confirm-registration">Təsdiqlə</button>
+            </div>
+            
+            <button style="width: 30px; height: 30px;" class="close-popup-x" id="close-popup">X</button>
         </div>
     `;
     document.body.appendChild(popupContainer);

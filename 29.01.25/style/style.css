@@ -891,3 +891,39 @@ padding: 5px 0px;
 .complaints_medical-div span{
   font-size: 14px;
 }
+.popup-content-policy h2{
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 11px;
+}
+.policy_select li {
+  font-size: 18px;
+  margin-bottom: 19px;
+}
+.desc-policy-p{
+  font-size: 18px;
+  margin-bottom: 13px;
+}
+.close-popup-x{
+  position: absolute;
+  right: 10px;
+  width: 43px;
+  top: 0;
+  height: 29px;
+  font-size: 19px;
+}
+
+.button-register{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+.button-register button {
+  background-color: #be0a04;
+  font-size: 20px;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius: 5px;
+}
