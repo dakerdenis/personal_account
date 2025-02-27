@@ -57,7 +57,59 @@ function loadPolicies () {
     }
     return statusDescriptions[status] || status // Return description or fallback to the status
   }
+  const imageMapping = {
+    AATPL: "xSzI/auto.png",
+    AS: "xSzI/auto.png",
+    VMI: "xSzI/auto.png",
+    "AS-A47-GD": "xSzI/auto.png",
+    "AS-FQ": "xSzI/auto.png",
+    "AS-F": "xSzI/auto.png",
+    "AS-H": "xSzI/auto.png",
+    REVAS: "xSzI/auto.png",
 
+    DETPL: "ISMs/emlak.png",
+    DE: "ISMs/emlak.png",
+    VHI: "ISMs/emlak.png",
+    "VPI-FL": "ISMs/emlak.png",
+    "VPI-F": "ISMs/emlak.png",
+    "VPI-H": "ISMs/emlak.png",
+    VPI: "ISMs/emlak.png",
+    "VPI-HN": "ISMs/emlak.png",
+    "VPI-FN": "ISMs/emlak.png",
+    REVPI: "ISMs/emlak.png",
+
+    CPA: "6mzY/ferdi_geza.png",
+    PA: "6mzY/ferdi_geza.png",
+
+    CAR: "VU60/insaat.png",
+
+    EL: "oSbg/isegoturen.png",
+    ELN: "oSbg/isegoturen.png",
+
+    TPL: "7yAx/mesulyet.png",
+    TPLN: "7yAx/mesulyet.png",
+
+    CMMI: "rNsp/profesional_resp.png",
+    PI: "rNsp/profesional_resp.png",
+    CDOL: "rNsp/profesional_resp.png",
+
+    CPM: "5xQN/masin_avadanliq.png",
+
+    TI: "AJn9/seyahat.png",
+
+    "VPI-R": "ml4V/teker.png",
+
+    LI: "RuiQ/tibbi.png",
+    LE: "RuiQ/tibbi.png",
+    "ONK-A47": "RuiQ/tibbi.png",
+    ONK: "RuiQ/tibbi.png",
+    TTU: "RuiQ/tibbi.png",
+    "LE-D": "RuiQ/tibbi.png",
+
+    "YS-OC": "4gJV/yuk.png",
+    YS: "4gJV/yuk.png",
+    YSN: "4gJV/yuk.png",
+  };
   // Placeholder to store all fetched policies for later use
   let policiesCache = {}
 
@@ -127,7 +179,8 @@ function loadPolicies () {
             const formattedEndDate = policy.INSURANCE_END_DATE
               ? policy.INSURANCE_END_DATE.split('T')[0]
               : 'N/A'
-
+ // Get the correct image based on the insurance code
+ const policyImage = imageMapping[policy.INSURANCE_CODE] || "default.png";
             return `
                     <li class="polis_single_element" style="justify-content: space-between; display: flex; align-items: center;">
                         <div>
@@ -139,7 +192,7 @@ function loadPolicies () {
                             <button class="policy-details-button" data-policy-number="${policy.POLICY_NUMBER}">View Details</button>
                         </div>
                         <div style="width: 307px; height: 122px; margin-right: 125px;">
-                            <img style="width: 100%; height: 100%; object-fit: contain;" src="https://a-group.az/storage/uploaded_files/xSzI/auto.png">
+                             <img style="width: 100%; height: 100%; object-fit: contain;" src="https://a-group.az/storage/uploaded_files/${policyImage}">
                         </div>
                     </li>
                 `
