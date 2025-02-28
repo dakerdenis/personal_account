@@ -56,15 +56,15 @@ unset($_SESSION['login_error']); // Clear the error after displaying it
 
                 <div class="form__input__container">
                     <p class="form__input__desc">Fin kodu:</p>
-                    <input value="A222222" type="text" name="pinCode" id="pinCode">
+                    <input placeholder="0000000" type="text" name="pinCode" id="pinCode">
                 </div>
-                <div class="form__input__container">
+                <div class="form__input__container">    
                     <p class="form__input__desc">Şəhədətnamə nömrəsi:</p>
-                    <input value="MIP2500001 или 100887/01" type="text" name="policyNumber" id="policyNumber">
+                    <input placeholder="Şəhədətnamə nömrəsi" type="text" name="policyNumber" id="policyNumber">
                 </div>
                 <div class="form__input__container">
                     <p class="form__input__desc">Mobil nömrə:</p>
-                    <input value="994507506901" type="text" name="phoneNumber" id="phoneNumber">
+                    <input placeholder="994XXXXXXXXX"  type="text" name="phoneNumber" id="phoneNumber">
                 </div>
 
                 <div class="form__input__button">

@@ -42,6 +42,7 @@
                     <a href="#" class="tab-link" data-target="complaints_not_medical">Mənim müraciyətlərim
                         (Qeyri-Tibbi)</a>
                     <a href="#" class="tab-link" data-target="refund">Geyriödəniş üçün müraciyət</a>
+                    <!---a href="https://a-group.az/payments/" target="_blank"  class="tab-link">Onlayn Ödəniş</a-->
                 </div>
                 <?php
                 if (isset($_SESSION['medical_policies']) && !empty($_SESSION['medical_policies'])) {
