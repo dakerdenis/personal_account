@@ -4,7 +4,7 @@ session_start(); // Start the session
 // Ensure the user is logged in and OTP is pending
 if (!isset($_SESSION['otp_pending']) || $_SESSION['otp_pending'] !== true) {
     error_log("OTP pending session is not set or incorrect.");
-    header("Location: /cabinet/index.php");
+    header("Location: /cabinet/$2OpzQ3jR0%5E=/index.php");
     exit();
 }
 
@@ -28,14 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['loggedin'] = true;
 
         // Redirect to personal.php
-        header("Location: /cabinet/personal.php");
+        header("Location: /cabinet/$2OpzQ3jR0%5E=/personal.php");
         exit();
     } else {
         // Log incorrect OTP attempt
         error_log("Invalid OTP entered: $enteredOtp");
         // If OTP is incorrect, destroy session and redirect to login
         session_destroy();
-        header("Location: /cabinet/index.php");
+        header("Location: /cabinet/$2OpzQ3jR0%5E=/index.php");
         exit();
     }
 }

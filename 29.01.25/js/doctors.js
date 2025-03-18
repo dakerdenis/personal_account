@@ -35,11 +35,11 @@ function loadDoctors() {
                 });
             } else {
                 console.error('Unexpected data structure:', data);
-                document.getElementById('doctors').innerHTML = '<p>Error loading data: Invalid response structure.</p>';
+                document.getElementById('doctors').innerHTML = '<p>Məlumat tapılmadı</p>';
             }
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-            document.getElementById('doctors').innerHTML = '<p>Error loading data.</p>';
+            document.getElementById('doctors').innerHTML = '<p>Məlumat tapılmadı</p>';
         });
 }

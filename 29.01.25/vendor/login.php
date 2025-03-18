@@ -74,7 +74,7 @@ try {
     if (!$response) {
         error_log("Empty response from server");
         $_SESSION['login_error'] = 'Invalid response from server. Please try again.';
-        header("Location: /cabinet/index.php");
+        header("Location: /cabinet/$2OpzQ3jR0%5E=/index.php");
         exit();
     }
 
@@ -120,20 +120,20 @@ try {
             error_log("Session data after login: " . print_r($_SESSION, true));
 
             // Redirect to otp.php to generate OTP and send SMS
-            header("Location: /cabinet/vendor/otp.php"); // This will generate OTP and redirect to verification.php
+            header("Location: /cabinet/$2OpzQ3jR0%5E=/vendor/otp.php"); // This will generate OTP and redirect to verification.php
             exit();
         } else {
             // If IS_LOGGED is not 1, show an error message
             error_log("Invalid credentials. IS_LOGGED=$isLogged");
             $_SESSION['login_error'] = 'Invalid credentials. Please try again.';
-            header("Location: /cabinet/index.php");
+            header("Location: /cabinet/$2OpzQ3jR0%5E=/index.php");
             exit();
         }
     } else {
         // If LoginResult is missing, show an error
         error_log("LoginResult not found in the SOAP response");
         $_SESSION['login_error'] = 'Invalid response from server. Please try again.';
-        header("Location: /cabinet/index.php");
+        header("Location: /cabinet/$2OpzQ3jR0%5E=/index.php");
         exit();
     }
 } catch (Exception $e) {

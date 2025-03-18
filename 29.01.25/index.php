@@ -10,13 +10,13 @@ $loginExpired = isset($_SESSION['login_time']) && (time() - $_SESSION['login_tim
 
 if ($isLoggedIn && $otpVerified && !$loginExpired) {
     // If session is active and OTP is verified, redirect to personal.php
-    header("Location: /cabinet/personal.php");
+    header("Location: /cabinet/$2OpzQ3jR0%5E=/personal.php");
     exit();
 } elseif ($loginExpired) {
     // If session has expired, destroy session and redirect to login
     $_SESSION = [];
     session_destroy();
-    header("Location: /cabinet/index.php");
+    header("Location: /cabinet/$2OpzQ3jR0%5E=/index.php");
     exit();
 }
 

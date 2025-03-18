@@ -50,9 +50,9 @@ function loadNonMedicalComplaints() {
                 complaints.forEach(complaint => {
                     complaintsHtml += `
                         <li class="complaints_medical-li">
-                            <div class="complaints_medical-div"><p>PIN Code:</p> <span>${complaint.PIN_CODE}</span></div>
-                            <div class="complaints_medical-div"><p>Policy Number:</p> <span>${complaint.POLICY_NUMBER}</span></div>
-                            <div class="complaints_medical-div"><p>Event Date:</p> <span>${
+                            <div class="complaints_medical-div"><p>FİN kodu:</p> <span>${complaint.PIN_CODE}</span></div>
+                            <div class="complaints_medical-div"><p>Şəhədətnamə nömrəsi:</p> <span>${complaint.POLICY_NUMBER}</span></div>
+                            <div class="complaints_medical-div"><p>Hadisə baş verdi:</p> <span>${
                                 complaint.EVENT_OCCURRENCE_DATE
                                     ? new Date(complaint.EVENT_OCCURRENCE_DATE).toLocaleString()
                                     : 'N/A'
@@ -66,7 +66,7 @@ function loadNonMedicalComplaints() {
             })
             .catch(error => {
                 console.error('Error fetching complaints data:', error);
-                complaintsTab.innerHTML = `<p>Error loading non-medical complaints data: ${error.message || 'Unknown error'}.</p>`;
+                complaintsTab.innerHTML = `<p>Məlumat tapilmadı ${error.message || ''}.</p>`;
             })
             .finally(() => {
                 preloader.style.display = 'none';

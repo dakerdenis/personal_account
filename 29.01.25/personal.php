@@ -4,7 +4,7 @@
     // Check if the user is logged in and OTP has been verified
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION['otp_pending'] === true) {
         // If not, redirect to login page
-        header("Location: /cabinet/index.php");
+        header("Location: /cabinet/$2OpzQ3jR0%5E=/index.php");
         exit();
     }
 
@@ -31,7 +31,7 @@
                 <div class="personal__account_image">
                     <img src="https://a-group.az/storage/uploaded_files/Z6zB/company_logo.png" alt="" srcset="">
                 </div>
-                <h1>A-Group şəxsi kabinetə xoş gəlmisiniz !</h1>
+                <h1>A-Qroup sığorta şirkəti <br> şəxsi kabinet</h1>
 
 
 
@@ -41,7 +41,7 @@
                     <a href="#" class="tab-link" data-target="complaints">Mənim müraciyətlərim (Tibbi)</a>
                     <a href="#" class="tab-link" data-target="complaints_not_medical">Mənim müraciyətlərim
                         (Qeyri-Tibbi)</a>
-                    <a href="#" class="tab-link" data-target="refund">Geyriödəniş üçün müraciyət</a>
+                    <a href="#" class="tab-link" data-target="refund">Geri ödəniş üçün müraciyət</a>
                     <!---a href="https://a-group.az/payments/" target="_blank"  class="tab-link">Onlayn Ödəniş</a-->
                 </div>
                 <?php
@@ -69,11 +69,11 @@
             <div class="personal__account__data-wrapper">
                 <div class="personal__account-desc">
                     Hörmətli <?php echo ($name . " " . $surname) ?>, <br>
-                    A-Group şəxsi kabinetə xoş gəldiniz !
+                    şəxsi kabinetə xoş gəlmişsiniz !
                 </div>
                 <!-- Tab content for various sections -->
                 <div id="policies" class="tab-content">
-                    Loading...
+                    
                 </div>
 
                 <!-----Policies info Auto---->
@@ -101,7 +101,7 @@
                 </div>
 
                 <div id="complaints" class="tab-content">
-                    Loading...
+                    
                 </div>
                 <div id="complaints_not_medical" class="tab-content">
                     <!-- Non-Medical Claims will be rendered here -->
@@ -123,7 +123,7 @@
                 <div id="doctor-popup" class="popup" style="display: none;">
 
                     <div class="doctor-popup__wrapper">
-                        <button id="close-doctor-popup" class="popup-close">Bağla</button>
+                        <button id="close-doctor-popup" class="popup-close">Bağlamaq</button>
                         <div id="doctor-popup-content" class="popup-content2">
 
                             <!-- Doctor details will be rendered here -->

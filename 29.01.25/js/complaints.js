@@ -22,9 +22,9 @@ function loadComplaints() {
                     data.COMPLAINTS.forEach(complaint => {
                         complaintsHtml += `
                             <li class="complaints_medical-li">
-                                <div class="complaints_medical-block"><p>PIN Code:</p> <span>${complaint.PIN_CODE}</span></div>
-                                <div class="complaints_medical-block"><p>Clinic Name:</p> <span>${complaint.CLINIC_NAME}</span></div>
-                                <div class="complaints_medical-block"><p>Event Occurrence Date:</p> <span>${new Date(complaint.EVENT_OCCURRENCE_DATE).toLocaleDateString()}</span></div>
+                                <div class="complaints_medical-block"><p>FİN kodu:</p> <span>${complaint.PIN_CODE}</span></div>
+                                <div class="complaints_medical-block"><p>Xəstəxana adı:</p> <span>${complaint.CLINIC_NAME}</span></div>
+                                <div class="complaints_medical-block"><p>Hadisə baş verdi:</p> <span>${new Date(complaint.EVENT_OCCURRENCE_DATE).toLocaleDateString()}</span></div>
                             </li>
                         `;
                     });
@@ -36,7 +36,7 @@ function loadComplaints() {
             })
             .catch(error => {
                 console.error('Error fetching complaints data:', error);
-                complaintsTab.innerHTML = `<p>Error loading complaints data: ${error.message || 'Unknown error'}.</p>`;
+                complaintsTab.innerHTML = `<p>Məlumat tapılmadı ${error.message || ' '}.</p>`;
             })
             .finally(() => {
                 // Hide preloader after data is loaded or error occurs

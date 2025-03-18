@@ -24,7 +24,7 @@ function loadSpecialists (specialityId) {
 
         if (data && data.DOCTORS) {
           let doctorsHtml =
-            '<h2 class="complaints_medical-name">Specialists List</h2><ul><br>'
+            '<h2 class="complaints_medical-name">Həkimlər siyahısı:</h2><ul><br>'
           data.DOCTORS.forEach(doctor => {
             doctorsHtml += `
                             <li class="complaints_medical-li doctors__single">
@@ -37,9 +37,9 @@ function loadSpecialists (specialityId) {
 <img src="data:image/jpeg;base64,${doctor.FILE_CONTENT}" alt="Doctor's image"  /><br>
                                 </div>
                                 
-                                <button class="doctor-details-button" data-doctor-id="${doctor.CUSTOMER_ID}">Подробно о докторе</button>
+                                <button class="doctor-details-button" data-doctor-id="${doctor.CUSTOMER_ID}">Həkim haqqında</button>
                                 <!--Запись к доктору--->
-                                <button class="register-doctor-button" data-doctor-id="${doctor.CUSTOMER_ID}">Записаться к доктору</button>
+                                <button class="register-doctor-button" data-doctor-id="${doctor.CUSTOMER_ID}">Qəbula yazıl</button>
                             </li>
                         `
           })
@@ -84,7 +84,7 @@ function loadSpecialists (specialityId) {
       })
       .catch(error => {
         console.error('Error fetching data:', error)
-        specialistsTab.innerHTML = '<p>Error loading data.</p>'
+        specialistsTab.innerHTML = '<p>Məlumat tapılmadı</p>'
       })
       .finally(() => {
         // Hide preloader after data is loaded or error occurs

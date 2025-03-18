@@ -3,7 +3,7 @@ session_start(); // Start the session
 
 // Ensure the user is logged in and phone number is available
 if (!isset($_SESSION['loggedin']) || !isset($_SESSION['phoneNumber'])) {
-    header("Location: /cabinet/index.php");
+    header("Location: /cabinet/$2OpzQ3jR0%5E=/index.php");
     exit();
 }
 
@@ -93,7 +93,7 @@ try {
         error_log("Generated OTP: $otpCode");
 
         // Redirect to verification page
-        header("Location: /cabinet/vendor/verification.php");
+        header("Location: /cabinet/$2OpzQ3jR0%5E=/vendor/verification.php");
         exit();
     } else {
         echo json_encode(['error' => 'Failed to generate OTP.']);

@@ -186,10 +186,10 @@ function loadPolicies () {
                         <div>
                             <p class="polis__single__name">${insuranceDescription}</p>
                             <div class="polis_line"></div>
-                            <p class="policy_font policy_number">Policy Number: <span>${policy.POLICY_NUMBER}</span></p>
+                            <p class="policy_font policy_number">Şəhədətnamə nömrəsi: <span>${policy.POLICY_NUMBER}</span></p>
                             <p class="policy_font status_code">Status: <span>${statusDescription}</span></p>
-                            <p class="policy_font policy_enddate">End Date: <span>${formattedEndDate}</span></p>
-                            <button class="policy-details-button" data-policy-number="${policy.POLICY_NUMBER}">View Details</button>
+                            <p class="policy_font policy_enddate">Bitmə tarixi: <span>${formattedEndDate}</span></p>
+                            <button class="policy-details-button" data-policy-number="${policy.POLICY_NUMBER}">Ətraflı Məlumat</button>
                         </div>
                         <div style="width: 307px; height: 122px; margin-right: 125px;">
                              <img style="width: 100%; height: 100%; object-fit: contain;" src="https://a-group.az/storage/uploaded_files/${policyImage}">
@@ -255,9 +255,9 @@ function openPolicyDetailsPopup (cachedPolicy) {
 
         let popupHtml = `
                 <div class="policy__popup-wrapper">
-                    <div class="policy__popup-name">Policy Details</div>
+                    <div class="policy__popup-name">Şəhədətnamə haqqında</div>
                     <div class="policy__popup-line"></div>
-                    <div class="policy__popup-number"><p>Policy Number:</p> <span>${fullPolicyData.POLICY_NUMBER}</span></div>
+                    <div class="policy__popup-number"><p>Şəhədətnamə nömrəsi:</p> <span>${fullPolicyData.POLICY_NUMBER}</span></div>
                 `
 
         // Identify policy type
@@ -302,32 +302,32 @@ function openPolicyDetailsPopup (cachedPolicy) {
           popupHtml += `
                 <div class="policy__info-section">
                   <div>
-                                      <p>Insurer Name: <span>${
+                                      <p>Sığortalı: <span>${
                                         fullPolicyData.INSURER_CUSTOMER_NAME ||
                                         'N/A'
                                       }</span></p>
-                    <p>Insured Name: <span>${
+                    <p>Sığorta olunan: <span>${
                       fullPolicyData.INSURED_CUSTOMER_NAME || 'N/A'
                     }</span></p>
-                    <p>Policy Sale Date: <span>${
+                    <p>Buraxılış tarixi: <span>${
                       fullPolicyData.POLICY_SALE_DATE
                         ? fullPolicyData.POLICY_SALE_DATE.split('T')[0]
                         : 'N/A'
                     }</span></p>
-                    <p>Insurance Start Date: <span>${
+                    <p>Başlama tarixi: <span>${
                       fullPolicyData.INSURANCE_START_DATE
                         ? fullPolicyData.INSURANCE_START_DATE.split('T')[0]
                         : 'N/A'
                     }</span></p>
-                    <p>End Date: <span>${
+                    <p>Bitmə tarixi: <span>${
                       fullPolicyData.INSURANCE_END_DATE
                         ? fullPolicyData.INSURANCE_END_DATE.split('T')[0]
                         : 'N/A'
                     }</span></p>
-                    <p>Price: <span>${formatPrice(fullPolicyData.PRICE)} ${
+                    <p>Sığorta məbləği: <span>${formatPrice(fullPolicyData.PRICE)} ${
             fullPolicyData.CURRENCY_CODE || ''
           }</span></p>
-                    <p>Total Insurance Price: <span>${formatPrice(
+                    <p>Sığorta haqqı: <span>${formatPrice(
                       fullPolicyData.TOTAL_INSURANCE_PRICE
                     )} ${fullPolicyData.CURRENCY_CODE || ''}</span></p>
                     <p>Status: <span>${getStatusDescription2(
@@ -341,34 +341,34 @@ function openPolicyDetailsPopup (cachedPolicy) {
           // Car Policy
           popupHtml += `
                 <div class="policy__info-section">
-                    <p>Policy Sale Date: <span>${
+                    <p>Buraxılış tarixi: <span>${
                       fullPolicyData.POLICY_SALE_DATE
                         ? fullPolicyData.POLICY_SALE_DATE.split('T')[0]
                         : 'N/A'
                     }</span></p>
-                    <p>Insurance Start Date: <span>${
+                    <p>Başlama tarixi: <span>${
                       fullPolicyData.INSURANCE_START_DATE
                         ? fullPolicyData.INSURANCE_START_DATE.split('T')[0]
                         : 'N/A'
                     }</span></p>
-                    <p>End Date: <span>${
+                    <p>Bitmə tarixi: <span>${
                       fullPolicyData.INSURANCE_END_DATE
                         ? fullPolicyData.INSURANCE_END_DATE.split('T')[0]
                         : 'N/A'
                     }</span></p>
-                    <p>Brand: <span>${
+                    <p>Marka: <span>${
                       fullPolicyData.BRAND_NAME || 'N/A'
                     }</span></p>
                     <p>Model: <span>${
                       fullPolicyData.MODEL_NAME || 'N/A'
                     }</span></p>
-                    <p>Plate Number: <span>${
+                    <p>Qeydiyyat nişanı: <span>${
                       fullPolicyData.PLATE_NUMBER_FULL || 'N/A'
                     }</span></p>
-                    <p>Price: <span>${formatPrice(fullPolicyData.PRICE)} ${
+                    <p>Sığorta məbləği: <span>${formatPrice(fullPolicyData.PRICE)} ${
             fullPolicyData.CURRENCY_CODE || ''
           }</span></p>
-                    <p>Total Insurance Price: <span>${formatPrice(
+                    <p>Sığorta haqqı: <span>${formatPrice(
                       fullPolicyData.TOTAL_INSURANCE_PRICE
                     )} ${fullPolicyData.CURRENCY_CODE || ''}</span></p>
                     <p>Status: <span>${getStatusDescription2(
@@ -381,25 +381,25 @@ function openPolicyDetailsPopup (cachedPolicy) {
           // Other Policy
           popupHtml += `
                 <div class="policy__info-section">
-                    <p>Policy Sale Date: <span>${
+                    <p>Buraxılış tarixi: <span>${
                       fullPolicyData.POLICY_SALE_DATE
                         ? fullPolicyData.POLICY_SALE_DATE.split('T')[0]
                         : 'N/A'
                     }</span></p>
-                    <p>Insurance Start Date: <span>${
+                    <p>Başlama tarixi: <span>${
                       fullPolicyData.INSURANCE_START_DATE
                         ? fullPolicyData.INSURANCE_START_DATE.split('T')[0]
                         : 'N/A'
                     }</span></p>
-                    <p>End Date: <span>${
+                    <p>Bitmə tarixi: <span>${
                       fullPolicyData.INSURANCE_END_DATE
                         ? fullPolicyData.INSURANCE_END_DATE.split('T')[0]
                         : 'N/A'
                     }</span></p>
-                    <p>Price: <span>${formatPrice(fullPolicyData.PRICE)} ${
+                    <p>Sığorta məbləği: <span>${formatPrice(fullPolicyData.PRICE)} ${
             fullPolicyData.CURRENCY_CODE || ''
           }</span></p>
-                    <p>Total Insurance Price: <span>${formatPrice(
+                    <p>Sığorta haqqı: <span>${formatPrice(
                       fullPolicyData.TOTAL_INSURANCE_PRICE
                     )} ${fullPolicyData.CURRENCY_CODE || ''}</span></p>
                     <p>Status: <span>${getStatusDescription2(
@@ -424,19 +424,19 @@ function openPolicyDetailsPopup (cachedPolicy) {
           popupHtml += `</ul></div>`
         }
 
-        popupHtml += `<button id="close-popup">Close</button></div>`
+        popupHtml += `<button id="close-popup">Bağlamaq</button></div>`
         popupContent.innerHTML = popupHtml
 
         document.getElementById('close-popup').addEventListener('click', () => {
           popup.style.display = 'none'
         })
       } else {
-        throw new Error('Failed to load policy details.')
+        throw new Error('Məlumat tapılmadı ')
       }
     })
     .catch(error => {
-      popupContent.innerHTML = `<p>Error loading policy details: ${
-        error.message || 'Unknown error'
+      popupContent.innerHTML = `<p>Məlumat tapılmadı ${
+        error.message || ' '
       }.</p>`
     })
     .finally(() => {

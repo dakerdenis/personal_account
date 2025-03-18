@@ -21,17 +21,17 @@ function loadRefund () {
           }
 
           let refundHtml =
-            '<h2 class="complaints_medical-name">Refund Payments</h2><ul>'
+            '<h2 class="complaints_medical-name">Geri ödəniş müraciyətlər</h2><ul>'
           refundPayments.forEach(refund => {
             refundHtml += `
                             <li class="complaints_medical-li">
                                 <div class="complaints_medical-block">
-                                    <p>Card Number:</p> <span>${
+                                    <p>Şəhədətnamə nömrəsi:</p> <span>${
                                       refund.CARD_NUMBER
                                     }</span>
                                 </div> 
                                 <div class="complaints_medical-block">
-                                    <p>Event Occurrence Date:</p> <span>
+                                    <p>Hadisə baş verdi:</p> <span>
                                     ${new Date(
                                         refund.EVENT_OCCURRENCE_DATE
                                       ).toLocaleDateString()}
