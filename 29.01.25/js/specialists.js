@@ -1,97 +1,95 @@
-function loadSpecialists (specialityId) {
-  console.log(`Fetching specialists for speciality ID: ${specialityId}`)
+function loadSpecialists(specialityId) {
+  console.log(`Fetching specialists for speciality ID: ${specialityId}`);
 
-  const preloader = document.getElementById('preloader')
-  const specialistsTab = document.getElementById('specialists')
-  const doctorsTab = document.getElementById('doctors')
-  const doctorDetailsTab = document.getElementById('doctor-details')
+  const preloader = document.getElementById('preloader');
+  const specialistsTab = document.getElementById('specialists');
+  const doctorsTab = document.getElementById('doctors');
 
   // Show preloader
-  preloader.style.display = 'flex'
+  preloader.style.display = 'flex';
 
-  // Ensure preloader is visible for at least 1.5 seconds
   setTimeout(() => {
-    fetch('./vendor/GetDoctorsBySpeciality.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: `specialityId=${encodeURIComponent(specialityId)}`
-    })
+      fetch('./vendor/GetDoctorsBySpeciality.php', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `specialityId=${encodeURIComponent(specialityId)}`
+      })
       .then(response => response.json())
       .then(data => {
-        console.log('Specialists data:', data) // Log the response to check the structure
+          console.log('Specialists data:', data); // Debugging log
 
-        if (data && data.DOCTORS) {
-          let doctorsHtml =
-            '<h2 class="complaints_medical-name">Həkimlər siyahısı:</h2><ul><br>'
-          data.DOCTORS.forEach(doctor => {
-            doctorsHtml += `
-                            <li class="complaints_medical-li doctors__single">
-                                <div  class="doctors__single-text">
-                                    <p  class="doctors__single-name"><strong> ${doctor.NAME}</strong></p>
-                                    <p  class="doctors__single-work">İş yeri: ${doctor.WORKPLACE_NAME}</p>
-                                    <p  class="doctors__single-id">Doctor ID: ${doctor.CUSTOMER_ID}</p>
-                                </div>
-                                <div class="doctors__single-image">
-<img src="data:image/jpeg;base64,${doctor.FILE_CONTENT}" alt="Doctor's image"  /><br>
-                                </div>
-                                
-                                <button class="doctor-details-button" data-doctor-id="${doctor.CUSTOMER_ID}">Həkim haqqında</button>
-                                <!--Запись к доктору--->
-                                <button class="register-doctor-button" data-doctor-id="${doctor.CUSTOMER_ID}">Qəbula yazıl</button>
-                            </li>
-                        `
-          })
-          doctorsHtml += '</ul>'
+          // Ensure DOCTORS is an array
+          if (!data || !data.DOCTORS) {
+              throw new Error("No doctors data found.");
+          }
 
-          // Display the specialists in the "Specialists" tab
-          specialistsTab.innerHTML = doctorsHtml
-          specialistsTab.style.display = 'block'
-          doctorsTab.style.display = 'none'
+          const doctors = Array.isArray(data.DOCTORS) ? data.DOCTORS : [data.DOCTORS];
 
-          // Attach click event listeners to each "Write to doctor" button
-          // Attach click event listeners to each "Подробно о докторе" button
-          const doctorButtons = document.querySelectorAll(
-            '.doctor-details-button'
-          )
-          doctorButtons.forEach(button => {
-            button.addEventListener('click', event => {
-              const doctorId = event.target.getAttribute('data-doctor-id')
-              console.log(`Doctor ID clicked: ${doctorId}`)
-              loadDoctorDetails(doctorId) // Call the new function from doctorDetails.js
-            })
-          })
+          // If no doctors found, display message
+          if (doctors.length === 0) {
+              specialistsTab.innerHTML = `
+                  <h2 class="complaints_medical-name">Həkimlər siyahısı:</h2>
+                  <p class="error-message">Bu ixtisas üzrə həkim tapılmadı.</p>
+              `;
+              specialistsTab.style.display = 'block';
+              doctorsTab.style.display = 'none';
+              return;
+          }
 
-          // Attach click event listeners to "Записаться к доктору" buttons
-          const registerButtons = document.querySelectorAll(
-            '.register-doctor-button'
-          );
-          registerButtons.forEach(button => {
-            button.addEventListener("click", async event => {
-                const doctorId = event.target.getAttribute("data-doctor-id");
-                console.log(`Register button clicked for Doctor ID: ${doctorId}`);
-        
-                // Open the popup to select a policy before proceeding
-                openRegisterDoctorPopup(doctorId);
-            });
-        });
-        } else {
-          throw new Error('Unexpected data structure')
-        }
+          let doctorsHtml = '<h2 class="complaints_medical-name">Həkimlər siyahısı:</h2><ul><br>';
+          doctors.forEach(doctor => {
+              doctorsHtml += `
+                  <li class="complaints_medical-li doctors__single">
+                      <div class="doctors__single-text">
+                          <p class="doctors__single-name"><strong>${doctor.NAME}</strong></p>
+                          <p class="doctors__single-work">İş yeri: ${doctor.WORKPLACE_NAME}</p>
+                          <p class="doctors__single-id">Doctor ID: ${doctor.CUSTOMER_ID}</p>
+                      </div>
+                      <div class="doctors__single-image">
+                          <img src="data:image/jpeg;base64,${doctor.FILE_CONTENT}" alt="Doctor's image" />
+                      </div>
+                      <button class="doctor-details-button" data-doctor-id="${doctor.CUSTOMER_ID}">Həkim haqqında</button>
+                      <button class="register-doctor-button" data-doctor-id="${doctor.CUSTOMER_ID}">Qəbula yazıl</button>
+                  </li>
+              `;
+          });
+          doctorsHtml += '</ul>';
 
-        
+          // Display the specialists
+          specialistsTab.innerHTML = doctorsHtml;
+          specialistsTab.style.display = 'block';
+          doctorsTab.style.display = 'none';
+
+          // Attach click event listeners
+          document.querySelectorAll('.doctor-details-button').forEach(button => {
+              button.addEventListener('click', event => {
+                  const doctorId = event.target.getAttribute('data-doctor-id');
+                  console.log(`Doctor ID clicked: ${doctorId}`);
+                  loadDoctorDetails(doctorId);
+              });
+          });
+
+          document.querySelectorAll('.register-doctor-button').forEach(button => {
+              button.addEventListener("click", async event => {
+                  const doctorId = event.target.getAttribute("data-doctor-id");
+                  console.log(`Register button clicked for Doctor ID: ${doctorId}`);
+                  openRegisterDoctorPopup(doctorId);
+              });
+          });
       })
       .catch(error => {
-        console.error('Error fetching data:', error)
-        specialistsTab.innerHTML = '<p>Məlumat tapılmadı</p>'
+          console.error('Error fetching data:', error);
+          specialistsTab.innerHTML = '<p class="error-message">Bu ixtisas üzrə həkim tapılmadı.</p>';
       })
       .finally(() => {
-        // Hide preloader after data is loaded or error occurs
-        preloader.style.display = 'none'
-      })
-  }, 1000) // Minimum preloader time of 1.5 seconds
+          preloader.style.display = 'none';
+      });
+  }, 1000);
 }
+
+
 
 // Helper function to fetch medical policies
 async function fetchMedicalPolicies() {

@@ -10,7 +10,7 @@ function loadComplaints() {
         fetch('./vendor/GetMedicalClaimInformations.php') // Replace with your actual endpoint
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Məlumat tapilmadı');
                 }
                 return response.json();
             })
@@ -31,11 +31,11 @@ function loadComplaints() {
                     complaintsHtml += '</ul>';
                     complaintsTab.innerHTML = complaintsHtml;
                 } else {
-                    throw new Error('Invalid complaints data structure');
+                    throw new Error('Məlumat tapilmadı');
                 }
             })
             .catch(error => {
-                console.error('Error fetching complaints data:', error);
+                console.error('Məlumat tapilmadı.', error);
                 complaintsTab.innerHTML = `<p>Məlumat tapılmadı ${error.message || ' '}.</p>`;
             })
             .finally(() => {

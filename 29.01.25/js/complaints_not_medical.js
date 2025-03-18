@@ -42,7 +42,7 @@ function loadNonMedicalComplaints() {
 
                 // Render the complaints
                 if (complaints.length === 0) {
-                    complaintsTab.innerHTML = '<p>You don\'t have complaints.</p>';
+                    complaintsTab.innerHTML = '<p>Məlumat tapilmadı.</p>';
                     return;
                 }
 
@@ -65,8 +65,9 @@ function loadNonMedicalComplaints() {
                 complaintsTab.innerHTML = complaintsHtml;
             })
             .catch(error => {
-                console.error('Error fetching complaints data:', error);
-                complaintsTab.innerHTML = `<p>Məlumat tapilmadı ${error.message || ''}.</p>`;
+                console.error('Məlumat tapilmadı.', error);
+                /// ${error.message || ''}
+                complaintsTab.innerHTML = `<p>Məlumat tapilmadı.</p>`;
             })
             .finally(() => {
                 preloader.style.display = 'none';

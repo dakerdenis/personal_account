@@ -51,7 +51,7 @@ function loadRefund () {
       })
       .catch(error => {
         console.error('Error fetching data:', error)
-        refundTab.innerHTML = '<p>Error loading data.</p>'
+        refundTab.innerHTML = '<p>Məlumat tapılmadı.</p>'
       })
       .finally(() => {
         // Hide preloader after data is loaded or error occurs
