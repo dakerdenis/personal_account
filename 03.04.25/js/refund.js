@@ -21,7 +21,7 @@ function loadRefund () {
           }
 
           let refundHtml =
-            '<h2 class="complaints_medical-name">Geri ödəniş müraciyətlər</h2><ul>'
+            '<h2 class="complaints_medical-name">Geri ödəniş müraciətlər</h2><ul>'
           refundPayments.forEach(refund => {
             refundHtml += `
                             <li class="complaints_medical-li">

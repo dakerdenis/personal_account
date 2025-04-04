@@ -36,12 +36,12 @@
 
 
                 <div class="personal__account__info-additional">
-                    <a href="#" class="tab-link" data-target="policies">Şəhadətləmələr</a>
+                    <a href="#" class="tab-link" data-target="policies">Şəhadətnamələr</a>
                     <a href="#" class="tab-link" data-target="doctors">Həkimlər siyahısı</a>
-                    <a href="#" class="tab-link" data-target="complaints">Mənim müraciyətlərim (Tibbi)</a>
-                    <a href="#" class="tab-link" data-target="complaints_not_medical">Mənim müraciyətlərim
+                    <a href="#" class="tab-link" data-target="complaints">Mənim müraciətlərim (Tibbi)</a>
+                    <a href="#" class="tab-link" data-target="complaints_not_medical">Mənim müraciətlərim
                         (Qeyri-Tibbi)</a>
-                    <a href="#" class="tab-link" data-target="refund">Geri ödəniş üçün müraciyət</a>
+                    <a href="#" class="tab-link" data-target="refund">Geri ödəniş üçün müraciət</a>
                     <!---a href="https://a-group.az/payments/" target="_blank"  class="tab-link">Onlayn Ödəniş</a-->
                 </div>
                 <?php
@@ -69,7 +69,7 @@
             <div class="personal__account__data-wrapper">
                 <div class="personal__account-desc">
                     Hörmətli <?php echo ($name . " " . $surname) ?>, <br>
-                    şəxsi kabinetə xoş gəlmişsiniz !
+                    şəxsi kabinetə xoş gəlmişsiniz!
                 </div>
                 <!-- Tab content for various sections -->
                 <div id="policies" class="tab-content">
