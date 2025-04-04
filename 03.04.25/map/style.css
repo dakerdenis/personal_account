@@ -1,0 +1,361 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+*,*:before, *:after{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+:focus, :active{outline: none;}
+a:focus, a:active{outline: none;}
+
+nav,footer,header,aside{display:block;}
+
+html,body{
+    height: 100%;
+    width: 100%;
+    font-size: 100%;
+    line-height: 1;
+    font-size: 14px;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-family: 'Roboto', sans-serif;
+
+
+}
+
+input,button,textarea{
+    font-family: inherit;
+}
+
+input::-ms-clear{display:none}
+button{cursor: pointer;}
+button::-ms-focus-inner{
+    padding: 0; border: 0;
+}
+a, a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li {
+    list-style: none;
+}
+img{
+    vertical-align:top;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-size: inherit;font-weight: 400;
+}
+.map_wrapper {
+    height: 100vh;
+    width: 100%;
+}
+.map_container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    flex-wrap: wrap;
+}
+.map__block {
+        width: 1100px;
+        height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('./map.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #e3e3e3;
+    background-size: contain;
+    position: relative;
+    border-radius: 0px 0px 25px 0px;
+    margin-top: 2.75%;
+    margin-left: 2%;
+   
+    font-family: 'Poppins', sans-serif;
+}
+.map__block:hover{
+
+    cursor: pointer;
+}
+.map__desc {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+}
+.map__desc__image{
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    height: 60px;
+    width: 60px;
+}
+.map__desc__image img{
+    width: 60px;
+    height: 60px;
+}
+
+/***************регионы*********************/
+.region__block{
+    font-size: 14px;
+    background-color: #fff
+    ;
+    font-weight: 500;
+    color: #000;
+    border: 2px rgba(255, 0, 0, 0.9)
+    solid;
+    border-radius: 15px;
+    position: absolute;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 2px 6px 2px 6px;
+}
+.region__block:hover{
+    border: 2px solid rgba(255, 0, 0, 0.9)
+    ;
+
+background-color: rgba(255, 0, 0, 0.9) ;
+color: #fff;
+    box-shadow: 0px 0px 10px 2px rgba(255, 0, 0, 0.5)
+    ;
+
+}
+
+
+.region__block_baku{
+    top: 265px;
+    right: 210px;
+}
+.region__block_sumgait{
+    top: 239px;
+    right: 245px;
+}
+.region__block_hacmaz{
+    top: 88px;
+    right: 368px;
+}
+.region__block_gusar{
+    top: 111px;
+    right: 476px;
+}
+.region__block_gabala{
+    top: 190px;
+
+}
+.region__block_goycay{
+    top: 249px;
+    right: 530px;
+}
+.region__block_shirvan{
+    top: 373px;
+    right: 375px;
+}
+.region__block_masali{
+    top: 542px;
+    right: 374px;
+}
+.region__block_lenkaran{
+    top: 585px;
+    right: 343px;
+}
+.region__block_imisli{
+    right: 482px ;
+    top: 384px;
+}
+.region__block_barda{
+    top: 306px;
+    right: 589px;
+}
+.region__block_bilesuvar{
+    top: 455px;
+    right: 401px;
+}
+.region__block_sheki{
+    top: 156px;
+    right: 617px;
+}
+.region__block_mingechivir{
+    top: 237px;
+    right: 643px;
+}
+.region__block_zagatala{
+
+    top: 80px;
+    right: 642px;
+}
+.region__block_gence{
+
+    top: 251px;
+    right: 724px;
+}
+.region__block_qazax{
+    top: 161px;
+    right: 868px; 
+}
+.region__block_tovuz{
+    top: 188px;
+    right: 788px;
+}
+.region__block_nahcivan{
+    top: 487px;
+    right: 860px;
+}
+.region__block_Qaradag{
+    top: 294px;
+    right: 229px;
+
+}
+.region__block_georgia{
+
+    top: 47px;
+    left: 129px;
+}
+/*******************************/
+.map__list__wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.map__helper__desc {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    display: flex;
+}
+.map__helper__name {
+    font-size: 18px;
+}
+.map__helper__img {
+    height: 100%;
+}
+.map__helper__img  img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.map__helper__placeholder {
+}
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 20px;
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb
+{
+	background-color: rgba(255, 0, 0, 0.4)
+    ;	
+	background-image: -webkit-linear-gradient(45deg,
+	                                         rgba(255, 0, 0, 0.9) 25%,
+											  transparent 25%,
+											  transparent 50%,
+                                              rgba(255, 0, 0, 0.9)
+                                              50%,
+                                              rgba(255, 0, 0, 0.9)
+                                              75%,
+											  transparent 75%,
+											  transparent)
+}
+
+
+/*********************************/
+.map__desc_{
+ position: absolute;
+ bottom: 15px;
+ left: 15px;
+}
+.map__desc {
+    height: 100%;
+    padding: 25px;
+    width: 40%;
+    overflow: auto;
+}
+.map_desc_name {
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e3e3e3;
+    padding-bottom: 4px;
+    font-family: 'Poppins', sans-serif;
+    color: hsl(229, 6%, 35%);
+
+}
+.map__desc__elements {
+
+}
+.tabcontent{
+    background-color: #fff;
+    border-radius: 15px;
+
+    padding: 15px;
+}
+.tabcontent h3{
+    font-size: 25px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: 'Poppins', sans-serif;
+    color: hsl(229, 6%, 35%);
+}
+.tabcontent p{
+    display: block;
+}
+
+.clinic_block {
+    /* background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    padding: 7px;
+    margin-top: 15px;
+    border-radius: 10px; */
+    border-radius: 5px;
+    box-shadow: 0px 30px 40px -35px #997275;
+    padding: 30px;
+    margin: 40px;
+    border-top: 3px solid #B62929;
+    font-family: 'Poppins', sans-serif;
+    background-color: hsl(0, 0%, 98%);
+    color: hsl(229, 6%, 50%);
+    transition: 0.5s;
+}
+.clinic_block:hover{
+    transform: translateY(-15px);
+    cursor: pointer;
+}
+.clinic__name {
+    color:#B62929;
+    font-weight: 600;
+    font-size: 17px;
+}
+.clinic__number {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 20px;
+}
+.clinic_block p {
+    margin-bottom: 3px;
+    color:#B62929;
+    font-weight: 600;
+}
+.clinic__adress {
+    margin-bottom: 5px;
+    
+}
+.clinic_orientir {
+    margin-bottom: 8px;
+}
+.clinic_email {
+}

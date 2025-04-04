@@ -1,0 +1,407 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+:focus,
+:active {
+  outline: none;
+}
+a:focus,
+a:active {
+  outline: none;
+}
+
+nav,
+footer,
+header,
+aside {
+  display: block;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  line-height: 1;
+  font-size: 14px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-family: "Montserrat", sans-serif;
+}
+body {
+  background: rgb(215, 31, 36);
+  background: -moz-linear-gradient(
+    273deg,
+    rgba(215, 31, 36, 1) 39%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    273deg,
+    rgba(215, 31, 36, 1) 39%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  background: linear-gradient(
+    273deg,
+    rgba(215, 31, 36, 1) 39%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#d71f24",endColorstr="#ffffff",GradientType=1);
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+button {
+  cursor: pointer;
+}
+button::-ms-focus-inner {
+  padding: 0;
+  border: 0;
+}
+a,
+a:visited {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+ul li {
+  list-style: none;
+}
+img {
+  vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: 400;
+}
+
+.main__wrapper {
+  width: 100%;
+  height: 100%;
+}
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 70px;
+}
+.header__logo {
+  height: 100%;
+  width: 20%;
+  padding-left: 45px;
+  display: flex;
+  align-items: center;
+}
+.header__logo a {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.header__logo img {
+  height: 80%;
+}
+.header__block__admin {
+  width: 20%;
+  display: flex;
+  justify-content: end;
+  padding-right: 40px;
+  align-items: center;
+}
+.header__block__admin img {
+  height: 28px;
+  margin-right: 10px;
+}
+.header__block__admin p {
+  font-size: 20px;
+  color: #fff;
+  margin-right: 40px;
+}
+.header__block__admin a {
+  background-color: #fff;
+  color: #d71f24;
+  font-size: 20px;
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 8px 25px 8px 25px;
+  border: 2px solid #fff;
+  transition: ease-in-out 0.2s;
+}
+.header__block__admin a:hover {
+  background-color: #d71f24;
+  color: #fff;
+}
+.main__container {
+  padding-top: 70px;
+  width: 100%;
+  height: 100%;
+}
+.content__wrapper {
+  margin: 0 auto;
+  width: 80%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+.admin__clinics_name {
+  font-size: 25px;
+  width: 100%;
+  border-bottom: 1px solid #d71f24;
+  padding-bottom: 5px;
+}
+.admin__clinics_desc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.admin_clinics__numberof {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+.admin_clinics__numberof span {
+  margin-left: 10px;
+  font-size: 22px;
+  color: #d71f24;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+.admin__add_clinic {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.admin__add_clinic a {
+  color: #fff;
+  background-color: #d71f24;
+  border: 2px solid #d71f24;
+  border-radius: 10px;
+  padding: 8px 40px 8px 40px;
+  font-weight: 500;
+  font-size: 20px;
+  transition: ease-in-out 0.3s;
+}
+.admin__add_clinic a:hover {
+  color: #d71f24;
+  background-color: #fff;
+}
+.sortirovka {
+  width: 100%;
+  display: flex;
+  height: 50px;
+  align-items: center;
+  margin-top: 25px;
+}
+.sortirovka__form_data {
+  margin-right: 15px;
+}
+.sortirovka__form_data a {
+  background-color: #e3e3e3;
+  border-radius: 5px;
+  padding: 4px 10px 4px;
+  color: #000;
+}
+.sortirovka__form_city {
+}
+.clinics__wrapper {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.element_clinic {
+  width: 95%;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  padding: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.number_of_clinic {
+  font-weight: 500;
+  font-size: 20px;
+  width: 5%;
+}
+.name_of_clinic {
+  font-size: 18px;
+  width: 45%;
+  font-weight: 600;
+}
+.city_of_clinic {
+  width: 9%;
+  font-size: 18px;
+  font-weight: 600;
+}
+.settings__clinics {
+  height: 100%;
+}
+.settings__clinics a {
+  color: #fff;
+  background-color: #d71f24;
+  border: 2px solid #d71f24;
+  border-radius: 10px;
+  padding: 6px 30px 6px 30px;
+  font-weight: 500;
+  font-size: 18px;
+  transition: ease-in-out 0.3s;
+
+}
+.settings__clinics a:hover {
+  color: #d71f24;
+  background-color: #fff;
+}
+.delete__clinic {
+  height: 100%;
+}
+.delete__clinic a {
+  color: #fff;
+  background-color: #d71f24;
+  border: 2px solid #d71f24;
+  border-radius: 10px;
+  padding: 6px 30px 6px 30px;
+  font-weight: 500;
+  font-size: 18px;
+  transition: ease-in-out 0.3s;
+}
+.delete__clinic a:hover {
+  color: #d71f24;
+  background-color: #fff;
+}
+
+.submit__button {
+  margin-top: 25px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.submit__button input {
+  color: #fff;
+  background-color: #d71f24;
+  border: 2px solid #d71f24;
+  border-radius: 10px;
+  padding: 6px 30px 6px 30px;
+  font-weight: 500;
+  font-size: 18px;
+  transition: ease-in-out 0.3s;
+  cursor: pointer;
+}
+.submit__button input:hover {
+  color: #d71f24;
+  background-color: #fff;
+}
+
+/******************/
+/*the container must be positioned relative:*/
+.custom-select {
+  position: relative;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+
+.select-selected {
+  background-color: #d71f24;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,
+.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: #d71f24;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dont_change {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #d71f24;
+}
